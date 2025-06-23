@@ -17,6 +17,41 @@ npm install path
 npm install mysql2
 npm install cookie-parser
 ```
+
+# 🐬 Installation et Utilisation de MySQL
+
+## ✅ Installation de MySQL
+
+### 📦 Sous Debian/Ubuntu
+```bash
+sudo apt update
+sudo apt install mysql-server
+sudo systemctl start mysql
+sudo systemctl enable mysql
+```
+
+### 🍎 Sous macOS (avec Homebrew)
+```bash
+brew update
+brew install mysql
+brew services start mysql
+```
+
+###  🪟 Sous Windows
+
+Télécharger le MySQL Installer : https://dev.mysql.com/downloads/installer/
+   
+### 🔑 Connexion à MySQL
+```bash
+mysql -u root -p
+
+```
+> Entrer le mot de passe root défini à l’installation
+
+### 📥 Importer un fichier .sql avec source
+```SQL
+SOURCE /chemin/vers/mon_script.sql;
+```
 ---
 
 ## ▶️ Lancement
