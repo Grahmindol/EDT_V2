@@ -193,25 +193,7 @@
         </section>
       </div><!-- background rows -->
       <div class="w-schedule__grid js-w-schedule__grid" aria-hidden="true">
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">09:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">10:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">11:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">12:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">13:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">14:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">15:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">16:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">17:00</span></div>
-        <div class="w-schedule__grid-row"></div>
-        <div class="w-schedule__grid-row"><span class="w-schedule__grid-row-label">18:00</span></div>
+        <!-- dynamically generated -->
       </div>
     </div><!-- modal window (weekly schedule) -->
     <div id="w-schedule-modal-id"
@@ -318,14 +300,14 @@
             getAttribute(attr) {
               return null;
             },
-            getModalContent(){
+            getModalContent() {
               return content;
             },
-            isFakeTrigger : true
+            isFakeTrigger: true
           }
         },
         focus() {
-            return null;
+          return null;
         }
       };
 
@@ -335,7 +317,8 @@
 
   <!-- Initialize Swiper -->
   <script>
-    var swiper = new Swiper(".swiper", {
+    let currentIndex = 0;
+    /*var swiper = new Swiper(".swiper", {
       observeParents: true,
       slidesPerView: 1,
       slidesPerGroup: 1,
@@ -351,6 +334,56 @@
     swiper.on('transitionEnd', () => {
       swiper.appendSlide(generateScheduleDay({ id: "1", name: "Mardi", events: [{ id: "1", name: "Abs Circuit", datetime: "09:30PT1H" }] }));
       my_schedule.update()
+    });*/
+    const container = document.querySelector('.swiper .swiper-wrapper');
+
+    
+
+    function renderSlide(index){
+      const data = [{ id: "1", name: "Lundi", events: [
+        { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
+        { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
+        { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
+      ] },
+            { id: "2", name: "Mardi", events: [] },
+            { id: "3", name: "Mercredi", events: [] },
+            { id: "4", name: "Jeudi", events: [] },
+            { id: "5", name: "Vendredi", events: [] },
+            { id: "6", name: "Samedi", events: [] },
+            { id: "7", name: "Dimanche", events: [] }];
+      return generateScheduleDay(data[(index+6)%6]).outerHTML
+    }
+
+    function updateSlides(centerIndex) {
+      container.innerHTML = '';
+      container.insertAdjacentHTML('beforeend', renderSlide(centerIndex - 1));
+      container.insertAdjacentHTML('beforeend', renderSlide(centerIndex));
+      container.insertAdjacentHTML('beforeend', renderSlide(centerIndex + 1));
+
+      my_schedule.update()
+
+    }
+
+    // Initial slide setup
+    updateSlides(currentIndex);
+
+    const swiper = new Swiper('.swiper', {
+      initialSlide: 1,
+      slidesPerView: 1,
+      allowTouchMove: true,
+      on: {
+        slideChangeTransitionEnd: function () {
+          const realIndex = this.activeIndex; // ⚠️ use `this` not `swiper`
+
+          if (realIndex === 2) currentIndex++;
+          else if (realIndex === 0) currentIndex--;
+
+          updateSlides(currentIndex);
+          this.update();
+          this.slideTo(1, 0); // reset to center without animation
+
+        }
+      }
     });
   </script>
 

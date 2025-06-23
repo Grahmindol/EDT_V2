@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Infinite Virtual Swiper</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+  <style>
+    .swiper {
+      width: 300px;
+      height: 200px;
+      margin: auto;
+    }
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="swiper">
+    <div class="swiper-wrapper"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    let currentIndex = 0;
+    const container = document.querySelector('.swiper .swiper-wrapper');
+
+    const renderSlide = (index) => `<div class="swiper-slide">Slide #${index}</div>`;
+
+    function updateSlides(centerIndex) {
+      container.innerHTML = '';
+      container.insertAdjacentHTML('beforeend', renderSlide(centerIndex - 1));
+      container.insertAdjacentHTML('beforeend', renderSlide(centerIndex));
+      container.insertAdjacentHTML('beforeend', renderSlide(centerIndex + 1));
+    }
+
+    // Initial slide setup
+    updateSlides(currentIndex);
+
+    const swiper = new Swiper('.swiper', {
+      initialSlide: 1,
+      slidesPerView: 1,
+      allowTouchMove: true,
+      on: {
+        slideChangeTransitionEnd: function () {
+          const realIndex = this.activeIndex; // ⚠️ use `this` not `swiper`
+
+          if (realIndex === 2) currentIndex++;
+          else if (realIndex === 0) currentIndex--;
+
+          updateSlides(currentIndex);
+          this.slideTo(1, 0); // reset to center without animation
+        }
+      }
+    });
+  </script>
+</body>
+</html>
