@@ -1,0 +1,51 @@
+Project emploi_du_temps {
+  database_type: "MySQL"
+  note: "Emploi du temps avec groupes multiples, couleurs et login"
+}
+
+Table BlocSeance  [note: "Groupe de séance"] {
+  id int [pk, increment] 
+  nom varchar(16) [note: "ex: MP2I, G7, TD_math_1, opt_si"]
+  prio int [note: "0 z-layer basse et 10 z-layer haute ..."]
+}
+
+Table Groupe  [note: "Groupe d'eleve"] {
+  id int [pk, increment] 
+  nom varchar(16) [note: "ex: MP2I, G7, TD_math_1, opt_si"]
+}
+
+Table Eleve_Groupe [note: "L'élève E est dans le groupe G"] { 
+  eleve_id int [ref: > Eleve.id]
+  groupe_id int [ref: > Groupe.id]
+  primary key (eleve_id, groupe_id)
+}
+
+Table BlocSeance_Groupe [note: "le groupe G suit les seance du block B la seamaine N"] { 
+  bloc_id int [ref: > BlocSeance.id]
+  groupe_id int [ref: > Groupe.id]
+  semaine int [note: "0 si pour toute les semaine"] 
+  primary key (bloc_id, groupe_id)
+}
+
+Table Eleve {
+  id int [pk, increment]
+  nom varchar(16)
+  prenom varchar(16)
+  password_hash varchar(255) [note: "Mot de passe chiffré"]
+}
+
+
+
+Table Seance {
+  id int [pk, increment]
+  couleur_id int
+  date_initiale date
+  date_fin date
+  recurrence_jours int [note: "0 = ponctuelle, sinon nombre de jours entre répétitions"]
+  heure_debut time
+  heure_fin time
+  salle varchar(16)
+  bloc_id int [ref: > BlocSeance.id]
+  enseignant varchar(16)
+  matiere varchar(16)
+}
