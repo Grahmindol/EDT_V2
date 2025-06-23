@@ -8352,11 +8352,11 @@
     visibility: hidden;
   }
 }
-/*@media not all and (min-width: 64rem) {
+@media not all and (min-width: 64rem) {
   .display\@md {
     display: none !important;
   }
-}*/
+}
 @media (min-width: 80rem) {
   /* grid */
   .grid-col-1\@lg {

@@ -254,29 +254,11 @@
   <script src="./js/weekly-schedule.min.js"></script>
 
   <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
+  <script src="./js/swiper-bundle.min.js"></script>
+  <script src="./js/populate.js"></script>
 
   <!-- End Component JS -->
-  <!-- Initialize Swiper -->
-  <script>
-    var swiper = new Swiper(".swiper", {
-      observeParents: true,
-      slidesPerView: 1,
-      slidesPerGroup: 1,
-      spaceBetween: 10,
-      breakpoints: {
-        1024: {
-          slidesPerView: 7,
-          slidesPerGroup: 7,  // fais défiler 7 jours à la fois
-          spaceBetween: 0
-        }
-      }
-    });
-    swiper.on('transitionEnd', () => {
-      swiper.appendSlide('<div class="swiper-slide">Auto slide</div>');
-    });
-  </script>
+
   <script>
 
     var wSchedule = document.getElementsByClassName('js-w-schedule')[0];
@@ -287,9 +269,14 @@
       { id: 3, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./app/assets/img/weekly-schedule-img-3.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Yoga Level 1</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' },
       { id: 4, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./app/assets/img/weekly-schedule-img-4.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Restorative Yoga</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' }
     ];
-    new WSchedule({
+    let my_schedule = new WSchedule({
       element: wSchedule,
       searchData: function (trigger, cb) {
+        if (trigger.isFakeTrigger) {
+          return setTimeout(function () {
+            cb(trigger.getModalContent());
+          }, 500);
+        }
         var event = trigger.getAttribute('data-w-schedule-event') || 1;
         var data = searchValues.filter(function (item) {
           return item['id'] == event;
@@ -317,6 +304,54 @@
         cb();
       }
     };
+
+
+    function showCustomModal(content) {
+      e = my_schedule.modal[0]
+      // Crée un fake trigger
+      const mockTrigger = {
+        closest(selector) {
+          return {
+            getBoundingClientRect() {
+              return { top: 100, left: 100, width: 200, height: 100, right: 300, bottom: 200 };
+            },
+            getAttribute(attr) {
+              return null;
+            },
+            getModalContent(){
+              return content;
+            },
+            isFakeTrigger : true
+          }
+        },
+        focus() {
+            return null;
+        }
+      };
+
+      e.dispatchEvent(new CustomEvent("openModal", { detail: mockTrigger }));
+    }
+  </script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".swiper", {
+      observeParents: true,
+      slidesPerView: 1,
+      slidesPerGroup: 1,
+      spaceBetween: 10,
+      breakpoints: {
+        1024: {
+          slidesPerView: 7,
+          slidesPerGroup: 7,  // fais défiler 7 jours à la fois
+          spaceBetween: 0
+        }
+      }
+    });
+    swiper.on('transitionEnd', () => {
+      swiper.appendSlide(generateScheduleDay({ id: "1", name: "Mardi", events: [{ id: "1", name: "Abs Circuit", datetime: "09:30PT1H" }] }));
+      my_schedule.update()
+    });
   </script>
 
 </body>
