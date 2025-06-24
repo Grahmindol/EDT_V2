@@ -12,10 +12,7 @@ Lance ces commandes dans ton terminal :
 
 ```batch
 npm init -y
-npm install express
-npm install path
-npm install mysql2
-npm install cookie-parser
+npm install
 ```
 
 # 🐬 Installation et Utilisation de MySQL
