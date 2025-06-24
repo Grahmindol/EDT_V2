@@ -371,9 +371,8 @@
     // Met à jour les slides visibles autour du centre
     function updateSlides(centerIndex) {
       const visible = getVisibleCount();
-
       container.innerHTML = '';
-      for (let i = 0; i <= 3 * visible + 2; i++) {
+      for (let i = 1; i <= 3*visible; i++) {
         container.insertAdjacentHTML('beforeend', renderSlide(centerIndex + i));
       }
       my_schedule.update(); // ta fonction custom
@@ -400,19 +399,18 @@
       on: {
         slideChangeTransitionEnd: function () {
           const visible = getVisibleCount();
-          const centerSlide = Math.floor(visible / 2);
 
           const realIndex = this.activeIndex;
 
-          if (realIndex > centerSlide) {
+          if (realIndex > visible) {
             currentIndex += visible;
-          } else if (realIndex < centerSlide) {
+          } else if (realIndex < visible) {
             currentIndex -= visible;
           }
 
           updateSlides(currentIndex);
           this.update();
-          this.slideTo(centerSlide, 0);
+          this.slideTo(visible, 0);
         }
       }
     });
