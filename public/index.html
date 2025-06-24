@@ -313,6 +313,20 @@
 
       e.dispatchEvent(new CustomEvent("openModal", { detail: mockTrigger }));
     }
+
+    async function loadModalFromURL(url) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Erreur HTTP ${res.status}`);
+
+        const html = await res.text();
+
+        showCustomModal(html);
+      } catch (err) {
+        console.error('Erreur chargement modal HTML:', err);
+        alert('Erreur chargement contenu');
+      }
+    }
   </script>
 
   <!-- Initialize Swiper -->

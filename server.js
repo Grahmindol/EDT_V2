@@ -1,46 +1,24 @@
 const express = require('express');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
 const path = require('path');
-const mysql = require('mysql2/promise');
+const bcrypt = require('bcrypt');
+const connectDB = require('./db');
 require('dotenv').config();
 
 const app = express();
 const port = 3000;
-
 let connection;
 
-function requireAuth(req, res, next) {
-  if (!req.session.user) return res.status(401).send('Non autorisé');
-  next();
-}
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-async function main() {
-  try {
-    connection = await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME
-    });
-    console.log('✅ Connexion SQL établie');
-  } catch (err) {
-    console.error('❌ Erreur SQL:', err);
-    process.exit(1);
-  }
-
-  // Middlewares
-  app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  }));
-
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-
-  // 🔐 Créer un nouvel utilisateur
+// 🔐 Créer un nouvel utilisateur
   app.post('/auth/create', async (req, res) => {
     const { nom, prenom, password } = req.body;
     if (!nom || !prenom || !password) return res.status(400).send('Champs manquants');
@@ -95,10 +73,7 @@ async function main() {
     });
   });
 
-  // Lancement du serveur
-  app.listen(port, () => {
-    console.log(`🚀 Serveur lancé sur http://localhost:${port}`);
-  });
-}
-
-main();
+app.listen(port, async () => {
+  connection = await connectDB(); // ici on récupère la vraie connexion
+  console.log(`🚀 Serveur lancé sur http://localhost:${port}`);
+});

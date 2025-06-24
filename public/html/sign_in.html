@@ -1,0 +1,32 @@
+<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0">
+  <img src="./img/signin-image.jpg" alt="Connexion image" />
+</a>
+<div class="w-schedule-modal__body padding-md width-70%@md height-100%@md">
+  <div class="text-component">
+    <h1 class="text-xl">Connexion</h1>
+    <form id="sign-in-form">
+      <input type="text" name="nom" placeholder="Nom" required class="input" />
+      <input type="text" name="prenom" placeholder="Prénom" required class="input" />
+      <input type="password" name="password" placeholder="Mot de passe" required class="input" />
+      <p><button class="btn btn--primary" type="submit">Se connecter</button></p>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.getElementById('sign-in-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+    const res = await fetch('/auth/signin', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      alert('✅ Connecté !');
+      location.reload();
+    } else {
+      alert('❌ Identifiants invalides');
+    }
+  };
+</script>

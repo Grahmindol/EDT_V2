@@ -1,0 +1,25 @@
+<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0">
+  <img src="./img/signout-image.jpg" alt="Déconnexion image" />
+</a>
+<div class="w-schedule-modal__body padding-md width-70%@md height-100%@md flex flex-column justify-center align-center">
+  <div class="text-component text-center">
+    <h1 class="text-xl">Déconnexion</h1>
+    <p class="color-contrast-medium mb-md">Êtes-vous sûr de vouloir vous déconnecter ?</p>
+    <p>
+      <button class="btn btn--primary" id="confirm-signout-btn">Se déconnecter</button>
+      <button class="btn btn--secondary" onclick="closeModal()">Annuler</button>
+    </p>
+  </div>
+</div>
+
+<script>
+  document.getElementById('confirm-signout-btn').onclick = async function() {
+    const res = await fetch('/auth/signout', { method: 'POST' });
+    if (res.ok) {
+      alert('🚪 Déconnecté');
+      location.reload();
+    } else {
+      alert('❌ Erreur déconnexion');
+    }
+  };
+</script>
