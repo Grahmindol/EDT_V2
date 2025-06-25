@@ -679,28 +679,3 @@ Usage: codyhouse.co/license
 
     /* #endregion */
 /*}*/
-
-@media (min-width: 80rem) {
-    /* #region (Events) */.w-schedule__days {
-        margin-left:60px
-    }
-
-    /* #endregion */
-    /* #region (Background Rows) */
-    .w-schedule__grid-row:not(:last-child)::after {
-        left: 60px;
-        width: calc(100% - 60px)
-    }
-
-    .w-schedule__grid-row-label {
-        display: inline-block;
-        line-height: 1;
-        position: absolute;
-        transform: translateY(-50%);
-        top: 0;
-        left: 0;
-        font-size: var(--text-sm)
-    }
-
-    /* #endregion */
-}

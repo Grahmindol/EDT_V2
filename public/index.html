@@ -9,6 +9,7 @@
   <link id="cd-base-part-1" rel="stylesheet" href="./css/icons.css">
   <link rel="stylesheet" href="./css/forms.css">
   <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/swipe.css">
 
   <!-- Component CSS -->
   <link id="codyframe" rel="stylesheet" href="./css/weekly-schedule.css">
@@ -58,7 +59,7 @@
           <li class="header__item"><a href="#0" class="header__link">Paramètre </a></li>
           <li class="header__item"><a href="#0" class="header__link">Édition</a></li>
           <li class="header__item header__item--divider" aria-hidden="true"></li>
-          <li class="header__item"><a href="#0" class="header__link">Se Déconnecter</a></li>
+          <li class="header__item"><a href="./html/sign_out.html" target="modal" class="header__link">Se Déconnecter</a></li>
         </ul>
       </div>
     </nav>
@@ -208,6 +209,15 @@
         alert('Erreur chargement contenu');
       }
     }
+
+    document.addEventListener("click", function (e) {
+      const link = e.target.closest('a[target="modal"]');
+      if (link) {
+        e.preventDefault(); // empêche le chargement normal
+        const url = link.getAttribute("href");
+        if (url) loadModalFromURL(url);
+      }
+    });
   </script>
 
   <!-- Initialize Swiper -->
