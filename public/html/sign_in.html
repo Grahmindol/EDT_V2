@@ -1,14 +1,36 @@
 <a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0">
-  <img src="./img/signin-image.jpg" alt="Connexion image" />
+  <img src="./img/signin-image.png" alt="Connexion image" />
 </a>
+
 <div class="w-schedule-modal__body padding-md width-70%@md height-100%@md">
-  <div class="text-component">
-    <h1 class="text-xl">Connexion</h1>
+  <div class="container max-width-xs padding-y-lg">
     <form id="sign-in-form">
-      <input type="text" name="nom" placeholder="Nom" required class="input" />
-      <input type="text" name="prenom" placeholder="Prénom" required class="input" />
-      <input type="password" name="password" placeholder="Mot de passe" required class="input" />
-      <p><button class="btn btn--primary" type="submit">Se connecter</button></p>
+      <fieldset class="margin-bottom-md">
+        <legend class="form-legend">Connexion</legend>
+
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-6@md">
+              <label class="form-label" for="input-nom">Nom</label>
+              <input class="form-control width-100%" type="text" name="nom" id="input-nom" required>
+            </div>
+
+            <div class="col-6@md">
+              <label class="form-label" for="input-prenom">Prénom</label>
+              <input class="form-control width-100%" type="text" name="prenom" id="input-prenom" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="input-password">Mot de passe</label>
+          <input class="form-control width-100%" type="password" name="password" id="input-password" required>
+        </div>
+      </fieldset>
+
+      <div class="text-right">
+        <button class="btn btn--primary" type="submit">Se connecter</button>
+      </div>
     </form>
   </div>
 </div>
@@ -30,3 +52,4 @@
     }
   };
 </script>
+

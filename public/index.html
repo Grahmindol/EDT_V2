@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/typography.css">
   <link id="cd-base-part-1" rel="stylesheet" href="./css/icons.css">
+  <link rel="stylesheet" href="./css/forms.css">
+  <link rel="stylesheet" href="./css/header.css">
 
   <!-- Component CSS -->
   <link id="codyframe" rel="stylesheet" href="./css/weekly-schedule.css">
@@ -32,165 +34,43 @@
     }
   </style>
   <script>
-    document.documentElement.style.setProperty('--w-schedule-row-height', `${Math.max(30, window.innerHeight / 20)}px`);
+    document.documentElement.style.setProperty('--w-schedule-row-height', `${window.innerHeight / 14}px`);
   </script>
 </head>
 
 <body>
-  <div class="container max-width-xl padding-y-xl js-cd-demo">
+  <header class="header position-relative js-header ">
+  <div class="header__container container max-width-lg">
+    <div class="header__logo">
+      <a href="#0">
+        <svg width="104" height="30" viewBox="0 0 104 30"><title>Go to homepage</title><path d="M37.54 24.08V3.72h4.92v16.37h8.47v4zM60.47 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8 8 0 015.64-2.18 8.07 8.07 0 015.68 2.2 8.49 8.49 0 012 5.69 8.63 8.63 0 01-1.78 5.38 7.6 7.6 0 01-5.89 2.49zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.79 3-2.79 4.26.32 4.23 2.82 4.23zM95.49 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8.4 8.4 0 0111.31 0 8.43 8.43 0 012 5.69 8.6 8.6 0 01-1.77 5.38 7.6 7.6 0 01-5.89 2.51zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.8 3-2.8 4.26.31 4.23 2.83 4.23zM77.66 30c-5.74 0-7-3.25-7.23-4.52l4.6-.26c.41.91 1.17 1.41 2.76 1.41a2.45 2.45 0 002.82-2.53v-2.68a7 7 0 01-1.7 1.75 6.12 6.12 0 01-5.85-.08c-2.41-1.37-3-4.25-3-6.66 0-.89.12-3.67 1.45-5.42a5.67 5.67 0 014.64-2.4c1.2 0 3 .25 4.46 2.82V8.81h4.85v15.33a5.2 5.2 0 01-2.12 4.32A9.92 9.92 0 0177.66 30zm.15-9.66c2.53 0 2.81-2.69 2.81-3.91s-.31-4-2.81-4-2.81 2.8-2.81 4 .27 3.91 2.81 3.91zM55.56 3.72h9.81v2.41h-9.81z" fill="var(--color-contrast-higher)"/><circle cx="15" cy="15" r="15" fill="var(--color-primary)"/></svg>
+      </a>
+    </div>
+
+    <button class="btn btn--subtle header__trigger js-header__trigger" aria-label="Toggle menu" aria-expanded="false" aria-controls="header-nav">
+      <i class="header__trigger-icon" aria-hidden="true"></i>
+    </button>
+
+    <nav class="header__nav js-header__nav" id="header-nav" role="navigation" aria-label="Main">
+      <div class="header__nav-inner">
+        <div class="header__label">Main menu</div>
+        <ul class="header__list">
+          <li class="header__item"><a href="#0" class="header__link">Paramètre </a></li>
+          <li class="header__item"><a href="#0" class="header__link">Édition</a></li>
+          <li class="header__item header__item--divider" aria-hidden="true"></li>
+          <li class="header__item"><a href="#0" class="header__link">Se Déconnecter</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+  <div class="container max-width-xl padding-y-sm js-cd-demo">
     <!-- Component HTML -->
     <div class="w-schedule js-tabs js-w-schedule tabs--no-interaction swiper" data-hide-panel-class="display@md"
-      data-w-schedule-timeline="09:00-18:00" style="--w-schedule-row-nr: 19;overflow: hidden; ">
+      data-w-schedule-timeline="08:00-19:00" style="overflow: hidden; ">
       <!-- 👇 events -->
-      <div class="w-schedule__days js-tabs__panels swiper-wrapper" , style="width: fit-content;"><!-- Monday -->
-        <section id="w-schedule-mon" class="w-schedule__day js-tabs__panel swiper-slide" role="tabpanel"
-          aria-labelledby="tab-w-schedule-mon">
-          <div class="w-schedule__col-label text-sm">Monday</div>
-          <ul class="w-schedule__events">
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--1 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="1"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 1); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="09:30PT1H">09:30 - 10:30</time>
-                <div class="text-md font-medium text-base@md">Abs Circuit</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--2 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="2"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 4); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 3);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="11:00PT1H30M">11:00 - 12:30</time>
-                <div class="text-md font-medium text-base@md">Rowing Workout</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--3 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="3"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 10); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2.5);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="14:00PT1H15M">14:00 - 15:15</time>
-                <div class="text-md font-medium text-base@md">Yoga Level 1</div>
-              </a></li>
-          </ul>
-        </section><!-- Tuesday -->
-        <section id="w-schedule-tue" class="w-schedule__day js-tabs__panel swiper-slide" role="tabpanel"
-          aria-labelledby="tab-w-schedule-tue">
-          <div class="w-schedule__col-label text-sm">Tuesday</div>
-          <ul class="w-schedule__events">
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--2 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="2"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 2); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="10:00PT1H">10:00 - 11:00</time>
-                <div class="text-md font-medium text-base@md">Rowing Workout</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--4 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="4"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 5); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 3);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="11:30PT1H30M">11:30 - 13:00</time>
-                <div class="text-md font-medium text-base@md">Restorative Yoga</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--1 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="1"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 9); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 3);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="13:30PT1H30M">13:30 - 15:00</time>
-                <div class="text-md font-medium text-base@md">Abs Circuit</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--3 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="3"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 13.5); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="15:45PT1H">15:45 - 16:45</time>
-                <div class="text-md font-medium text-base@md">Yoga Level 1</div>
-              </a></li>
-          </ul>
-        </section><!-- Wednesday -->
-        <section id="w-schedule-wed" class="w-schedule__day js-tabs__panel swiper-slide" role="tabpanel"
-          aria-labelledby="tab-w-schedule-wed">
-          <div class="w-schedule__col-label text-sm">Wednesday</div>
-          <ul class="w-schedule__events">
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--4 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="4"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 0); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2.5);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="09:00PT1H15M">09:00 - 10:15</time>
-                <div class="text-md font-medium text-base@md">Restorative Yoga</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--3 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="3"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 3.5); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="10:45PT1H">10:45 - 11:45</time>
-                <div class="text-md font-medium text-base@md">Yoga Level 1</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--2 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="2"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 6); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 3.5);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="12:00PT1H45M">12:00 - 13:45</time>
-                <div class="text-md font-medium text-base@md">Rowing Workout</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--3 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="3"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 9.5); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2.5);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="13:45PT1H15M">13:45 - 15:00</time>
-                <div class="text-md font-medium text-base@md">Yoga Level 1</div>
-              </a></li>
-          </ul>
-        </section><!-- Thursday -->
-        <section id="w-schedule-thu" class="w-schedule__day js-tabs__panel swiper-slide" role="tabpanel"
-          aria-labelledby="tab-w-schedule-thu">
-          <div class="w-schedule__col-label text-sm">Thursday</div>
-          <ul class="w-schedule__events">
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--1 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="1"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 1); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="09:30PT1H">09:30 - 10:30</time>
-                <div class="text-md font-medium text-base@md">Abs Circuit</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--4 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="4"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 6); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 3.5);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="12:00PT1H45M">12:00 - 13:45</time>
-                <div class="text-md font-medium text-base@md">Restorative Yoga</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--1 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="1"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 13); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="15:30PT1H">15:30 - 16:30</time>
-                <div class="text-md font-medium text-base@md">Abs Circuit</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--2 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="2"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 16); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="17:00PT1H">17:00 - 18:00</time>
-                <div class="text-md font-medium text-base@md">Rowing Workout</div>
-              </a></li>
-          </ul>
-        </section><!-- Friday -->
-        <section id="w-schedule-fri" class="w-schedule__day js-tabs__panel swiper-slide" role="tabpanel"
-          aria-labelledby="tab-w-schedule-fri">
-          <div class="w-schedule__col-label text-sm">Friday</div>
-          <ul class="w-schedule__events">
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--2 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="2"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 2); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="10:00PT1H">10:00 - 11:00</time>
-                <div class="text-md font-medium text-base@md">Rowing Workout</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--1 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="1"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 7); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 3);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="12:30PT1H30M">12:30 - 14:00</time>
-                <div class="text-md font-medium text-base@md">Abs Circuit</div>
-              </a></li>
-            <li class="w-schedule__event-wrapper"><a class="w-schedule__event w-schedule__event--3 js-w-schedule__event"
-                href="#0" aria-controls="w-schedule-modal-id" data-w-schedule-event="3"
-                style="--w-schedule-event-top: calc(var(--w-schedule-row-height) * 13.5); --w-schedule-event-height: calc(var(--w-schedule-row-height) * 2);"><time
-                  class="text-sm opacity-60% text-xs@md" datetime="15:45PT1H">15:45 - 16:45</time>
-                <div class="text-md font-medium text-base@md">Yoga Level 1</div>
-              </a></li>
-          </ul>
-        </section><!-- Saturday -->
-        <section id="w-schedule-sat" class="w-schedule__day js-tabs__panel swiper-slide" role="tabpanel"
-          aria-labelledby="tab-w-schedule-sat">
-          <div class="w-schedule__col-label text-sm">Saturday</div>
-          <p class="text-center hide@md">No classes on Saturday 👏</p>
-        </section><!-- Sunday -->
-        <section id="w-schedule-sun" class="w-schedule__day js-tabs__panel swiper-slide" role="tabpanel"
-          aria-labelledby="tab-w-schedule-sat">
-          <div class="w-schedule__col-label text-sm">Sunday</div>
-          <p class="text-center hide@md">No classes on Sunday too 👏</p>
-        </section>
+      <div class="w-schedule__days js-tabs__panels swiper-wrapper" , style="width: fit-content;">
+        <!-- dynamically generated -->
       </div><!-- background rows -->
       <div class="w-schedule__grid js-w-schedule__grid" aria-hidden="true">
         <!-- dynamically generated -->
@@ -228,13 +108,14 @@
           <line x1="3" y1="3" x2="21" y2="21"></line>
           <line x1="21" y1="3" x2="3" y2="21"></line>
         </g>
-      </svg></button><!-- [end] modal window (weekly schedule) --><!-- End Component HTML -->
+      </svg></button>
+      <!-- [end] modal window (weekly schedule) -->
+      
+      <!-- End Component HTML -->
   </div>
-  <!-- <script src="../../assets/js/min/iframe-min.js?v=206"></script> <!-- ver=x -->
-  <!-- <script src="../../../codyhouse-framework/main/assets/js/util.js?v=204"></script> <!-- ver=x -->
   <!-- Component JS -->
   <script src="./js/weekly-schedule.min.js"></script>
-
+  <script src="./js/header.js"></script>
   <!-- Swiper JS -->
   <script src="./js/swiper-bundle.min.js"></script>
   <script src="./js/populate.js"></script>
@@ -247,9 +128,9 @@
 
     var searchValues = [
       { id: 1, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./img/weekly-schedule-img-1.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Abs Circuit</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' },
-      { id: 2, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./app/assets/img/weekly-schedule-img-2.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Rowing Workout</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' },
-      { id: 3, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./app/assets/img/weekly-schedule-img-3.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Yoga Level 1</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' },
-      { id: 4, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./app/assets/img/weekly-schedule-img-4.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Restorative Yoga</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' }
+      { id: 2, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./img/weekly-schedule-img-maths.png" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Rowing Workout</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' },
+      { id: 3, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./img/weekly-schedule-img-3.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Yoga Level 1</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' },
+      { id: 4, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./img/weekly-schedule-img-4.jpg" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Restorative Yoga</h1><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">Book Class</button></p></div></div>' }
     ];
     let my_schedule = new WSchedule({
       element: wSchedule,
@@ -333,27 +214,18 @@
   <script>
     const container = document.querySelector('.swiper .swiper-wrapper');
 
-    // Données des jours
-    const data = [
-      {
-        id: "1", name: "Lundi", events: [
-          { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
-          { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
-          { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
-        ]
-      },
-      { id: "2", name: "Mardi", events: [] },
-      { id: "3", name: "Mercredi", events: [] },
-      { id: "4", name: "Jeudi", events: [] },
-      { id: "5", name: "Vendredi", events: [] },
-      { id: "6", name: "Samedi", events: [] },
-      { id: "7", name: "Dimanche", events: [] }
-    ];
-
     // Utilitaire circulaire
     function getDay(index) {
-      const safeIndex = ((index % data.length) + data.length) % data.length;
-      return data[safeIndex];
+      const day_id = index % 7;
+      const week_id = (index - day_id)/7;
+      console.log(`week : ${week_id}`)
+      return {
+      id: `${index}`, name: "Lundi", events: [
+        { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
+        { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
+        { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
+      ]
+    };
     }
 
     function renderSlide(index) {
@@ -383,7 +255,7 @@
 
     // Instancie Swiper
     const swiper = new Swiper('.swiper', {
-      initialSlide: Math.floor(getVisibleCount() / 2),
+      initialSlide: getVisibleCount(),
       allowTouchMove: true,
       observeParents: true,
       slidesPerView: getVisibleCount(),
@@ -424,7 +296,17 @@
       }
     });
   </script>
-  <script src="./js/auth.js"></script>
+  <script>
+  window.addEventListener('DOMContentLoaded', async () => {
+    const res = await fetch('/auth/status');
+    const status = await res.json();
+
+    if (!status.connected) {
+      // utilisateur non connecté => on affiche le modal de connexion
+      loadModalFromURL("/html/sign_in.html");
+    }
+  });
+</script>
 </body>
 
 </html>
