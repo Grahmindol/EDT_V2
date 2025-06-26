@@ -440,22 +440,9 @@
     };
 
     DatePicker.prototype.getDate = function () {
-        return this.selectedDay && this.selectedMonth !== false && this.selectedYear
-            ? formatDate(this)
-            : null;
-    };
-
-    DatePicker.prototype.getWeekNumber = function () {
-        if (!this.selectedDay || this.selectedMonth === false || !this.selectedYear) return null;
-
-        const date = new Date(this.selectedYear, this.selectedMonth, this.selectedDay);
-        // ISO week date
-        const day = date.getUTCDay() || 7;
-        date.setUTCDate(date.getUTCDate() + 4 - day);
-        const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-        const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
-
-        return weekNo;
+        if(!this.selectedDay || this.selectedMonth === false || !this.selectedYear) return new Date();
+        const [day, month, year] = formatDate(this).split('/');
+        return new Date(year, month - 1, day);
     };
 
     DatePicker.prototype.addDays = function (n) {
@@ -470,21 +457,6 @@
 
         this.setDate(`${day}${this.options.dateSeparator}${month}${this.options.dateSeparator}${year}`);
     };
-
-    DatePicker.prototype.addWeeks = function (n) {
-        this.addDays(n * 7);
-    };
-
-    DatePicker.prototype.setToToday = function () {
-        const today = new Date();
-        const day = String(today.getDate()).padStart(2, "0");
-        const month = String(today.getMonth() + 1).padStart(2, "0");
-        const year = today.getFullYear();
-
-        const dateStr = `${day}${this.options.dateSeparator}${month}${this.options.dateSeparator}${year}`;
-        this.setDate(dateStr);
-    };
-
 
     // ---- INIT SCRIPT ----
 

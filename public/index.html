@@ -43,8 +43,8 @@
   <header class="header position-relative js-header ">
     <div class="header__container container max-width-lg">
       <div class="header__logo">
-        <a href="#0">
-          <svg width="150" height="50" viewBox="0 0 50 30" xmlns="http://www.w3.org/2000/svg">
+        <a href="#0" class="user-select-none">
+          <svg width="210" height="70" viewBox="0 0 50 30" xmlns="http://www.w3.org/2000/svg">
             <text x="15" y="22" font-size="24" fill="var(--color-contrast-higher)" font-family="Impact, fantasy"
               font-weight="bold">EDT</text>
             <g fill="var(--color-primary)">
@@ -63,7 +63,7 @@
         </a>
       </div>
 
-      <div class="date-input js-date-input"><label for="date-input-1" class="form-label margin-bottom-2xs">Select date<i
+      <div class="date-input js-date-input"><label for="date-input-1" class="form-label margin-bottom-4xs">Select date<i
             class="sr-only">, format is dd/mm/yyyy</i>:</label>
         <div class="date-input__wrapper"><input type="text"
             class="form-control width-100% date-input__text js-date-input__text" placeholder="dd/mm/yyyy"
@@ -103,25 +103,25 @@
             </div>
             <ol class="date-picker__week">
               <li>
-                <div class="date-picker__day">M<span class="sr-only">onday</span></div>
+                <div class="date-picker__day">L<span class="sr-only">undi</span></div>
               </li>
               <li>
-                <div class="date-picker__day">T<span class="sr-only">uesday</span></div>
+                <div class="date-picker__day">M<span class="sr-only">ardi</span></div>
               </li>
               <li>
-                <div class="date-picker__day">W<span class="sr-only">ednesday</span></div>
+                <div class="date-picker__day">M<span class="sr-only">ercredi</span></div>
               </li>
               <li>
-                <div class="date-picker__day">T<span class="sr-only">hursday</span></div>
+                <div class="date-picker__day">J<span class="sr-only">eudi</span></div>
               </li>
               <li>
-                <div class="date-picker__day">F<span class="sr-only">riday</span></div>
+                <div class="date-picker__day">V<span class="sr-only">endredi</span></div>
               </li>
               <li>
-                <div class="date-picker__day">S<span class="sr-only">aturday</span></div>
+                <div class="date-picker__day">S<span class="sr-only">amedi</span></div>
               </li>
               <li>
-                <div class="date-picker__day">S<span class="sr-only">unday</span></div>
+                <div class="date-picker__day">D<span class="sr-only">imanche</span></div>
               </li>
             </ol>
           </header>
@@ -213,7 +213,6 @@
   <!-- End Component JS -->
 
   <script>
-
     var wSchedule = document.getElementsByClassName('js-w-schedule')[0];
 
     var searchValues = [
@@ -257,29 +256,19 @@
         cb();
       }
     };
-
-
-    
   </script>
 
   <!-- Initialize Swiper -->
   <script>
     const my_datapiker = document.querySelector('.js-date-input').datepickerInstance;
     my_datapiker.setDate(new Date());
-    document.querySelectorAll('.js-date-input').forEach((el) => {
-      el.addEventListener('dateChange', (e) => {
-        console.log("📅 Nouvelle date sélectionnée :", e.detail.value);
-      });
-    });
 
     const container = document.querySelector('.swiper .swiper-wrapper');
 
     // Utilitaire circulaire
     function getDay(index) {
-      const day_id = index % 7;
-      const week_id = (index - day_id) / 7;
       return {
-        id: `${index}`, name: "Lundi", events: [
+        id: `${index.toISOString()}`, name: `${index.toDateString()}`, events: [
           { id: 1, name: "Abs Circuit", datetime: "08:00PT2H" },
           { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
           { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
@@ -300,17 +289,21 @@
     }
 
     // Met à jour les slides visibles autour du centre
-    function updateSlides(centerIndex) {
+    function updateSlides() {
+      let date_iterator = my_datapiker.getDate();
       const visible = getVisibleCount();
+      date_iterator.setDate(date_iterator.getDate() - visible);
+      if (visible == 7) date_iterator.setDate(date_iterator.getDate() - date_iterator.getDay() +1);
       container.innerHTML = '';
       for (let i = 1; i <= 3 * visible; i++) {
-        container.insertAdjacentHTML('beforeend', renderSlide(centerIndex + i));
+        container.insertAdjacentHTML('beforeend', renderSlide(date_iterator));
+        date_iterator.setDate(date_iterator.getDate()+1);
       }
       my_schedule.update(); // ta fonction custom
     }
 
     // Initial setup
-    updateSlides(currentIndex);
+    updateSlides();
 
     // Instancie Swiper
     const swiper = new Swiper('.swiper', {
@@ -330,18 +323,17 @@
       on: {
         slideChangeTransitionEnd: function () {
           const visible = getVisibleCount();
-
           const realIndex = this.activeIndex;
 
           if (realIndex > visible) {
             currentIndex += visible;
+            my_datapiker.addDays(visible);
           } else if (realIndex < visible) {
             currentIndex -= visible;
+            my_datapiker.addDays(-visible);
           }
-
-          updateSlides(currentIndex);
           this.update();
-          this.slideTo(visible, 0);
+          this.slideTo(visible, 0,false);
         }
       }
     });
@@ -353,6 +345,14 @@
       if (newVisible !== currentVisible) {
         location.reload(); // Reload propre si changement de mode
       }
+    });
+
+    
+    document.querySelectorAll('.js-date-input').forEach((el) => {
+      el.addEventListener('dateChange', (e) => {
+        updateSlides()
+        swiper.update();
+      });
     });
   </script>
   <script>
