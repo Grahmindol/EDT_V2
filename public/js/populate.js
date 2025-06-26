@@ -38,7 +38,7 @@ function generateScheduleDay(day) {
         section.appendChild(eventList);
     } else {
         const noClassMsg = document.createElement("p");
-        noClassMsg.classList.add("text-center", "hide@md");
+        noClassMsg.classList.add("text-center");
         noClassMsg.textContent = "No classes on this day 👏";
         section.appendChild(noClassMsg);
     }

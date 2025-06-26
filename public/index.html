@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/typography.css">
   <link id="cd-base-part-1" rel="stylesheet" href="./css/icons.css">
@@ -213,6 +213,38 @@
   <!-- End Component JS -->
 
   <script>
+    const weekCache = new Map();
+
+    function getWeekNumber(date) {
+      const tmp = new Date(date.getTime());
+      tmp.setHours(0, 0, 0, 0);
+      tmp.setDate(tmp.getDate() + 3 - ((tmp.getDay() + 6) % 7)); // ISO week
+      const week1 = new Date(tmp.getFullYear(), 0, 4);
+      return 1 + Math.round(((tmp - week1) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
+    }
+
+    async function getDaySchedule(date) {
+      const week = getWeekNumber(date);
+      if (!weekCache.has(week)) {
+        const response = await fetch(`./api/schedule?week=${week}`);
+        if (!response.ok) throw new Error("Erreur API");
+        const data = await response.json();
+        weekCache.set(week, data);
+      }
+
+      const dayName = date.toLocaleDateString('fr-FR', { weekday: 'long' });
+      const days = weekCache.get(week);
+      const found = days.find(d => d.name.toLowerCase() === dayName.toLowerCase());
+
+      return found || {
+        id: `${date.toISOString()}`,
+        name: dayName,
+        events: []
+      };
+    }
+  </script>
+
+  <script>
     var wSchedule = document.getElementsByClassName('js-w-schedule')[0];
 
     var searchValues = [
@@ -265,48 +297,13 @@
 
     const container = document.querySelector('.swiper .swiper-wrapper');
 
-    // Utilitaire circulaire
-    function getDay(index) {
-      return {
-        id: `${index.toISOString()}`, name: `${index.toDateString()}`, events: [
-          { id: 1, name: "Abs Circuit", datetime: "08:00PT2H" },
-          { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
-          { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
-        ]
-      };
-    }
-
-    function renderSlide(index) {
-      return generateScheduleDay(getDay(index)).outerHTML;
-    }
-
-    // Index logique du centre
-    let currentIndex = 0;
-
     // Détecte combien de slides sont visibles en fonction de l’écran
     function getVisibleCount() {
       return window.innerWidth >= 1024 ? 7 : 1;
     }
 
-    // Met à jour les slides visibles autour du centre
-    function updateSlides() {
-      let date_iterator = my_datapiker.getDate();
-      const visible = getVisibleCount();
-      date_iterator.setDate(date_iterator.getDate() - visible);
-      if (visible == 7) date_iterator.setDate(date_iterator.getDate() - date_iterator.getDay() +1);
-      container.innerHTML = '';
-      for (let i = 1; i <= 3 * visible; i++) {
-        container.insertAdjacentHTML('beforeend', renderSlide(date_iterator));
-        date_iterator.setDate(date_iterator.getDate()+1);
-      }
-      my_schedule.update(); // ta fonction custom
-    }
-
-    // Initial setup
-    updateSlides();
-
     // Instancie Swiper
-    const swiper = new Swiper('.swiper', {
+    const my_swiper = new Swiper('.swiper', {
       initialSlide: getVisibleCount(),
       allowTouchMove: true,
       observeParents: true,
@@ -323,37 +320,60 @@
       on: {
         slideChangeTransitionEnd: function () {
           const visible = getVisibleCount();
-          const realIndex = this.activeIndex;
-
-          if (realIndex > visible) {
-            currentIndex += visible;
-            my_datapiker.addDays(visible);
-          } else if (realIndex < visible) {
-            currentIndex -= visible;
-            my_datapiker.addDays(-visible);
-          }
-          this.update();
-          this.slideTo(visible, 0,false);
+          my_datapiker.addDays(visible * Math.sign(this.activeIndex - visible));
+          this.slideTo(visible, 0, false);
         }
       }
     });
 
+    // Met à jour les slides visibles
+    async function updateSlides() {
+      let date_iterator = my_datapiker.getDate();
+      const visible = getVisibleCount();
+      date_iterator.setDate(date_iterator.getDate() - visible);
+      if (visible === 7) date_iterator.setDate(date_iterator.getDate() - date_iterator.getDay() + 1);
+
+      const fragments = [];
+      const dates = [];
+
+      // Préparation des dates à charger
+      for (let i = 1; i <= 3 * visible; i++) {
+        dates.push(new Date(date_iterator)); // clone pour éviter mutation
+        date_iterator.setDate(date_iterator.getDate() + 1);
+      }
+
+      // Chargement parallèle des jours
+      const dayData = await Promise.all(dates.map(getDaySchedule));
+
+      // Construction des slides HTML en mémoire
+      for (const day of dayData) {
+        const slideHTML = generateScheduleDay(day).outerHTML;
+        fragments.push(slideHTML);
+      }
+
+      // Une seule modification du DOM
+      container.innerHTML = fragments.join('');
+
+      my_schedule.update();
+      my_swiper.update();
+    }
+
     // Facultatif : reload si on change de taille d'écran de façon significative
     window.addEventListener('resize', () => {
       const newVisible = window.innerWidth >= 1024 ? 7 : 1;
-      const currentVisible = swiper.params.slidesPerView;
+      const currentVisible = my_swiper.params.slidesPerView;
       if (newVisible !== currentVisible) {
         location.reload(); // Reload propre si changement de mode
       }
     });
 
-    
+
     document.querySelectorAll('.js-date-input').forEach((el) => {
-      el.addEventListener('dateChange', (e) => {
-        updateSlides()
-        swiper.update();
-      });
+      el.addEventListener('dateChange', updateSlides);
     });
+
+    // Initial setup
+    updateSlides();
   </script>
   <script>
     window.addEventListener('DOMContentLoaded', async () => {
