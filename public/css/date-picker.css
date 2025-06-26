@@ -241,3 +241,11 @@ Usage: codyhouse.co/license
     /* remove Firefox dotted-outline focus effect */
     border: none
 }
+
+.date-input {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10; /* pour passer au-dessus si besoin */
+   /*pointer-events: none; optionnel si ce n'est pas cliquable */
+}
