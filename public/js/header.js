@@ -1,4 +1,3 @@
-// File#: _1_main-header
 // Usage: codyhouse.co/license
 (function() {
 	var mainHeader = document.getElementsByClassName('js-header');

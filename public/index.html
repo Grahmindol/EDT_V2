@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="./css/forms.css">
   <link rel="stylesheet" href="./css/header.css">
   <link rel="stylesheet" href="./css/date-picker.css">
-  <link rel="stylesheet" href="./css/swipe.css">
 
   <!-- Component CSS -->
   <link id="codyframe" rel="stylesheet" href="./css/weekly-schedule.css">
@@ -46,8 +45,21 @@
       <div class="header__logo">
         <a href="#0">
           <svg width="150" height="50" viewBox="0 0 50 30" xmlns="http://www.w3.org/2000/svg">
-            <text x="15" y="22" font-size="24" fill="var(--color-contrast-higher)" font-family="Impact, fantasy" font-weight="bold">EDT</text>
-            <g fill="var(--color-primary)"><path d="m-1.946 14.952-1.47-1.47.678-.68.792.793L-.4 12.048l.679.68zm5.834-2.81H.938v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm-11.753-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm5.201-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm9.432-5.795H.938v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm-11.753-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm5.201-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm5.201-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm2.241 8.57h2.95v-2.949H.938zm.96-1.989h1.03v1.03h-1.03zm-13.673 1.99h2.95v-2.95h-2.95zm.96-1.99h1.03v1.03h-1.03zm3.281 1.99h2.95v-2.95h-2.95zm.96-1.99h1.03v1.03h-1.03zm3.281 1.99h2.95v-2.95h-2.95zm.96-1.99h1.03v1.03h-1.03z"/><path d="M-9.745 21.154v.48A2.37 2.37 0 0 1-12.06 24a2.376 2.376 0 0 1-2.316-2.366V6.081H6.49v13.76h.96V1.7H3.584A2.252 2.252 0 0 0-.394.792a2.25 2.25 0 0 0-3.55 0 2.25 2.25 0 0 0-3.55 0 2.251 2.251 0 0 0-3.977.907h-3.865v1.594h-2.542v24.14H3.35V24.96h4.163a3.33 3.33 0 0 0 3.326-3.327v-.48zM1.381.885c.545 0 1.01.339 1.202.815H.18a1.3 1.3 0 0 1 1.2-.815m-3.55 0c.545 0 1.011.339 1.202.815H-3.37A1.3 1.3 0 0 1-2.168.885m-3.55 0c.544 0 1.01.339 1.201.815H-6.92A1.3 1.3 0 0 1-5.718.885m-3.55 0a1.3 1.3 0 0 1 1.202.815h-2.404A1.3 1.3 0 0 1-9.268.885m-5.108 1.775h2.905a2.26 2.26 0 0 0 2.203 1.775v-.96c-.544 0-1.01-.338-1.202-.815h2.549a2.26 2.26 0 0 0 2.203 1.775v-.96c-.544 0-1.01-.338-1.202-.815h2.549a2.26 2.26 0 0 0 2.203 1.775v-.96c-.545 0-1.01-.338-1.202-.815h2.548a2.26 2.26 0 0 0 2.203 1.775v-.96c-.544 0-1.01-.338-1.201-.815h6.31v2.46h-20.866zm-2.542 1.594h1.582V6.4h-1.582zm19.306 22.22h-19.306V7.36h1.582v14.274a3.34 3.34 0 0 0 3.225 3.324v.003l.045-.001H2.39zm5.124-2.473H-9.777a3.32 3.32 0 0 0 .958-1.887H9.829A2.37 2.37 0 0 1 7.512 24"/><text y="601.6" font-size="25.6" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000" transform="matrix(.08 0 0 .08 -24 -6.8)">Created by Rafiico Creative Studio</text><text y="627.2" font-size="25.6" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000" transform="matrix(.08 0 0 .08 -24 -6.8)">from Noun Project</text></g></svg>
+            <text x="15" y="22" font-size="24" fill="var(--color-contrast-higher)" font-family="Impact, fantasy"
+              font-weight="bold">EDT</text>
+            <g fill="var(--color-primary)">
+              <path
+                d="m-1.946 14.952-1.47-1.47.678-.68.792.793L-.4 12.048l.679.68zm5.834-2.81H.938v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm-11.753-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm5.201-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm9.432-5.795H.938v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm-11.753-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm5.201-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm5.201-1.99h-2.95v2.95h2.95zm-.96 1.99h-1.03v-1.03h1.03zm2.241 8.57h2.95v-2.949H.938zm.96-1.989h1.03v1.03h-1.03zm-13.673 1.99h2.95v-2.95h-2.95zm.96-1.99h1.03v1.03h-1.03zm3.281 1.99h2.95v-2.95h-2.95zm.96-1.99h1.03v1.03h-1.03zm3.281 1.99h2.95v-2.95h-2.95zm.96-1.99h1.03v1.03h-1.03z" />
+              <path
+                d="M-9.745 21.154v.48A2.37 2.37 0 0 1-12.06 24a2.376 2.376 0 0 1-2.316-2.366V6.081H6.49v13.76h.96V1.7H3.584A2.252 2.252 0 0 0-.394.792a2.25 2.25 0 0 0-3.55 0 2.25 2.25 0 0 0-3.55 0 2.251 2.251 0 0 0-3.977.907h-3.865v1.594h-2.542v24.14H3.35V24.96h4.163a3.33 3.33 0 0 0 3.326-3.327v-.48zM1.381.885c.545 0 1.01.339 1.202.815H.18a1.3 1.3 0 0 1 1.2-.815m-3.55 0c.545 0 1.011.339 1.202.815H-3.37A1.3 1.3 0 0 1-2.168.885m-3.55 0c.544 0 1.01.339 1.201.815H-6.92A1.3 1.3 0 0 1-5.718.885m-3.55 0a1.3 1.3 0 0 1 1.202.815h-2.404A1.3 1.3 0 0 1-9.268.885m-5.108 1.775h2.905a2.26 2.26 0 0 0 2.203 1.775v-.96c-.544 0-1.01-.338-1.202-.815h2.549a2.26 2.26 0 0 0 2.203 1.775v-.96c-.544 0-1.01-.338-1.202-.815h2.549a2.26 2.26 0 0 0 2.203 1.775v-.96c-.545 0-1.01-.338-1.202-.815h2.548a2.26 2.26 0 0 0 2.203 1.775v-.96c-.544 0-1.01-.338-1.201-.815h6.31v2.46h-20.866zm-2.542 1.594h1.582V6.4h-1.582zm19.306 22.22h-19.306V7.36h1.582v14.274a3.34 3.34 0 0 0 3.225 3.324v.003l.045-.001H2.39zm5.124-2.473H-9.777a3.32 3.32 0 0 0 .958-1.887H9.829A2.37 2.37 0 0 1 7.512 24" />
+              <text y="601.6" font-size="25.6" font-weight="bold"
+                font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000"
+                transform="matrix(.08 0 0 .08 -24 -6.8)">Created by Rafiico Creative Studio</text><text y="627.2"
+                font-size="25.6" font-weight="bold"
+                font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000"
+                transform="matrix(.08 0 0 .08 -24 -6.8)">from Noun Project</text>
+            </g>
+          </svg>
         </a>
       </div>
 
@@ -114,7 +126,8 @@
             </ol>
           </header>
           <ol class="date-picker__dates js-date-picker__dates" aria-labelledby="calendar-label-1">
-            <!-- days will be created using js --></ol>
+            <!-- days will be created using js -->
+          </ol>
         </div>
         <div aria-live="polite" class="sr-only js-date-input__sr-live"></div>
       </div>
@@ -188,6 +201,8 @@
     <!-- End Component HTML -->
   </div>
   <!-- Component JS -->
+  <script src="./js/util.js"></script>
+  <script src="./js/modal.js"></script>
   <script src="./js/weekly-schedule.min.js"></script>
   <script src="./js/header.js"></script>
   <script src="./js/date-picker.js"></script>
@@ -244,65 +259,25 @@
     };
 
 
-    function showCustomModal(content) {
-      e = my_schedule.modal[0]
-      // Crée un fake trigger
-      const mockTrigger = {
-        closest(selector) {
-          return {
-            getBoundingClientRect() {
-              return { top: 100, left: 100, width: 200, height: 100, right: 300, bottom: 200 };
-            },
-            getAttribute(attr) {
-              return null;
-            },
-            getModalContent() {
-              return content;
-            },
-            isFakeTrigger: true
-          }
-        },
-        focus() {
-          return null;
-        }
-      };
-
-      e.dispatchEvent(new CustomEvent("openModal", { detail: mockTrigger }));
-    }
-
-    async function loadModalFromURL(url) {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`Erreur HTTP ${res.status}`);
-
-        const html = await res.text();
-
-        showCustomModal(html);
-      } catch (err) {
-        console.error('Erreur chargement modal HTML:', err);
-        alert('Erreur chargement contenu');
-      }
-    }
-
-    document.addEventListener("click", function (e) {
-      const link = e.target.closest('a[target="modal"]');
-      if (link) {
-        e.preventDefault(); // empêche le chargement normal
-        const url = link.getAttribute("href");
-        if (url) loadModalFromURL(url);
-      }
-    });
+    
   </script>
 
   <!-- Initialize Swiper -->
   <script>
+    const my_datapiker = document.querySelector('.js-date-input').datepickerInstance;
+    my_datapiker.setDate(new Date());
+    document.querySelectorAll('.js-date-input').forEach((el) => {
+      el.addEventListener('dateChange', (e) => {
+        console.log("📅 Nouvelle date sélectionnée :", e.detail.value);
+      });
+    });
+
     const container = document.querySelector('.swiper .swiper-wrapper');
 
     // Utilitaire circulaire
     function getDay(index) {
       const day_id = index % 7;
       const week_id = (index - day_id) / 7;
-      console.log(`week : ${week_id}`)
       return {
         id: `${index}`, name: "Lundi", events: [
           { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
