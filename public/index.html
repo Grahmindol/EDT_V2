@@ -9,6 +9,7 @@
   <link id="cd-base-part-1" rel="stylesheet" href="./css/icons.css">
   <link rel="stylesheet" href="./css/forms.css">
   <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/date-picker.css">
   <link rel="stylesheet" href="./css/swipe.css">
 
   <!-- Component CSS -->
@@ -41,30 +42,111 @@
 
 <body>
   <header class="header position-relative js-header ">
-  <div class="header__container container max-width-lg">
-    <div class="header__logo">
-      <a href="#0">
-        <svg width="104" height="30" viewBox="0 0 104 30"><title>Go to homepage</title><path d="M37.54 24.08V3.72h4.92v16.37h8.47v4zM60.47 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8 8 0 015.64-2.18 8.07 8.07 0 015.68 2.2 8.49 8.49 0 012 5.69 8.63 8.63 0 01-1.78 5.38 7.6 7.6 0 01-5.89 2.49zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.79 3-2.79 4.26.32 4.23 2.82 4.23zM95.49 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8.4 8.4 0 0111.31 0 8.43 8.43 0 012 5.69 8.6 8.6 0 01-1.77 5.38 7.6 7.6 0 01-5.89 2.51zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.8 3-2.8 4.26.31 4.23 2.83 4.23zM77.66 30c-5.74 0-7-3.25-7.23-4.52l4.6-.26c.41.91 1.17 1.41 2.76 1.41a2.45 2.45 0 002.82-2.53v-2.68a7 7 0 01-1.7 1.75 6.12 6.12 0 01-5.85-.08c-2.41-1.37-3-4.25-3-6.66 0-.89.12-3.67 1.45-5.42a5.67 5.67 0 014.64-2.4c1.2 0 3 .25 4.46 2.82V8.81h4.85v15.33a5.2 5.2 0 01-2.12 4.32A9.92 9.92 0 0177.66 30zm.15-9.66c2.53 0 2.81-2.69 2.81-3.91s-.31-4-2.81-4-2.81 2.8-2.81 4 .27 3.91 2.81 3.91zM55.56 3.72h9.81v2.41h-9.81z" fill="var(--color-contrast-higher)"/><circle cx="15" cy="15" r="15" fill="var(--color-primary)"/></svg>
-      </a>
-    </div>
+    <div class="header__container container max-width-lg">
+      <div class="header__logo">
+        <a href="#0">
+          <svg width="150" height="50" viewBox="0 0 104 30" xmlns="http://www.w3.org/2000/svg">
+            <title>Go to homepage</title>
+            <path
+              d="M37.54 24.08V3.72h4.92v16.37h8.47v4zM60.47 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8 8 0 015.64-2.18 8.07 8.07 0 015.68 2.2 8.49 8.49 0 012 5.69 8.63 8.63 0 01-1.78 5.38 7.6 7.6 0 01-5.89 2.49zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.79 3-2.79 4.26.32 4.23 2.82 4.23zM95.49 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8.4 8.4 0 0111.31 0 8.43 8.43 0 012 5.69 8.6 8.6 0 01-1.77 5.38 7.6 7.6 0 01-5.89 2.51zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.8 3-2.8 4.26.31 4.23 2.83 4.23zM77.66 30c-5.74 0-7-3.25-7.23-4.52l4.6-.26c.41.91 1.17 1.41 2.76 1.41a2.45 2.45 0 002.82-2.53v-2.68a7 7 0 01-1.7 1.75 6.12 6.12 0 01-5.85-.08c-2.41-1.37-3-4.25-3-6.66 0-.89.12-3.67 1.45-5.42a5.67 5.67 0 014.64-2.4c1.2 0 3 .25 4.46 2.82V8.81h4.85v15.33a5.2 5.2 0 01-2.12 4.32A9.92 9.92 0 0177.66 30zm.15-9.66c2.53 0 2.81-2.69 2.81-3.91s-.31-4-2.81-4-2.81 2.8-2.81 4 .27 3.91 2.81 3.91zM55.56 3.72h9.81v2.41h-9.81z"
+              fill="var(--color-contrast-higher)" />
 
-    <button class="btn btn--subtle header__trigger js-header__trigger" aria-label="Toggle menu" aria-expanded="false" aria-controls="header-nav">
-      <i class="header__trigger-icon" aria-hidden="true"></i>
-    </button>
-
-    <nav class="header__nav js-header__nav" id="header-nav" role="navigation" aria-label="Main">
-      <div class="header__nav-inner">
-        <div class="header__label">Main menu</div>
-        <ul class="header__list">
-          <li class="header__item"><a href="#0" class="header__link">Paramètre </a></li>
-          <li class="header__item"><a href="./html/edit.html" target="modal" class="header__link">Édition</a></li>
-          <li class="header__item header__item--divider" aria-hidden="true"></li>
-          <li class="header__item"><a href="./html/sign_out.html" target="modal" class="header__link">Se Déconnecter</a></li>
-        </ul>
+            <!-- 🔁 Replacement of original circle with the padlock icon -->
+            <g transform="scale(0.09) translate(-80, -85)" fill="var(--color-primary)">
+              <!-- Ton SVG du cadenas commence ici -->
+              <polygon points="275.675,271.902 257.291,253.519 265.775,245.033 275.675,254.933 295.003,235.604 303.488,244.09 "/><g><path d="M348.6,236.779h-36.873v36.874H348.6V236.779z M336.6,261.652h-12.873v-12.874H336.6V261.652z"/><path d="M189.689,236.779h-36.872v36.874h36.872V236.779z M177.689,261.652h-12.872v-12.874h12.872V261.652z"/><path d="M242.702,236.779H205.83v36.874h36.872V236.779z M230.702,261.652H217.83v-12.874h12.872V261.652z"/><path d="M348.6,189.21h-36.873v36.872H348.6V189.21z M336.6,214.082h-12.873V201.21H336.6V214.082z"/><path d="M189.689,189.21h-36.872v36.872h36.872V189.21z M177.689,214.082h-12.872V201.21h12.872V214.082z"/><path d="M242.702,189.21H205.83v36.872h36.872V189.21z M230.702,214.082H217.83V201.21h12.872V214.082z"/><path d="M295.716,189.21h-36.873v36.872h36.873V189.21z M283.716,214.082h-12.873V201.21h12.873V214.082z"/><path d="M311.727,321.223H348.6V284.35h-36.873V321.223z M323.727,296.35H336.6v12.873h-12.873V296.35L323.727,296.35z"/><path d="M152.817,321.223h36.872V284.35h-36.872V321.223L152.817,321.223z M164.817,296.35h12.872v12.873h-12.872V296.35z"/><path d="M205.83,321.223h36.872V284.35H205.83V321.223z M217.83,296.35h12.872v12.873H217.83V296.35z"/><path d="M258.843,321.223h36.873V284.35h-36.873V321.223L258.843,321.223z M270.843,296.35h12.873v12.873h-12.873V296.35z"/><path d="M178.193,349.421v6c0,16.103-12.928,29.233-28.946,29.574c-15.972-0.329-28.949-13.571-28.949-29.569V161.011h260.821v172   h12V106.255h-48.316c-2.758-12.668-14.054-22.187-27.537-22.187c-9,0-17.021,4.245-22.186,10.833   c-5.164-6.588-13.186-10.833-22.186-10.833s-17.021,4.245-22.187,10.833c-5.164-6.588-13.186-10.833-22.186-10.833   s-17.022,4.245-22.186,10.833c-5.164-6.588-13.186-10.833-22.186-10.833c-13.482,0-24.778,9.519-27.537,22.187h-48.316v19.914   H76.526v301.763h265.331v-30.92h21.958h23.306h6.773c22.929,0,41.581-18.658,41.581-41.591v-6H178.193L178.193,349.421z    M317.266,96.068c6.806,0,12.632,4.227,15.021,10.187h-30.04C304.637,100.295,310.463,96.068,317.266,96.068z M272.895,96.068   c6.806,0,12.631,4.227,15.021,10.187h-30.039C260.266,100.295,266.091,96.068,272.895,96.068z M228.522,96.068   c6.804,0,12.63,4.227,15.02,10.187h-30.04C215.893,100.295,221.719,96.068,228.522,96.068z M184.15,96.068   c6.804,0,12.63,4.227,15.02,10.187h-30.04C171.521,100.295,177.347,96.068,184.15,96.068z M120.298,118.255h36.316   c2.758,12.668,14.054,22.186,27.537,22.186v-12c-6.804,0-12.63-4.226-15.02-10.186h31.855   c2.758,12.668,14.054,22.186,27.537,22.186v-12c-6.804,0-12.63-4.226-15.02-10.186h31.855   c2.758,12.668,14.054,22.186,27.537,22.186v-12c-6.804,0-12.629-4.226-15.02-10.186h31.854   c2.76,12.668,14.055,22.186,27.536,22.186v-12c-6.803,0-12.629-4.226-15.02-10.186h78.873v30.756h-260.82V118.255z M88.526,138.169   h19.772V165H88.526V138.169z M329.855,415.932H88.526V177h19.772v178.426c0,22.36,18.037,40.885,40.316,41.551v0.034   c0.188,0,0.375-0.011,0.563-0.013c0.232,0.008,0.467,0.013,0.707,0.013h179.973L329.855,415.932L329.855,415.932z M393.894,385.011   h-6.773h-23.306H177.792c6.301-6.218,10.64-14.421,11.97-23.59h233.1C420.082,374.869,408.149,385.011,393.894,385.011z"/></g><text x="0.0" y="601.6" font-size="25.6" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">Created by Rafiico Creative Studio</text><text x="0.0" y="627.2" font-size="25.6" font-weight="bold" font-family="Arbeit Regular, Helvetica, Arial-Unicode, Arial, Sans-serif" fill="#000000">from Noun Project</text>
+            </g>
+          </svg>
+        </a>
       </div>
-    </nav>
-  </div>
-</header>
+
+      <div class="date-input js-date-input"><label for="date-input-1" class="form-label margin-bottom-2xs">Select date<i
+            class="sr-only">, format is dd/mm/yyyy</i>:</label>
+        <div class="date-input__wrapper"><input type="text"
+            class="form-control width-100% date-input__text js-date-input__text" placeholder="dd/mm/yyyy"
+            autocomplete="off" id="date-input-1"> <button class="date-input__trigger js-date-input__trigger"
+            aria-label="Select date using calendar widget" type="button"><svg class="icon" aria-hidden="true"
+              viewBox="0 0 20 20">
+              <g fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2">
+                <rect x="1" y="4" width="18" height="14" rx="1"></rect>
+                <line x1="5" y1="1" x2="5" y2="4"></line>
+                <line x1="15" y1="1" x2="15" y2="4"></line>
+                <line x1="1" y1="9" x2="19" y2="9"></line>
+              </g>
+            </svg></button></div>
+        <div class="date-picker js-date-picker" role="dialog" aria-labelledby="calendar-label-1"
+          style="left: 0px; right: auto;">
+          <header class="date-picker__header">
+            <div class="date-picker__month"><span class="date-picker__month-label js-date-picker__month-label"
+                id="calendar-label-1"></span><!-- this will contain month label + year -->
+              <nav>
+                <ul class="date-picker__month-nav js-date-picker__month-nav">
+                  <li><button
+                      class="date-picker__month-nav-btn js-date-picker__month-nav-btn js-date-picker__month-nav-btn--prev"
+                      type="button"><svg class="icon icon--xs" viewBox="0 0 16 16">
+                        <title>Previous month</title>
+                        <polyline points="10 2 4 8 10 14" fill="none" stroke="currentColor" stroke-linecap="round"
+                          stroke-linejoin="round" stroke-width="2"></polyline>
+                      </svg></button></li>
+                  <li><button
+                      class="date-picker__month-nav-btn js-date-picker__month-nav-btn js-date-picker__month-nav-btn--next"
+                      type="button"><svg class="icon icon--xs" viewBox="0 0 16 16">
+                        <title>Next month</title>
+                        <polyline points="6 2 12 8 6 14" fill="none" stroke="currentColor" stroke-linecap="round"
+                          stroke-linejoin="round" stroke-width="2"></polyline>
+                      </svg></button></li>
+                </ul>
+              </nav>
+            </div>
+            <ol class="date-picker__week">
+              <li>
+                <div class="date-picker__day">M<span class="sr-only">onday</span></div>
+              </li>
+              <li>
+                <div class="date-picker__day">T<span class="sr-only">uesday</span></div>
+              </li>
+              <li>
+                <div class="date-picker__day">W<span class="sr-only">ednesday</span></div>
+              </li>
+              <li>
+                <div class="date-picker__day">T<span class="sr-only">hursday</span></div>
+              </li>
+              <li>
+                <div class="date-picker__day">F<span class="sr-only">riday</span></div>
+              </li>
+              <li>
+                <div class="date-picker__day">S<span class="sr-only">aturday</span></div>
+              </li>
+              <li>
+                <div class="date-picker__day">S<span class="sr-only">unday</span></div>
+              </li>
+            </ol>
+          </header>
+          <ol class="date-picker__dates js-date-picker__dates" aria-labelledby="calendar-label-1">
+            <!-- days will be created using js --></ol>
+        </div>
+        <div aria-live="polite" class="sr-only js-date-input__sr-live"></div>
+      </div>
+
+      <button class="btn btn--subtle header__trigger js-header__trigger" aria-label="Toggle menu" aria-expanded="false"
+        aria-controls="header-nav">
+        <i class="header__trigger-icon" aria-hidden="true"></i>
+      </button>
+
+      <nav class="header__nav js-header__nav" id="header-nav" role="navigation" aria-label="Main">
+        <div class="header__nav-inner">
+          <div class="header__label">Main menu</div>
+          <ul class="header__list">
+            <li class="header__item"><a href="#0" class="header__link">Paramètre </a></li>
+            <li class="header__item"><a href="./html/edit.html" target="modal" class="header__link">Édition</a></li>
+            <li class="header__item header__item--divider" aria-hidden="true"></li>
+            <li class="header__item"><a href="./html/sign_out.html" target="modal" class="header__link">Se
+                Déconnecter</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
   <div class="container max-width-xl padding-y-sm js-cd-demo">
     <!-- Component HTML -->
     <div class="w-schedule js-tabs js-w-schedule tabs--no-interaction swiper" data-hide-panel-class="display@md"
@@ -110,13 +192,14 @@
           <line x1="21" y1="3" x2="3" y2="21"></line>
         </g>
       </svg></button>
-      <!-- [end] modal window (weekly schedule) -->
-      
-      <!-- End Component HTML -->
+    <!-- [end] modal window (weekly schedule) -->
+
+    <!-- End Component HTML -->
   </div>
   <!-- Component JS -->
   <script src="./js/weekly-schedule.min.js"></script>
   <script src="./js/header.js"></script>
+  <script src="./js/date-picker.js"></script>
   <!-- Swiper JS -->
   <script src="./js/swiper-bundle.min.js"></script>
   <script src="./js/populate.js"></script>
@@ -227,15 +310,15 @@
     // Utilitaire circulaire
     function getDay(index) {
       const day_id = index % 7;
-      const week_id = (index - day_id)/7;
+      const week_id = (index - day_id) / 7;
       console.log(`week : ${week_id}`)
       return {
-      id: `${index}`, name: "Lundi", events: [
-        { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
-        { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
-        { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
-      ]
-    };
+        id: `${index}`, name: "Lundi", events: [
+          { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
+          { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
+          { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
+        ]
+      };
     }
 
     function renderSlide(index) {
@@ -254,7 +337,7 @@
     function updateSlides(centerIndex) {
       const visible = getVisibleCount();
       container.innerHTML = '';
-      for (let i = 1; i <= 3*visible; i++) {
+      for (let i = 1; i <= 3 * visible; i++) {
         container.insertAdjacentHTML('beforeend', renderSlide(centerIndex + i));
       }
       my_schedule.update(); // ta fonction custom
@@ -307,16 +390,16 @@
     });
   </script>
   <script>
-  window.addEventListener('DOMContentLoaded', async () => {
-    const res = await fetch('/auth/status');
-    const status = await res.json();
+    window.addEventListener('DOMContentLoaded', async () => {
+      const res = await fetch('/auth/status');
+      const status = await res.json();
 
-    if (!status.connected) {
-      // utilisateur non connecté => on affiche le modal de connexion
-      loadModalFromURL("/html/sign_in.html");
-    }
-  });
-</script>
+      if (!status.connected) {
+        // utilisateur non connecté => on affiche le modal de connexion
+        loadModalFromURL("/html/sign_in.html");
+      }
+    });
+  </script>
 </body>
 
 </html>
