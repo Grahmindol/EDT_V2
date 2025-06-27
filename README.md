@@ -67,7 +67,7 @@ node server.js
  
 
 
-- [ ] 📖 Lecteur de contenu  -- en cour
+- [x] 📖 Lecteur de contenu 
 
 
 ---
@@ -77,18 +77,18 @@ node server.js
 - [x] 🧠 Connexion MySQL2
 - [x] 🧭 Routing Express
 - [x] 📁 Serveur de fichiers statiques
-- [x] 🍪 Gestion des cookies (auth, préférences...)
-- [ ] 🔍 écrire les endpoints
+- [ ] 🍪 Gestion des cookies (auth, préférences...)
+- [ ] 🔍 écrire les endpoints <-- en cour
       
 ### 🔌 Liste des endpoints
 
-| Méthode  | Endpoint          | Description                       |
-|----------|------------------|-----------------------------------|
-| `GET`    | /api/items       | 🔍 Liste tous les items           |
-| `GET`    | /api/items/:id   | 🔎 Récupère un item par ID        |
-| `POST`   | /api/items       | ➕ Crée un nouvel item            |
-| `PUT`    | /api/items/:id   | ✏️ Met à jour un item            |
-| `DELETE` | /api/items/:id   | ❌ Supprime un item              |
+| Méthode  | Endpoint             | Description                         |
+|----------|----------------------|-------------------------------------|
+| `POST`   | /auth/create         | 🔐 Créer un nouvel utilisateur      |
+| `POST`   | /auth/signin         | 🔑 Connexion                        |
+| `POST`   | /auth/signout        | 🚪 Déconnexion                      |
+| `GET`    | /api/schedule?week=n | 📅 Recupere l'EDT pour la seamine n |
+| `   `    | ...                  | ✏️ ...                              |
 
 ---
 
@@ -98,8 +98,8 @@ node server.js
 
 - [x] 🌙 Mode sombre (optionnel)  
 - [x] ⏩ swipe 
-- [ ] 🔐 Authentification basique
-- [ ] 📜 contenus  
+- [x] 🔐 Authentification basique
+- [x] 📜 contenus  
 - [ ] 🎨 Design personnalisable  
 
 ---
@@ -108,7 +108,7 @@ node server.js
 
 ### 🛠️ Fonctionnalités
 
-- [ ] 🔐 Accès restreint aux éditeurs/admin  
+- [ ] 🔐 Accès restreint aux éditeurs/admin
+- [ ] 📤 Création d'eleve et de groupe  <-- en cour
 - [ ] 📤 Création de séance
-- [ ] 📤 Création d'eleve et de groupe
 - [ ] 📤 Gestion des "hotfix"
