@@ -4,8 +4,69 @@
 
 <div class="w-schedule-modal__body padding-md width-70%@md height-100%@md">
   <div class="container max-width-xs padding-y-lg">
+    <form id="groupForm">
+      <fieldset class="margin-bottom-md">
+        <legend class="form-legend">Gestion des groupe</legend>
+        <div class="margin-bottom-sm" id="groupTags">
+          
+        </div>
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="newGroup">Créer ou rejoindre un groupe :</label>
+          <input class="form-control width-100%" type="text" name="groupName" id="newGroup" placeholder="ex: MP2I ou G7"
+            required>
+        </div>
+      </fieldset>
 
-    la page qui permet de creer des séance .... 
-    
+      <div class="text-right">
+        <button class="btn btn--primary" type="submit">Valider</button>
+      </div>
+    </form>
   </div>
 </div>
+
+<script>
+
+  async function fetchGroups() {
+    const res = await fetch('/api/eleve/groups');
+    const data = await res.json();
+    document.getElementById("groupTags").innerHTML = '<p class="form-label">Groupe actuelle :</p>';
+    data.forEach(g => {
+      const span = document.createElement('span');
+      span.textContent = g.nom;
+      span.className = 'tag';
+      document.getElementById("groupTags").appendChild(span);
+    });
+  }
+
+  fetchGroups();
+
+  document.getElementById('groupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const groupName = document.getElementById('newGroup').value.trim();
+    if (!groupName) return;
+
+    await fetch('/api/eleve/groups', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nom: groupName })
+    });
+
+    document.getElementById('newGroup').value = '';
+    fetchGroups();
+  });
+</script>
+
+<style>
+  .tags-container {
+    margin-bottom: 1em;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--color-bg-lighter);
+    color: var(--color-contrast-higher);
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin: 2px;
+  }
+</style>

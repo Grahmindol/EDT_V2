@@ -74,6 +74,14 @@ app.post('/auth/signout', (req, res) => {
   });
 });
 
+app.get('/auth/status', (req, res) => {
+  if (req.session.user) {
+    res.json({ connected: true, user: req.session.user });
+  } else {
+    res.json({ connected: false });
+  }
+});
+
 // 🔒 Middleware de vérification
 function requireAuth(req, res, next) {
   if (!req.session.user) return res.status(401).send('Non connecté');
@@ -134,7 +142,7 @@ const DAY_NAMES = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", 
 app.get('/api/schedule', async (req, res) => {
   const week = parseInt(req.query.week, 10) || getISOWeek(new Date());
   const user = req.session.user;
-  if (!user) return res.status(401).json({ error: "Non authentifié" });
+  if (!user) return res.json(DAY_NAMES.map((name, i) => ({ id: `${i + 1}`, name, events: [] })));
 
   try {
     // 1. Groupes de l'élève
