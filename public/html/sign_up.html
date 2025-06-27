@@ -1,32 +1,102 @@
 <a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0">
-  <img src="./img/signup-image.jpg" alt="Inscription image" />
+  <img src="./img/signin-image.png" alt="Connexion image" />
 </a>
+
 <div class="w-schedule-modal__body padding-md width-70%@md height-100%@md">
-  <div class="text-component">
-    <h1 class="text-xl">Créer un compte</h1>
+  <div class="container max-width-xs padding-y-lg">
     <form id="sign-up-form">
-      <input type="text" name="nom" placeholder="Nom" required class="input" />
-      <input type="text" name="prenom" placeholder="Prénom" required class="input" />
-      <input type="password" name="password" placeholder="Mot de passe" required class="input" />
-      <p><button class="btn btn--primary" type="submit">Créer</button></p>
+      <fieldset class="margin-bottom-md">
+        <legend class="form-legend">Créez un compte</legend>
+
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-6@md">
+              <label class="form-label" for="input-nom">Nom</label>
+              <input class="form-control width-100%" type="text" name="nom" id="input-nom" required>
+            </div>
+
+            <div class="col-6@md">
+              <label class="form-label" for="input-prenom">Prénom</label>
+              <input class="form-control width-100%" type="text" name="prenom" id="input-prenom" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="input-password">Mot de passe</label>
+          <input class="form-control width-100%" type="password" name="password" id="input-password" required>
+        </div>
+
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="input-password">Confirmé le Mot de passe</label>
+          <input class="form-control width-100%" type="password" name="confirm-password" id="input-password-confirm" required>
+        </div>
+      </fieldset>
+
+      <div class="text-right">
+        <button class="btn btn--primary" type="submit">Créez un compte</button>
+      </div>
     </form>
   </div>
 </div>
 
 <script>
+  function formatNomPrenom(nom, prenom) {
+    return {
+      nom: nom.toUpperCase().trim(),
+      prenom: prenom.charAt(0).toUpperCase() + prenom.slice(1).toLowerCase().trim()
+    };
+  }
+
   document.getElementById('sign-up-form').onsubmit = async function(e) {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.target));
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    const pwd = form.querySelector('input[name="password"]');
+    const confirm = form.querySelector('input[name="confirm-password"]');
+
+    if (pwd.value !== confirm.value) {
+      alert('❌ Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    // 🔠 Mise en forme du nom et prénom
+    const { nom, prenom } = formatNomPrenom(data.nom || '', data.prenom || '');
+    data.nom = nom;
+    data.prenom = prenom;
+
+    // Préparation des données
+    const password = data.password;
+    delete data['confirm-password'];
+
     const res = await fetch('/auth/create', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
     });
+
     if (res.ok) {
       alert('✅ Compte créé !');
-      location.reload();
+
+      // 🔐 Connexion immédiate
+      const res2 = await fetch('/auth/signin', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ nom, prenom, password })
+      });
+
+      if (res2.ok) {
+        location.reload();
+      } else {
+        alert('❌ Compte créé mais connexion échouée');
+      }
     } else {
       alert('❌ Erreur création compte');
     }
   };
 </script>
+
+

@@ -30,20 +30,37 @@
 
       <div class="text-right">
         <button class="btn btn--primary" type="submit">Se connecter</button>
+        <p class="margin-top-xs">
+          <button type="button" class="btn btn--subtle text-sm" onclick="loadModalFromURL('/html/sign_up.html')">Ou créez un compte</button>
+        </p>
       </div>
     </form>
   </div>
 </div>
 
 <script>
+  function formatNomPrenom(nom, prenom) {
+    return {
+      nom: nom.toUpperCase(),
+      prenom: prenom.charAt(0).toUpperCase() + prenom.slice(1).toLowerCase()
+    };
+  }
+  
   document.getElementById('sign-in-form').onsubmit = async function(e) {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
+
+    // 🔠 Mise en forme du nom et prénom
+    const { nom, prenom } = formatNomPrenom(data.nom || '', data.prenom || '');
+    data.nom = nom;
+    data.prenom = prenom;
+
     const res = await fetch('/auth/signin', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
     });
+
     if (res.ok) {
       alert('✅ Connecté !');
       location.reload();

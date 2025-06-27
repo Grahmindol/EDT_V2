@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const { parseISO, getISOWeek, addDays, isBefore, isAfter, format } = require('date-fns');
 const bcrypt = require('bcrypt');
 const connectDB = require('./db');
 require('dotenv').config();
@@ -73,68 +74,157 @@ app.post('/auth/signout', (req, res) => {
   });
 });
 
-app.get('/auth/status', (req, res) => {
-  if (req.session.user) {
-    res.json({ connected: true, user: req.session.user });
-  } else {
-    res.json({ connected: false });
+// 🔒 Middleware de vérification
+function requireAuth(req, res, next) {
+  if (!req.session.user) return res.status(401).send('Non connecté');
+  next();
+}
+
+// 🔍 Liste des groupes de l'élève
+app.get('/api/eleve/groups', requireAuth, async (req, res) => {
+  const { id } = req.session.user;
+
+  const [rows] = await connection.execute(`
+    SELECT g.nom FROM Groupe g
+    JOIN Eleve_Groupe eg ON g.id = eg.groupe_id
+    WHERE eg.eleve_id = ?`, [id]);
+
+  res.json(rows);
+});
+
+// ➕ Création ou ajout à un groupe
+app.post('/api/eleve/groups', requireAuth, async (req, res) => {
+  const { id } = req.session.user;
+  const { nom } = req.body;
+
+  if (!nom) return res.status(400).send('Nom de groupe requis');
+
+  try {
+    let [rows] = await connection.execute('SELECT id FROM Groupe WHERE nom = ?', [nom]);
+
+    let groupId;
+    if (!rows.length) {
+      const [result] = await connection.execute('INSERT INTO Groupe (nom) VALUES (?)', [nom]);
+      groupId = result.insertId;
+    } else {
+      groupId = rows[0].id;
+    }
+
+    await connection.execute(
+      'INSERT IGNORE INTO Eleve_Groupe (eleve_id, groupe_id) VALUES (?, ?)',
+      [id, groupId]
+    );
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('❌ Erreur groupe :', err);
+    res.status(500).send('Erreur serveur');
   }
 });
 
 
 
-app.get('/api/schedule', (req, res) => {
-  const week = parseInt(req.query.week, 10) || 0;
+function daysOfWeekIndex(date) {
+  return (date.getDay() + 6) % 7; // Lundi = 0, Dimanche = 6
+}
 
-  // Pour l'instant, on renvoie toujours le même EDT peu importe la semaine
-  const data = [
-    {
-      id: "1", name: "Lundi", events: [
-        { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
-        { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
-        { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
-      ]
-    },
-    {
-      id: "2", name: "Mardi", events: [
-        { id: 1, name: "Abs Circuit", datetime: "09:30PT1H" },
-        { id: 2, name: "Rowing Workout", datetime: "11:00PT1H30M" },
-        { id: 3, name: "Yoga Level 1", datetime: "14:00PT1H15M" }
-      ]
-    },
-    {
-      id: "3", name: "Mercredi", events: [
-        { id: 1, name: "Abs Circuit", datetime: "08:00PT2H" },
-        { id: 2, name: "Rowing Workout", datetime: "10:00PT2H" },
-        { id: 3, name: "Yoga Level 1", datetime: "13:00PT3H" }
-      ]
-    },
-    {
-      id: "4", name: "Jeudi", events: [
-        { id: 1, name: "Abs Circuit", datetime: "08:00PT3H" },
-        { id: 2, name: "Rowing Workout", datetime: "13:00PT3H" },
-        { id: 3, name: "Yoga Level 1", datetime: "16:00PT1H15M" }
-      ]
-    },
-    {
-      id: "5", name: "Vendredi", events: [
-        { id: 1, name: "Abs Circuit", datetime: "08:00PT2H" },
-        { id: 2, name: "Rowing Workout", datetime: "10:00PT2H" },
-        { id: 3, name: "Yoga Level 1", datetime: "13:00PT2H" }
-      ]
-    },
-    {
-      id: "6", name: "Samedi", events: [
-        { id: 1, name: "DS", datetime: "08:00PT4H" }
-      ]
-    },
-    {
-      id: "7", name: "Dimanche", events: []
+const DAY_NAMES = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+
+// 📅 /api/schedule?week=26
+app.get('/api/schedule', async (req, res) => {
+  const week = parseInt(req.query.week, 10) || getISOWeek(new Date());
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: "Non authentifié" });
+
+  try {
+    // 1. Groupes de l'élève
+    const [groupes] = await connection.execute(`
+      SELECT groupe_id FROM Eleve_Groupe WHERE eleve_id = ?
+    `, [user.id]);
+
+    if (!groupes.length) return res.json(DAY_NAMES.map((name, i) => ({ id: `${i + 1}`, name, events: [] })));
+
+    const groupeIds = groupes.map(g => g.groupe_id);
+
+    // 2. BlocSeance actifs pour cette semaine ou semaine = 0
+    const [blocGroupes] = await connection.execute(`
+      SELECT DISTINCT bs.id AS bloc_id, bs.prio
+      FROM BlocSeance bs
+      JOIN BlocSeance_Groupe bsg ON bs.id = bsg.bloc_id
+      WHERE bsg.groupe_id IN (?)
+      AND (bsg.semaine = 0 OR bsg.semaine = ?)
+    `, [groupeIds, week]);
+
+    if (!blocGroupes.length) return res.json(DAY_NAMES.map((name, i) => ({ id: `${i + 1}`, name, events: [] })));
+
+    const blocIds = blocGroupes.map(b => b.bloc_id);
+
+    // 3. Récupérer les séances de ces blocs
+    const [seances] = await connection.execute(`
+      SELECT s.*, bs.prio
+      FROM Seance s
+      JOIN BlocSeance bs ON s.bloc_id = bs.id
+      WHERE s.bloc_id IN (?)
+    `, [blocIds]);
+
+    const now = new Date();
+    const eventsByDay = Array(7).fill(null).map((_, i) => ({
+      id: `${i + 1}`,
+      name: DAY_NAMES[i],
+      events: []
+    }));
+
+    // 4. Générer occurrences valides pour la semaine
+    for (const s of seances) {
+      const debut = parseISO(s.date_initiale);
+      const fin = parseISO(s.date_fin);
+      const interval = s.recurrence_jours || 0;
+
+      let current = new Date(debut);
+      while (!isAfter(current, fin)) {
+        const currentWeek = getISOWeek(current);
+        if (currentWeek === week) {
+          const jour = daysOfWeekIndex(current);
+          const startTime = s.heure_debut;
+          const endTime = s.heure_fin;
+          const duration = `PT${computeDuration(startTime, endTime)}`;
+          eventsByDay[jour].events.push({
+            id: s.id,
+            name: s.matiere,
+            enseignant: s.enseignant,
+            salle: s.salle,
+            datetime: `${startTime}${duration}`,
+            couleur_id: s.couleur_id,
+            bloc_prio: s.prio
+          });
+        }
+        if (interval === 0) break;
+        current = addDays(current, interval);
+      }
     }
-  ];
 
-  res.json(data);
+    // 5. Trier les events par heure
+    for (const day of eventsByDay) {
+      day.events.sort((a, b) => a.datetime.localeCompare(b.datetime));
+    }
+
+    res.json(eventsByDay);
+
+  } catch (err) {
+    console.error("❌ Erreur /api/schedule :", err);
+    res.status(500).send("Erreur serveur");
+  }
 });
+
+// 🧮 Durée format ISO ex: "PT1H15M"
+function computeDuration(start, end) {
+  const [sh, sm] = start.split(':').map(Number);
+  const [eh, em] = end.split(':').map(Number);
+  const mins = (eh * 60 + em) - (sh * 60 + sm);
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return `${h > 0 ? `${h}H` : ""}${m > 0 ? `${m}M` : ""}`;
+}
 
 app.listen(port, async () => {
   connection = await connectDB(); // ici on récupère la vraie connexion
