@@ -130,6 +130,78 @@ app.post('/api/eleve/groups', requireAuth, async (req, res) => {
   }
 });
 
+app.get('/api/blocs', requireAuth, async (req, res) => {
+  try {
+    const [rows] = await connection.execute('SELECT id, nom FROM BlocSeance');
+    res.json(rows);
+  } catch (err) {
+    console.error('❌ Erreur récupération blocs :', err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
+app.post('/api/blocs', requireAuth, async (req, res) => {
+  const { nom } = req.body;
+  if (!nom) return res.status(400).send('Nom requis');
+
+  try {
+    const [result] = await connection.execute(
+      'INSERT INTO BlocSeance (nom) VALUES (?)',
+      [nom]
+    );
+    res.json({ id: result.insertId, nom });
+  } catch (err) {
+    console.error('❌ Erreur création bloc :', err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
+
+app.post('/api/seances', requireAuth, async (req, res) => {
+  const {
+    matiere,
+    enseignant,
+    salle,
+    date_initiale,
+    date_fin,
+    recurrence_jours,
+    heure_debut,
+    heure_fin,
+    bloc_id
+  } = req.body;
+
+  // ✅ Vérif basique
+  if (!matiere || !date_initiale || !date_fin || !heure_debut || !heure_fin || !bloc_id) {
+    return res.status(400).send('Champs requis manquants');
+  }
+
+  try {
+    // 💾 Insert
+    const [result] = await connection.execute(
+      `INSERT INTO Seance 
+      (matiere, enseignant, salle, date_initiale, date_fin, recurrence_jours, heure_debut, heure_fin, bloc_id, couleur_id) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        matiere,
+        enseignant || null,
+        salle || null,
+        date_initiale,
+        date_fin,
+        recurrence_jours || 0,
+        heure_debut,
+        heure_fin,
+        bloc_id,
+        1 // 👈 tu peux remplacer 1 par une logique pour la couleur si besoin
+      ]
+    );
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('❌ Erreur création séance :', err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
 
 
 function daysOfWeekIndex(date) {

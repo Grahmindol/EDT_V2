@@ -4,32 +4,92 @@
 
 <div class="w-schedule-modal__body padding-md width-70%@md height-100%@md">
   <div class="container max-width-xs padding-y-lg">
+    <!-- Formulaire Groupe -->
     <form id="groupForm">
       <fieldset class="margin-bottom-md">
-        <legend class="form-legend">Gestion des groupe</legend>
-        <div class="margin-bottom-sm" id="groupTags">
-          
-        </div>
+        <legend class="form-legend">Gestion des groupes</legend>
+        <div class="margin-bottom-sm" id="groupTags"></div>
         <div class="margin-bottom-sm">
           <label class="form-label" for="newGroup">Créer ou rejoindre un groupe :</label>
           <input class="form-control width-100%" type="text" name="groupName" id="newGroup" placeholder="ex: MP2I ou G7"
             required>
         </div>
       </fieldset>
-
       <div class="text-right">
         <button class="btn btn--primary" type="submit">Valider</button>
+      </div>
+    </form>
+
+    <!-- Formulaire Séance -->
+    <form id="seanceForm">
+      <fieldset class="margin-bottom-md">
+        <legend class="form-legend">Gestion des Séances</legend>
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-4@md">
+              <label class="form-label" for="input-matiere">Matière</label>
+              <input class="form-control width-100%" type="text" name="matiere" id="input-matiere" required>
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-enseignant">Enseignant</label>
+              <input class="form-control width-100%" type="text" name="enseignant" id="input-enseignant">
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-salle">Salle</label>
+              <input class="form-control width-100%" type="text" name="salle" id="input-salle">
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-4@md">
+              <label class="form-label" for="input-date_initiale">Première occurrence</label>
+              <input class="form-control width-100%" type="date" name="date_initiale" id="input-date_initiale" required>
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-date_fin">Dernière occurrence</label>
+              <input class="form-control width-100%" type="date" name="date_fin" id="input-date_fin" required>
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-recurrence">Répétition (jours)</label>
+              <input class="form-control width-100%" type="number" name="recurrence_jours" id="input-recurrence"
+                value="0" min="0">
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-6@md">
+              <label class="form-label" for="input-heure_debut">Heure début</label>
+              <input class="form-control width-100%" type="time" name="heure_debut" id="input-heure_debut" required>
+            </div>
+            <div class="col-6@md">
+              <label class="form-label" for="input-heure_fin">Heure fin</label>
+              <input class="form-control width-100%" type="time" name="heure_fin" id="input-heure_fin" required>
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="select-bloc">Bloc</label>
+          <select class="form-control width-100%" id="select-bloc" name="bloc_id" required>
+            <option value="">Chargement...</option>
+          </select>
+          <button class="btn btn--subtle margin-top-xs" type="button" id="btn-create-bloc">Créer un nouveau
+            bloc</button>
+        </div>
+      </fieldset>
+      <div class="text-right">
+        <button class="btn btn--primary" type="submit">Créer la séance</button>
       </div>
     </form>
   </div>
 </div>
 
 <script>
-
   async function fetchGroups() {
     const res = await fetch('/api/eleve/groups');
     const data = await res.json();
-    document.getElementById("groupTags").innerHTML = '<p class="form-label">Groupe actuelle :</p>';
+    document.getElementById("groupTags").innerHTML = '<p class="form-label">Groupes actuels :</p>';
     data.forEach(g => {
       const span = document.createElement('span');
       span.textContent = g.nom;
@@ -54,13 +114,72 @@
     document.getElementById('newGroup').value = '';
     fetchGroups();
   });
+
+  document.getElementById('seanceForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    const res = await fetch('/api/seances', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      alert('✅ Séance créée !');
+      form.reset();
+    } else {
+      alert('❌ Erreur lors de la création');
+    }
+  });
+
+  async function loadBlocs() {
+  const res = await fetch('/api/blocs');
+  const data = await res.json();
+  const select = document.getElementById('select-bloc');
+  select.innerHTML = '';
+
+  data.forEach(b => {
+    const opt = document.createElement('option');
+    opt.value = b.id;
+    opt.textContent = b.nom;
+    select.appendChild(opt);
+  });
+
+  // Option vide par défaut
+  const optDefault = document.createElement('option');
+  optDefault.value = '';
+  optDefault.textContent = 'Sélectionnez un bloc';
+  optDefault.selected = true;
+  optDefault.disabled = true;
+  select.insertBefore(optDefault, select.firstChild);
+}
+
+loadBlocs();
+
+document.getElementById('btn-create-bloc').addEventListener('click', async () => {
+  const nom = prompt('Nom du nouveau bloc ?');
+  if (!nom) return;
+
+  const res = await fetch('/api/blocs', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nom })
+  });
+
+  if (res.ok) {
+    await loadBlocs();
+    alert('✅ Bloc créé');
+  } else {
+    alert('❌ Erreur création bloc');
+  }
+});
 </script>
 
 <style>
-  .tags-container {
-    margin-bottom: 1em;
-  }
-
   .tag {
     display: inline-block;
     background: var(--color-bg-lighter);
