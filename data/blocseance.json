@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "nom": "HEPDO_MPI",
+    "prio": 0
+  },
+  {
+    "id": 2,
+    "nom": "HEPDO_MPI_STAR",
+    "prio": 1
+  },
+  {
+    "id": 3,
+    "nom": "HEPDO_MPI_NON_STAR",
+    "prio": 1
+  },
+  {
+    "id": 4,
+    "nom": "HEPDO_MPI_INFO_1",
+    "prio": 1
+  },
+  {
+    "id": 5,
+    "nom": "HEPDO_MPI_INFO_2",
+    "prio": 1
+  },
+  {
+    "id": 6,
+    "nom": "HEPDO_MPI_TP_1",
+    "prio": 1
+  },
+  {
+    "id": 7,
+    "nom": "HEPDO_MPI_TP_2",
+    "prio": 1
+  },
+  {
+    "id": 8,
+    "nom": "HEPDO_ITA",
+    "prio": 1
+  },
+  {
+    "id": 9,
+    "nom": "HEPDO_ESP",
+    "prio": 1
+  },
+  {
+    "id": 10,
+    "nom": "HEPDO_ALL",
+    "prio": 1
+  }
+]

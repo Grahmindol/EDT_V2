@@ -17,10 +17,10 @@ function generateScheduleDay(day) {
             listItem.classList.add("w-schedule__event-wrapper");
 
             const link = document.createElement("a");
-            link.classList.add("w-schedule__event", `w-schedule__event--${event.id}`, "js-w-schedule__event");
+            link.classList.add("w-schedule__event", `w-schedule__event--${event.couleur_id}`, "js-w-schedule__event");
             link.href = "#0";
             link.setAttribute("aria-controls", "w-schedule-modal-id");
-            link.setAttribute("data-w-schedule-event", event.id);
+            link.setAttribute("data-w-schedule-event", event.couleur_id);
 
             const time = document.createElement("time");
             time.classList.add("text-sm", "opacity-60%", "text-xs@md");
