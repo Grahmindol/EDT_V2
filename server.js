@@ -322,7 +322,7 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
         const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
         eventsByDay[jour].events.push({
           id: s.id,
-          name: s.matiere,
+          name: `${s.matiere} (${s.salle}) ${s.enseignant != "" ? 'avec ' + s.enseignant : "" }`,
           enseignant: s.enseignant,
           salle: s.salle,
           datetime: `${s.heure_debut}${duration}`,

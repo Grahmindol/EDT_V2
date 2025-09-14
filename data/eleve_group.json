@@ -13,14 +13,22 @@
   },
   {
     "eleve_id": 1,
+    "groupe_id": -205
+  },
+  {
+    "eleve_id": 1,
     "groupe_id": 9
   },
   {
     "eleve_id": 1,
-    "groupe_id": 6
+    "groupe_id": 4
   },
   {
     "eleve_id": 1,
-    "groupe_id": 4
+    "groupe_id": 2
+  },
+  {
+    "eleve_id": 1,
+    "groupe_id": 6
   }
 ]

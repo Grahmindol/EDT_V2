@@ -31,6 +31,17 @@
   { "id": -113, "nom": "MP2I_G13_KOLLE" },
   { "id": -114, "nom": "MP2I_G14_KOLLE" },
   { "id": -115, "nom": "MP2I_G15_KOLLE" },
-  { "id": -116, "nom": "MP2I_G16_KOLLE" }
+  { "id": -116, "nom": "MP2I_G16_KOLLE" },
+
+
+  { "id": -201, "nom": "MPI_G1_KOLLE" },
+  { "id": -202, "nom": "MPI_G2_KOLLE" },
+  { "id": -203, "nom": "MPI_G3_KOLLE" },
+  { "id": -204, "nom": "MPI_G4_KOLLE" },
+  { "id": -205, "nom": "MPI_G5_KOLLE" },
+  { "id": -206, "nom": "MPI_G6_KOLLE" },
+  { "id": -207, "nom": "MPI_G7_KOLLE" },
+  { "id": -208, "nom": "MPI_G8_KOLLE" },
+  { "id": -209, "nom": "MPI_G9_KOLLE" }
 
 ]
