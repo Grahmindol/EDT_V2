@@ -1,0 +1,329 @@
+<!-- GROUPS + SEANCE + PLANNING (final) -->
+<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0">
+  <img src="./img/edit-image.png" alt="Connexion image" />
+</a>
+
+<div class="w-schedule-modal__body padding-md width-70%@md height-100%@md">
+  <div class="container max-width-xs padding-y-lg">
+    <!-- Formulaire Groupe (création) -->
+    <form id="groupForm">
+      <fieldset class="margin-bottom-md">
+        <legend class="form-legend">Créer / Rejoindre</legend>
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="newGroup">Créer un nouveau groupe :</label>
+          <input class="form-control width-100%" type="text" name="groupName" id="newGroup" placeholder="ex: MP2I ou G7">
+        </div>
+        <div class="text-right">
+          <button class="btn btn--primary" type="submit">Créer et rejoindre</button>
+        </div>
+      </fieldset>
+    </form>
+
+    <!-- Liste des groupes (target element : allGroups ou fallback groupTags) -->
+    <div id="allGroups" class="margin-bottom-sm"></div>
+    <div id="groupTags" class="margin-bottom-sm" style="display:none;">
+      <p class="form-label">Groupes actuels :</p>
+    </div>
+
+    <!-- Formulaire Séance (inchangé) -->
+    <form id="seanceForm">
+      <fieldset class="margin-bottom-md">
+        <legend class="form-legend">Gestion des Séances</legend>
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-4@md">
+              <label class="form-label" for="input-matiere">Matière</label>
+              <input class="form-control width-100%" type="text" name="matiere" id="input-matiere" required>
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-enseignant">Enseignant</label>
+              <input class="form-control width-100%" type="text" name="enseignant" id="input-enseignant">
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-salle">Salle</label>
+              <input class="form-control width-100%" type="text" name="salle" id="input-salle">
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-4@md">
+              <label class="form-label" for="input-date_initiale">Première occurrence</label>
+              <input class="form-control width-100%" type="date" name="date_initiale" id="input-date_initiale" required>
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-date_fin">Dernière occurrence</label>
+              <input class="form-control width-100%" type="date" name="date_fin" id="input-date_fin" required>
+            </div>
+            <div class="col-4@md">
+              <label class="form-label" for="input-recurrence">Répétition (jours)</label>
+              <input class="form-control width-100%" type="number" name="recurrence_jours" id="input-recurrence" value="0" min="0">
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-sm">
+          <div class="grid gap-sm">
+            <div class="col-6@md">
+              <label class="form-label" for="input-heure_debut">Heure début</label>
+              <input class="form-control width-100%" type="time" name="heure_debut" id="input-heure_debut" required>
+            </div>
+            <div class="col-6@md">
+              <label class="form-label" for="input-heure_fin">Heure fin</label>
+              <input class="form-control width-100%" type="time" name="heure_fin" id="input-heure_fin" required>
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="select-bloc">Bloc</label>
+          <select class="form-control width-100%" id="select-bloc" name="bloc_id" required>
+            <option value="">Chargement...</option>
+          </select>
+          <button class="btn btn--subtle margin-top-xs" type="button" id="btn-create-bloc">Créer un nouveau bloc</button>
+        </div>
+      </fieldset>
+      <div class="text-right">
+        <button class="btn btn--primary" type="submit">Créer la séance</button>
+      </div>
+    </form>
+
+    <!-- Nouveau formulaire planification simplifié -->
+    <form id="planningForm">
+      <fieldset class="margin-bottom-md">
+        <legend class="form-legend">Link Bloc ↔ Groupe</legend>
+
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="select-bloc-link">Bloc de séance</label>
+          <select class="form-control width-100%" id="select-bloc-link" required>
+            <option value="">Chargement...</option>
+          </select>
+        </div>
+
+        <div class="margin-bottom-sm">
+          <label class="form-label" for="select-group-link">Groupe</label>
+          <select class="form-control width-100%" id="select-group-link" required>
+            <option value="">Chargement...</option>
+          </select>
+        </div>
+
+        <div class="margin-bottom-sm">
+          <button type="button" id="btn-toggle-link" class="btn btn--primary">Vérifier</button>
+          <span id="linkStatus" style="margin-left:10px;"></span>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<script>
+(async () => {
+  // --- helpers ---
+  async function apiGET(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`${url} -> ${r.status}`);
+    return r.json();
+  }
+  async function apiPOST(url, body) {
+    return fetch(url, { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  }
+  async function apiDELETE(url, body) {
+    return fetch(url, { method: 'DELETE', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  }
+
+  // DOM (fallback to groupTags if allGroups absent)
+  const allGroupsEl = document.getElementById('allGroups') || document.getElementById('groupTags');
+  const selectBlocLink = document.getElementById('select-bloc-link');
+  const selectGroupLink = document.getElementById('select-group-link');
+  const btnToggleLink = document.getElementById('btn-toggle-link');
+  const linkStatus = document.getElementById('linkStatus');
+  const groupForm = document.getElementById('groupForm');
+  const newGroupInput = document.getElementById('newGroup');
+
+  // données locales
+  let blocs = [];
+  let allGroups = [];
+  let myGroups = [];
+  let blocGroupLinks = []; // requiert endpoint serveur /api/blocseance_groupe
+
+  // charge tout
+  async function refreshAll() {
+    try {
+      blocs = await apiGET('/api/blocs');
+      allGroups = await apiGET('/api/groups');
+      myGroups = await apiGET('/api/eleve/groups').catch(()=>[]);
+      blocGroupLinks = await apiGET('/api/blocseance_groupe').catch(()=>[]);
+    } catch (err) {
+      console.warn('⚠️ refreshAll warning:', err);
+    }
+    renderGroupsList();
+    populateSelects();
+    updateLinkUI();
+  }
+
+  function renderGroupsList() {
+    allGroupsEl.innerHTML = '';
+    allGroups.forEach(g => {
+      let inIt = myGroups.some(m => m.id === g.id); // <-- let (mutable)
+      const wrap = document.createElement('div');
+      wrap.style.display = 'flex';
+      wrap.style.gap = '8px';
+      wrap.style.alignItems = 'center';
+      wrap.style.marginBottom = '6px';
+
+      const name = document.createElement('div');
+      name.textContent = g.nom;
+      wrap.appendChild(name);
+
+      const btn = document.createElement('button');
+      btn.className = inIt ? 'btn btn--subtle' : 'btn btn--primary';
+      btn.textContent = inIt ? 'Quit' : 'Join';
+      btn.addEventListener('click', async () => {
+        try {
+          if (inIt) {
+            const res = await fetch(`/api/eleve/groups/${g.id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('quit failed');
+            myGroups = myGroups.filter(m => m.id !== g.id);
+            btn.className = 'btn btn--primary';
+            btn.textContent = 'Join';
+            inIt = false;
+          } else {
+            const res = await apiPOST('/api/eleve/groups', { nom: g.nom });
+            if (!res.ok) throw new Error('join failed');
+            myGroups.push(g);
+            btn.className = 'btn btn--subtle';
+            btn.textContent = 'Quit';
+            inIt = true;
+          }
+        } catch (err) {
+          alert('❌ Erreur: ' + err.message);
+        }
+        await refreshAll(); // re-render après action
+      });
+
+      wrap.appendChild(btn);
+      allGroupsEl.appendChild(wrap);
+    });
+  }
+
+  function populateSelects() {
+    // blocs
+    selectBlocLink.innerHTML = '';
+    const optB = document.createElement('option'); optB.value=''; optB.textContent='Sélectionnez un bloc'; optB.disabled=true; optB.selected=true;
+    selectBlocLink.appendChild(optB);
+    blocs.forEach(b => {
+      const o = document.createElement('option'); o.value = b.id; o.textContent = b.nom; selectBlocLink.appendChild(o);
+    });
+
+    // groupes (all)
+    selectGroupLink.innerHTML = '';
+    const optG = document.createElement('option'); optG.value=''; optG.textContent='Sélectionnez un groupe'; optG.disabled=true; optG.selected=true;
+    selectGroupLink.appendChild(optG);
+    allGroups.forEach(g => {
+      const o = document.createElement('option'); o.value = g.id; o.textContent = g.nom; selectGroupLink.appendChild(o);
+    });
+
+    const selectBlocSeance = document.getElementById('select-bloc');
+
+// --- Blocs pour création de séance ---
+selectBlocSeance.innerHTML = '';
+const defaultBlocOpt = document.createElement('option');
+defaultBlocOpt.value = '';
+defaultBlocOpt.textContent = 'Sélectionnez un bloc';
+defaultBlocOpt.disabled = true;
+defaultBlocOpt.selected = true;
+selectBlocSeance.appendChild(defaultBlocOpt);
+
+blocs.forEach(b => {
+  const o = document.createElement('option');
+  o.value = b.id;
+  o.textContent = b.nom;
+  selectBlocSeance.appendChild(o);
+});
+  }
+
+  function isLinked(blocId, groupeId) {
+    if (!blocGroupLinks) return false;
+    return blocGroupLinks.some(x => x.bloc_id === Number(blocId) && x.groupe_id === Number(groupeId));
+  }
+
+  function updateLinkUI() {
+    const b = selectBlocLink.value;
+    const g = selectGroupLink.value;
+    if (!b || !g) {
+      linkStatus.textContent = '';
+      btnToggleLink.textContent = 'Vérifier';
+      btnToggleLink.dataset.action = '';
+      return;
+    }
+    if (isLinked(b, g)) {
+      linkStatus.textContent = '🔗 Liés';
+      btnToggleLink.textContent = 'Unlink';
+      btnToggleLink.dataset.action = 'unlink';
+    } else {
+      linkStatus.textContent = '— non liés —';
+      btnToggleLink.textContent = 'Link';
+      btnToggleLink.dataset.action = 'link';
+    }
+  }
+
+  // bouton link/unlink
+  btnToggleLink.addEventListener('click', async () => {
+    const b = selectBlocLink.value;
+    const g = selectGroupLink.value;
+    if (!b || !g) return alert('❗ Choisis un bloc et un groupe');
+
+    const action = btnToggleLink.dataset.action;
+    try {
+      if (action === 'unlink') {
+        const res = await apiDELETE('/api/blocseance_groupe', { bloc_id: Number(b), groupe_id: Number(g) });
+        if (!res.ok) throw new Error('unlink failed');
+        alert('✅ Unlinked');
+      } else if (action === 'link') {
+        const res = await apiPOST('/api/blocseance_groupe', { bloc_id: Number(b), groupe_id: Number(g), semaine: 0 });
+        if (!res.ok) throw new Error('link failed');
+        alert('✅ Linked');
+      } else {
+        updateLinkUI();
+        return;
+      }
+      await refreshAll();
+    } catch (err) {
+      alert('❌ Erreur: ' + err.message + '\nSi endpoint manquant, ajoute-les côté serveur.');
+    }
+  });
+
+  // update link UI on select change
+  selectBlocLink.addEventListener('change', updateLinkUI);
+  selectGroupLink.addEventListener('change', updateLinkUI);
+
+  // group create form
+  groupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nom = newGroupInput.value.trim();
+    if (!nom) return alert('❌ Nom requis');
+    try {
+      const res = await apiPOST('/api/eleve/groups', { nom });
+      if (!res.ok) throw new Error('create/join failed');
+      newGroupInput.value = '';
+      alert('✅ Groupe créé et rejoint');
+      await refreshAll();
+    } catch (err) {
+      alert('❌ Erreur: ' + err.message);
+    }
+  });
+
+  // initial load
+  await refreshAll();
+
+})();
+</script>
+
+<style>
+  .tag {
+    display: inline-block;
+    background: var(--color-bg-lighter);
+    color: var(--color-contrast-higher);
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin: 2px;
+  }
+</style>

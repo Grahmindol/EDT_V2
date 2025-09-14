@@ -1,14 +1,26 @@
 [
   {
+    "eleve_id": 2,
+    "groupe_id": 10
+  },
+  {
+    "eleve_id": 2,
+    "groupe_id": 11
+  },
+  {
+    "eleve_id": 2,
+    "groupe_id": 13
+  },
+  {
     "eleve_id": 1,
     "groupe_id": 9
   },
   {
     "eleve_id": 1,
-    "groupe_id": 4
+    "groupe_id": 6
   },
   {
     "eleve_id": 1,
-    "groupe_id": 6
+    "groupe_id": 4
   }
 ]

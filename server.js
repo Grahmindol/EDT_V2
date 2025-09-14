@@ -1,4 +1,5 @@
-// app.js (JSON-backed version)
+// app.js (JSON-backed version with overrideLinks)
+const overrideLinks = require('./overrideLinks');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -11,20 +12,25 @@ const app = express();
 const port = 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 
+// --- Session ---
 app.use(session({
   secret: process.env.SESSION_SECRET || 'dev_secret',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 2 // 2h
+  }
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// --- helpers JSON store ---
+// --- Helpers JSON store ---
 async function ensureDataDir() {
-  try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-  } catch (e) { /* ignore */ }
+  try { await fs.mkdir(DATA_DIR, { recursive: true }); } catch { /* ignore */ }
 }
 async function readJson(filename) {
   const p = path.join(DATA_DIR, filename);
@@ -32,7 +38,7 @@ async function readJson(filename) {
     const txt = await fs.readFile(p, 'utf8');
     return JSON.parse(txt);
   } catch (err) {
-    // si fichier absent, on retourne tableau vide
+    if (err.code !== 'ENOENT') console.error(`⚠️ JSON corrompu : ${filename}`, err);
     return [];
   }
 }
@@ -44,61 +50,51 @@ function nextId(list) {
   if (!list || list.length === 0) return 1;
   return Math.max(...list.map(x => x.id || 0)) + 1;
 }
+function emptySchedule() {
+  return DAY_NAMES.map((name, i) => ({ id: `${i + 1}`, name, events: [] }));
+}
+function asyncHandler(fn) {
+  return (req, res, next) => { Promise.resolve(fn(req, res, next)).catch(next); };
+}
 
-// ensure data dir at startup
+// init data dir
 ensureDataDir();
 
-// ---- AUTH ----
-// Créer un nouvel utilisateur
-app.post('/auth/create', async (req, res) => {
-  const { nom, prenom, password } = req.body;
-  if (!nom || !prenom || !password) return res.status(400).send('Champs manquants');
+// --- AUTH ---
+app.post('/auth/create', asyncHandler(async (req, res) => {
+  const { prenom, password } = req.body;
+  if (!prenom || !password) return res.status(400).send('Champs manquants');
 
-  try {
-    const eleves = await readJson('eleves.json');
-    // simple check doublon
-    if (eleves.find(e => e.nom === nom && e.prenom === prenom)) {
-      return res.status(409).send('Utilisateur existe déjà');
-    }
-    const hash = await bcrypt.hash(password, 10);
-    const id = nextId(eleves);
-    eleves.push({ id, nom, prenom, password_hash: hash });
-    await writeJson('eleves.json', eleves);
-    res.sendStatus(201);
-  } catch (err) {
-    console.error('❌ Erreur lors de la création :', err);
-    res.status(500).send('Erreur serveur');
+  const eleves = await readJson('eleves.json');
+  if (eleves.find(e => e.prenom === prenom)) {
+    return res.status(409).send('Utilisateur existe déjà');
   }
-});
 
-// Connexion
-app.post('/auth/signin', async (req, res) => {
-  const { nom, prenom, password } = req.body;
-  if (!nom || !prenom || !password) return res.status(400).send('Champs manquants');
+  const hash = await bcrypt.hash(password, 10);
+  const id = nextId(eleves);
+  eleves.push({ id, prenom, password_hash: hash });
+  await writeJson('eleves.json', eleves);
+  res.sendStatus(201);
+}));
 
-  try {
-    const eleves = await readJson('eleves.json');
-    const user = eleves.find(e => e.nom === nom && e.prenom === prenom);
-    if (!user) return res.status(401).send('Utilisateur introuvable');
+app.post('/auth/signin', asyncHandler(async (req, res) => {
+  const { prenom, password } = req.body;
+  if (!prenom || !password) return res.status(400).send('Champs manquants');
 
-    const match = await bcrypt.compare(password, user.password_hash);
-    if (!match) return res.status(401).send('Mot de passe incorrect');
+  const eleves = await readJson('eleves.json');
+  const user = eleves.find(e => e.prenom === prenom);
+  if (!user) return res.status(401).send('Utilisateur introuvable');
 
-    req.session.user = { id: user.id, nom: user.nom, prenom: user.prenom };
-    res.sendStatus(200);
-  } catch (err) {
-    console.error('❌ Erreur connexion :', err);
-    res.status(500).send('Erreur serveur');
-  }
-});
+  const match = await bcrypt.compare(password, user.password_hash);
+  if (!match) return res.status(401).send('Mot de passe incorrect');
 
-// Déconnexion
+  req.session.user = { id: user.id, prenom: user.prenom };
+  res.sendStatus(200);
+}));
+
 app.post('/auth/signout', (req, res) => {
   req.session.destroy(err => {
-    if (err) {
-      console.error('❌ Erreur session destroy :', err);
-      return res.status(500).send('Erreur déconnexion');
-    }
+    if (err) return res.status(500).send('Erreur déconnexion');
     res.sendStatus(200);
   });
 });
@@ -111,141 +107,136 @@ app.get('/auth/status', (req, res) => {
   }
 });
 
-// Middleware auth
 function requireAuth(req, res, next) {
   if (!req.session.user) return res.status(401).send('Non connecté');
   next();
 }
 
-// List groups of student
-app.get('/api/eleve/groups', requireAuth, async (req, res) => {
+// --- Groups & Eleves ---
+app.get('/api/eleve/groups', requireAuth, asyncHandler(async (req, res) => {
   const { id } = req.session.user;
-  try {
-    const groupes = await readJson('groupes.json');
-    const eleve_group = await readJson('eleve_group.json');
-    const linked = eleve_group.filter(eg => eg.eleve_id === id).map(eg => {
-      return groupes.find(g => g.id === eg.groupe_id);
-    }).filter(Boolean);
-    res.json(linked);
-  } catch (err) {
-    console.error('❌ Erreur récupération groupes :', err);
-    res.status(500).send('Erreur serveur');
-  }
-});
+  const groupes = await readJson('groupes.json');
+  const eleve_group = await readJson('eleve_group.json');
+  const linked = eleve_group
+    .filter(eg => eg.eleve_id === id)
+    .map(eg => groupes.find(g => g.id === eg.groupe_id))
+    .filter(Boolean);
+  res.json(linked);
+}));
 
-// Add or create group
-app.post('/api/eleve/groups', requireAuth, async (req, res) => {
+app.post('/api/eleve/groups', requireAuth, asyncHandler(async (req, res) => {
   const { id } = req.session.user;
   const { nom } = req.body;
   if (!nom) return res.status(400).send('Nom de groupe requis');
 
-  try {
-    const groupes = await readJson('groupes.json');
-    const eleve_group = await readJson('eleve_group.json');
+  const groupes = await readJson('groupes.json');
+  const eleve_group = await readJson('eleve_group.json');
 
-    let group = groupes.find(g => g.nom === nom);
-    if (!group) {
-      const gid = nextId(groupes);
-      group = { id: gid, nom };
-      groupes.push(group);
-      await writeJson('groupes.json', groupes);
-    }
-
-    // insert ignore
-    if (!eleve_group.find(eg => eg.eleve_id === id && eg.groupe_id === group.id)) {
-      eleve_group.push({ eleve_id: id, groupe_id: group.id });
-      await writeJson('eleve_group.json', eleve_group);
-    }
-
-    res.sendStatus(200);
-  } catch (err) {
-    console.error('❌ Erreur groupe :', err);
-    res.status(500).send('Erreur serveur');
+  let group = groupes.find(g => g.nom === nom);
+  if (!group) {
+    const gid = nextId(groupes);
+    group = { id: gid, nom };
+    groupes.push(group);
+    await writeJson('groupes.json', groupes);
   }
-});
-
-app.get('/api/groups', async (req, res) => {
-  try {
-    const groupes = require('./data/groupes.json'); // ou depuis ta DB
-    res.json(groupes);
-  } catch (err) {
-    console.error("Erreur /api/groupes :", err);
-    res.status(500).json({ error: "Impossible de charger les groupes" });
+  if (!eleve_group.find(eg => eg.eleve_id === id && eg.groupe_id === group.id)) {
+    eleve_group.push({ eleve_id: id, groupe_id: group.id });
+    await writeJson('eleve_group.json', eleve_group);
   }
-});
+  res.sendStatus(200);
+}));
 
-// Blocs
-app.get('/api/blocs', requireAuth, async (req, res) => {
-  try {
-    const blocs = await readJson('blocseance.json');
-    // keep only id & nom to match old behavior
-    res.json(blocs.map(b => ({ id: b.id, nom: b.nom })));
-  } catch (err) {
-    console.error('❌ Erreur récupération blocs :', err);
-    res.status(500).send('Erreur serveur');
-  }
-});
+app.delete('/api/eleve/groups/:groupeId', requireAuth, asyncHandler(async (req, res) => {
+  const groupeId = Number(req.params.groupeId);
+  const userId = req.session.user.id;
+  let eg = await readJson('eleve_group.json');
+  eg = eg.filter(x => !(x.eleve_id === userId && x.groupe_id === groupeId));
+  await writeJson('eleve_group.json', eg);
+  res.sendStatus(200);
+}));
 
-app.post('/api/blocs', requireAuth, async (req, res) => {
+app.get('/api/groups', asyncHandler(async (req, res) => {
+  res.json(await readJson('groupes.json'));
+}));
+
+// --- Blocs ---
+app.get('/api/blocs', requireAuth, asyncHandler(async (req, res) => {
+  const blocs = await readJson('blocseance.json');
+  res.json(blocs.map(b => ({ id: b.id, nom: b.nom })));
+}));
+
+app.post('/api/blocs', requireAuth, asyncHandler(async (req, res) => {
   const { nom } = req.body;
   if (!nom) return res.status(400).send('Nom requis');
-  try {
-    const blocs = await readJson('blocseance.json');
-    const id = nextId(blocs);
-    const obj = { id, nom, prio: 0 };
-    blocs.push(obj);
-    await writeJson('blocseance.json', blocs);
-    res.json({ id, nom });
-  } catch (err) {
-    console.error('❌ Erreur création bloc :', err);
-    res.status(500).send('Erreur serveur');
+  const blocs = await readJson('blocseance.json');
+  const id = nextId(blocs);
+  const obj = { id, nom, prio: 0 };
+  blocs.push(obj);
+  await writeJson('blocseance.json', blocs);
+  res.json({ id, nom });
+}));
+
+// --- BlocSeance <-> Groupe ---
+app.get('/api/blocseance_groupe', requireAuth, asyncHandler(async (req, res) => {
+  res.json(await readJson('blocseance_groupe.json'));
+}));
+
+app.post('/api/blocseance_groupe', requireAuth, asyncHandler(async (req, res) => {
+  const bloc_id = Number(req.body.bloc_id);
+  const groupe_id = Number(req.body.groupe_id);
+  const semaine = Number(req.body.semaine || 0);
+  if (!bloc_id || !groupe_id) return res.status(400).send('bloc_id & groupe_id requis');
+
+  let bsg = await readJson('blocseance_groupe.json');
+  if (!bsg.find(x => x.bloc_id === bloc_id && x.groupe_id === groupe_id && x.semaine === semaine)) {
+    bsg.push({ bloc_id, groupe_id, semaine });
+    await writeJson('blocseance_groupe.json', bsg);
   }
-});
+  res.sendStatus(200);
+}));
 
-// Save planning (matrix) -> blocseance_groupe.json
-app.post('/api/planning', requireAuth, async (req, res) => {
-  const { groupe_id, matrix } = req.body;
-  if (!groupe_id || !Array.isArray(matrix)) {
-    return res.status(400).send('Paramètres invalides');
+app.delete('/api/blocseance_groupe', requireAuth, asyncHandler(async (req, res) => {
+  const bloc_id = Number(req.body.bloc_id);
+  const groupe_id = Number(req.body.groupe_id);
+  const semaine = req.body.semaine !== undefined ? Number(req.body.semaine) : undefined;
+  if (!bloc_id || !groupe_id) return res.status(400).send('bloc_id & groupe_id requis');
+
+  let bsg = await readJson('blocseance_groupe.json');
+  if (semaine === undefined) {
+    bsg = bsg.filter(x => !(x.bloc_id === bloc_id && x.groupe_id === groupe_id));
+  } else {
+    bsg = bsg.filter(x => !(x.bloc_id === bloc_id && x.groupe_id === groupe_id && x.semaine === semaine));
   }
+  await writeJson('blocseance_groupe.json', bsg);
+  res.sendStatus(200);
+}));
 
-  try {
-    let bsg = await readJson('blocseance_groupe.json');
-    // supprimer anciennes entrées pour ce groupe
-    bsg = bsg.filter(item => item.groupe_id !== groupe_id);
+// --- Planning ---
+app.post('/api/planning', requireAuth, asyncHandler(async (req, res) => {
+  const groupe_id = Number(req.body.groupe_id);
+  const matrix = req.body.matrix;
+  if (!groupe_id || !Array.isArray(matrix)) return res.status(400).send('Paramètres invalides');
 
-    // matrix[weekIndex][blocIndex] => week = weekIndex+1, bloc_id = blocIndex+1
-    for (let weekIndex = 0; weekIndex < matrix.length; weekIndex++) {
-      for (let blocIndex = 0; blocIndex < matrix[weekIndex].length; blocIndex++) {
-        if (matrix[weekIndex][blocIndex]) {
-          bsg.push({
-            bloc_id: blocIndex + 1,
-            groupe_id,
-            semaine: weekIndex + 1
-          });
-        }
+  let bsg = await readJson('blocseance_groupe.json');
+  bsg = bsg.filter(item => item.groupe_id !== groupe_id);
+
+  for (let weekIndex = 0; weekIndex < matrix.length; weekIndex++) {
+    for (let blocIndex = 0; blocIndex < matrix[weekIndex].length; blocIndex++) {
+      if (matrix[weekIndex][blocIndex]) {
+        bsg.push({ bloc_id: blocIndex + 1, groupe_id, semaine: weekIndex + 1 });
       }
     }
-
-    await writeJson('blocseance_groupe.json', bsg);
-    res.sendStatus(200);
-  } catch (err) {
-    console.error('❌ Erreur sauvegarde planning :', err);
-    res.status(500).send('Erreur serveur');
   }
-});
+  await writeJson('blocseance_groupe.json', bsg);
+  res.sendStatus(200);
+}));
 
-// Create seance
-app.post('/api/seances', requireAuth, async (req, res) => {
+// --- Seances ---
+app.post('/api/seances', requireAuth, asyncHandler(async (req, res) => {
   const {
-    matiere,
-    enseignant,
-    salle,
-    date_initiale,
-    date_fin,
-    recurrence_jours,
-    heure_debut,
-    heure_fin,
+    matiere, enseignant, salle,
+    date_initiale, date_fin,
+    recurrence_jours, heure_debut, heure_fin,
     bloc_id
   } = req.body;
 
@@ -253,109 +244,104 @@ app.post('/api/seances', requireAuth, async (req, res) => {
     return res.status(400).send('Champs requis manquants');
   }
 
-  try {
-    const seances = await readJson('seances.json');
-    const id = nextId(seances);
-    seances.push({
-      id,
-      matiere,
-      enseignant: enseignant || null,
-      salle: salle || null,
-      date_initiale,
-      date_fin,
-      recurrence_jours: recurrence_jours || 0,
-      heure_debut,
-      heure_fin,
-      bloc_id,
-      couleur_id: 1
-    });
-    await writeJson('seances.json', seances);
-    res.sendStatus(200);
-  } catch (err) {
-    console.error('❌ Erreur création séance :', err);
-    res.status(500).send('Erreur serveur');
-  }
-});
+  const seances = await readJson('seances.json');
+  const id = nextId(seances);
+  seances.push({
+    id,
+    matiere,
+    enseignant: enseignant || null,
+    salle: salle || null,
+    date_initiale,
+    date_fin,
+    recurrence_jours: Number(recurrence_jours) || 0,
+    heure_debut,
+    heure_fin,
+    bloc_id: Number(bloc_id),
+    couleur_id: 1
+  });
+  await writeJson('seances.json', seances);
+  res.sendStatus(200);
+}));
 
 // --- Schedule endpoint ---
 function daysOfWeekIndex(date) {
-  return (date.getDay() + 6) % 7; // Lundi = 0
+  return (date.getDay() + 6) % 7;
 }
 const DAY_NAMES = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 
-app.get('/api/schedule', async (req, res) => {
-  const week = parseInt(req.query.week, 10) || getISOWeek(new Date());
+app.get('/api/schedule', asyncHandler(async (req, res) => {
+  const week = Number(req.query.week) || getISOWeek(new Date());
   const user = req.session.user;
-  if (!user) return res.json(DAY_NAMES.map((name, i) => ({ id: `${i + 1}`, name, events: [] })));
+  if (!user) return res.json(emptySchedule());
 
-  try {
-    const eleve_group = await readJson('eleve_group.json');
-    const groupes = eleve_group.filter(eg => eg.eleve_id === user.id).map(eg => eg.groupe_id);
-    if (!groupes.length) return res.json(DAY_NAMES.map((name, i) => ({ id: `${i + 1}`, name, events: [] })));
+  const eleve_group = await readJson('eleve_group.json');
+  const groupes = eleve_group.filter(eg => eg.eleve_id === user.id).map(eg => eg.groupe_id);
+  if (!groupes.length) return res.json(emptySchedule());
 
-    const blocseance_groupe = await readJson('blocseance_groupe.json');
-    const blocseance = await readJson('blocseance.json');
+  const blocseance_groupe = await readJson('blocseance_groupe.json');
+  const blocseance = await readJson('blocseance.json');
 
-    // blocs actifs pour ce groupe et semaine (0 = toutes les semaines)
-    const blocGroupes = blocseance_groupe
-      .filter(b => groupes.includes(b.groupe_id) && (b.semaine === 0 || b.semaine === week))
-      .map(b => b.bloc_id);
+  const blocGroupes = [];
 
-    if (!blocGroupes.length) return res.json(DAY_NAMES.map((name, i) => ({ id: `${i + 1}`, name, events: [] })));
-
-    // récupérer prio des blocs
-    const blocMap = blocseance.reduce((acc, b) => { acc[b.id] = b; return acc; }, {});
-    const blocIds = [...new Set(blocGroupes)];
-
-    const seances = await readJson('seances.json');
-    const selectedSeances = seances.filter(s => blocIds.includes(s.bloc_id));
-
-    const eventsByDay = Array(7).fill(null).map((_, i) => ({
-      id: `${i + 1}`,
-      name: DAY_NAMES[i],
-      events: []
-    }));
-
-    for (const s of selectedSeances) {
-      const debut = parseISO(s.date_initiale);
-      const fin = parseISO(s.date_fin);
-      const interval = s.recurrence_jours || 0;
-
-      let current = new Date(debut);
-      while (!isAfter(current, fin)) {
-        const currentWeek = getISOWeek(current);
-        if (currentWeek === week) {
-          const jour = daysOfWeekIndex(current);
-          const startTime = s.heure_debut;
-          const endTime = s.heure_fin;
-          const duration = `PT${computeDuration(startTime, endTime)}`;
-          eventsByDay[jour].events.push({
-            id: s.id,
-            name: s.matiere,
-            enseignant: s.enseignant,
-            salle: s.salle,
-            datetime: `${startTime}${duration}`,
-            couleur_id: s.couleur_id,
-            bloc_prio: (blocMap[s.bloc_id] && blocMap[s.bloc_id].prio) || 0
-          });
-        }
-        if (interval === 0) break;
-        current = addDays(current, interval);
+  // Appliquer règles de base + override
+  for (const bloc of blocseance) {
+    for (const gId of groupes) {
+      const base = blocseance_groupe.some(b =>
+        b.bloc_id === bloc.id && b.groupe_id === gId && (b.semaine === 0 || b.semaine === week)
+      );
+      const override = overrideLinks(bloc, { id: gId }, week);
+      if (override === true || (base && override !== false)) {
+        blocGroupes.push(bloc.id);
       }
     }
-
-    for (const day of eventsByDay) {
-      day.events.sort((a, b) => a.datetime.localeCompare(b.datetime));
-    }
-
-    res.json(eventsByDay);
-  } catch (err) {
-    console.error("❌ Erreur /api/schedule :", err);
-    res.status(500).send("Erreur serveur");
   }
-});
 
-// computeDuration identique
+  if (!blocGroupes.length) return res.json(emptySchedule());
+
+  const blocMap = blocseance.reduce((acc, b) => { acc[b.id] = b; return acc; }, {});
+  const blocIds = [...new Set(blocGroupes)];
+  const seances = await readJson('seances.json');
+  const selectedSeances = seances.filter(s => blocIds.includes(s.bloc_id));
+
+  const eventsByDay = Array(7).fill(null).map((_, i) => ({
+    id: `${i + 1}`,
+    name: DAY_NAMES[i],
+    events: []
+  }));
+
+  for (const s of selectedSeances) {
+    const debut = parseISO(s.date_initiale);
+    const fin = parseISO(s.date_fin);
+    const interval = s.recurrence_jours || 0;
+    let current = new Date(debut);
+
+    while (!isAfter(current, fin)) {
+      const currentWeek = getISOWeek(current);
+      if (currentWeek === week) {
+        const jour = daysOfWeekIndex(current);
+        const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
+        eventsByDay[jour].events.push({
+          id: s.id,
+          name: s.matiere,
+          enseignant: s.enseignant,
+          salle: s.salle,
+          datetime: `${s.heure_debut}${duration}`,
+          couleur_id: s.couleur_id,
+          bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
+        });
+      }
+      if (interval === 0) break;
+      current = addDays(current, interval);
+    }
+  }
+
+  for (const day of eventsByDay) {
+    day.events.sort((a, b) => a.datetime.localeCompare(b.datetime));
+  }
+
+  res.json(eventsByDay);
+}));
+
 function computeDuration(start, end) {
   const [sh, sm] = start.split(':').map(Number);
   const [eh, em] = end.split(':').map(Number);
@@ -366,5 +352,5 @@ function computeDuration(start, end) {
 }
 
 app.listen(port, () => {
-  console.log(`🚀 Serveur (JSON) lancé sur http://localhost:${port}`);
+  console.log(`🚀 Serveur lancé sur http://localhost:${port}`);
 });

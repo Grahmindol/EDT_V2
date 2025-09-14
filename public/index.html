@@ -36,7 +36,7 @@
     }
   </style>
   <script>
-    document.documentElement.style.setProperty('--w-schedule-row-height', `${window.innerHeight / 14}px`);
+    document.documentElement.style.setProperty('--w-schedule-row-height', `${window.innerHeight / 15}px`);
   </script>
 </head>
 
@@ -134,7 +134,8 @@
       </div>
 
       <button class="btn btn--subtle header__trigger js-header__trigger" aria-label="Toggle menu" aria-expanded="false"
-        aria-controls="header-nav">
+        aria-controls="header-nav"
+        style="box-shadow: none; background-color: transparent !important;outline: none;">
         <i class="header__trigger-icon" aria-hidden="true"></i>
       </button>
 
@@ -142,8 +143,8 @@
         <div class="header__nav-inner">
           <div class="header__label">Main menu</div>
           <ul class="header__list">
-            <li class="header__item"><a href="#0" class="header__link">Paramètre </a></li>
-            <li class="header__item"><a href="./html/edit.html" target="modal" class="header__link">Édition</a></li>
+            <li class="header__item"><a href="#0" class="header__link">Paramètre Couleur (WIP)</a></li>
+            <li class="header__item"><a href="./html/edit.html" target="modal" class="header__link">Groupes Édition</a></li>
             <li class="header__item header__item--divider" aria-hidden="true"></li>
             <li class="header__item"><a href="./html/sign_out.html" target="modal" class="header__link">Se
                 Déconnecter</a></li>
@@ -155,7 +156,7 @@
   <div class="container max-width-xl padding-y-sm js-cd-demo">
     <!-- Component HTML -->
     <div class="w-schedule js-tabs js-w-schedule tabs--no-interaction swiper" data-hide-panel-class="display@md"
-      data-w-schedule-timeline="08:00-19:00" style="overflow: hidden; ">
+      data-w-schedule-timeline="08:00-20:00" style="overflow: hidden; ">
       <!-- 👇 events -->
       <div class="w-schedule__days js-tabs__panels swiper-wrapper" , style="width: fit-content;">
         <!-- dynamically generated -->
@@ -233,16 +234,27 @@
         weekCache.set(week, data);
       }
 
-      const dayName = date.toLocaleDateString('fr-FR', { weekday: 'long' });
+      const dayName = date.toLocaleDateString("fr-FR", { weekday: "long" });
+      const dayNum = date.getDate();
       const days = weekCache.get(week);
       const found = days.find(d => d.name.toLowerCase() === dayName.toLowerCase());
 
-      return found || {
+      if (found) {
+        // 🔹 on modifie directement la propriété name
+        return {
+          ...found,
+          name: `${found.name} ${dayNum}`
+        };
+      }
+
+      // 🔹 fallback : name contient déjà le numéro
+      return {
         id: `${date.toISOString()}`,
-        name: dayName,
+        name: `${dayName} ${dayNum}`,
         events: []
       };
     }
+
   </script>
 
   <script>

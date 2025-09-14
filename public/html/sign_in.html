@@ -2,7 +2,7 @@
   <img src="./img/signin-image.png" alt="Connexion image" />
 </a>
 
-<div class="w-schedule-modal__body padding-md width-70%@md height-100%@md">
+<div class="w-schedule-modal__body padding-md width-70%@md height-75%">
   <div class="container max-width-xs padding-y-lg">
     <form id="sign-in-form">
       <fieldset class="margin-bottom-md">
@@ -10,10 +10,6 @@
 
         <div class="margin-bottom-sm">
           <div class="grid gap-sm">
-            <div class="col-6@md">
-              <label class="form-label" for="input-nom">Nom</label>
-              <input class="form-control width-100%" type="text" name="nom" id="input-nom" required>
-            </div>
 
             <div class="col-6@md">
               <label class="form-label" for="input-prenom">Prénom</label>
@@ -27,6 +23,13 @@
           <input class="form-control width-100%" type="password" name="password" id="input-password" required>
         </div>
       </fieldset>
+
+      <div class="margin-bottom-md">
+  <p style="font-size: 0.85rem; color: #888;">
+    ⚠️ En utilisant un compte, vous vous engagez à vérifier l’exactitude des informations saisies. 
+    Rien n’est sécurisé et je décline toute responsabilité quant à l’usage des données ou du contenu généré via ce site.
+  </p>
+</div>
 
       <div class="text-right">
         <button class="btn btn--primary" type="submit">Se connecter</button>

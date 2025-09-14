@@ -7,5 +7,30 @@
   { "id": 6, "nom": "ITA" },
   { "id": 7, "nom": "ESP" },
   { "id": 8, "nom": "ALMD" },
-  { "id": 9, "nom": "MPI_STAR" }
+  { "id": 9, "nom": "MPI_STAR" },
+
+  { "id": 10, "nom": "MP2I" },
+  { "id": 11, "nom": "MP2I_G1" },
+  { "id": 12, "nom": "MP2I_G2" },
+
+  { "id": 13, "nom": "MP2I_G1_ANG" },
+  { "id": 14, "nom": "MP2I_G2_ANG" },
+
+  { "id": -101, "nom": "MP2I_G1_KOLLE" },
+  { "id": -102, "nom": "MP2I_G2_KOLLE" },
+  { "id": -103, "nom": "MP2I_G3_KOLLE" },
+  { "id": -104, "nom": "MP2I_G4_KOLLE" },
+  { "id": -105, "nom": "MP2I_G5_KOLLE" },
+  { "id": -106, "nom": "MP2I_G6_KOLLE" },
+  { "id": -107, "nom": "MP2I_G7_KOLLE" },
+  { "id": -108, "nom": "MP2I_G8_KOLLE" },
+  { "id": -109, "nom": "MP2I_G9_KOLLE" },
+  { "id": -110, "nom": "MP2I_G10_KOLLE" },
+  { "id": -111, "nom": "MP2I_G11_KOLLE" },
+  { "id": -112, "nom": "MP2I_G12_KOLLE" },
+  { "id": -113, "nom": "MP2I_G13_KOLLE" },
+  { "id": -114, "nom": "MP2I_G14_KOLLE" },
+  { "id": -115, "nom": "MP2I_G15_KOLLE" },
+  { "id": -116, "nom": "MP2I_G16_KOLLE" }
+
 ]

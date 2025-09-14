@@ -1,52 +1,44 @@
 [
-  {
-    "id": 1,
-    "nom": "HEPDO_MPI",
-    "prio": 0
-  },
-  {
-    "id": 2,
-    "nom": "HEPDO_MPI_STAR",
-    "prio": 1
-  },
-  {
-    "id": 3,
-    "nom": "HEPDO_MPI_NON_STAR",
-    "prio": 1
-  },
-  {
-    "id": 4,
-    "nom": "HEPDO_MPI_INFO_1",
-    "prio": 1
-  },
-  {
-    "id": 5,
-    "nom": "HEPDO_MPI_INFO_2",
-    "prio": 1
-  },
-  {
-    "id": 6,
-    "nom": "HEPDO_MPI_TP_1",
-    "prio": 1
-  },
-  {
-    "id": 7,
-    "nom": "HEPDO_MPI_TP_2",
-    "prio": 1
-  },
-  {
-    "id": 8,
-    "nom": "HEPDO_ITA",
-    "prio": 1
-  },
-  {
-    "id": 9,
-    "nom": "HEPDO_ESP",
-    "prio": 1
-  },
-  {
-    "id": 10,
-    "nom": "HEPDO_ALL",
-    "prio": 1
-  }
+  { "id": 1, "nom": "HEPDO_MPI", "prio": 0},
+  { "id": 2, "nom": "HEPDO_MPI_STAR", "prio": 1},
+  { "id": 3, "nom": "HEPDO_MPI_NON_STAR", "prio": 1},
+  { "id": 4, "nom": "HEPDO_MPI_INFO_1", "prio": 1},
+  { "id": 5, "nom": "HEPDO_MPI_INFO_2", "prio": 1},
+  { "id": 6, "nom": "HEPDO_MPI_TP_1", "prio": 1},
+  { "id": 7, "nom": "HEPDO_MPI_TP_2", "prio": 1},
+
+  { "id": 10, "nom": "HEPDO_MP2I" , "prio": 0},
+  { "id": 11, "nom": "HEPDO_MP2I_G1" , "prio": 0},
+  { "id": 12, "nom": "HEPDO_MP2I_G2" , "prio": 0},
+
+  { "id": 13, "nom": "HEPDO_MP2I_G1_ANG" ,"prio": 0},
+  { "id": 14, "nom": "HEPDO_MP2I_G2_ANG" ,"prio": 0},
+
+  { "id": 15, "nom": "HEPDO_MP2I_G1_INFO" ,"prio": 0},
+  { "id": 16, "nom": "HEPDO_MP2I_G2_INFO" ,"prio": 0},
+  { "id": 17, "nom": "HEPDO_MP2I_G3_INFO" ,"prio": 0},
+
+  
+  { "id": 20, "nom": "HEPDO_ITA", "prio": 1},
+  { "id": 21, "nom": "HEPDO_ESP", "prio": 1},
+  { "id": 22, "nom": "HEPDO_ALL", "prio": 1},
+
+
+  { "id": -101, "nom": "KOLLER_C1",  "prio": 2 },
+  { "id": -102, "nom": "KOLLER_C2",  "prio": 2 },
+  { "id": -103, "nom": "KOLLER_C3",  "prio": 2 },
+  { "id": -104, "nom": "KOLLER_C4",  "prio": 2 },
+  { "id": -105, "nom": "KOLLER_C5",  "prio": 2 },
+  { "id": -106, "nom": "KOLLER_C6",  "prio": 2 },
+  { "id": -107, "nom": "KOLLER_C7",  "prio": 2 },
+  { "id": -108, "nom": "KOLLER_C8",  "prio": 2 },
+  { "id": -109, "nom": "KOLLER_C9",  "prio": 2 },
+  { "id": -110, "nom": "KOLLER_C10", "prio": 2 },
+  { "id": -111, "nom": "KOLLER_C11", "prio": 2 },
+  { "id": -112, "nom": "KOLLER_C12", "prio": 2 },
+  { "id": -113, "nom": "KOLLER_C13", "prio": 2 },
+  { "id": -114, "nom": "KOLLER_C14", "prio": 2 },
+  { "id": -115, "nom": "KOLLER_C15", "prio": 2 },
+  { "id": -116, "nom": "KOLLER_C16", "prio": 2 }
+
 ]

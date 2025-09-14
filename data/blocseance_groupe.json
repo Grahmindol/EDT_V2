@@ -6,8 +6,16 @@
   { "bloc_id": 4, "groupe_id": 2, "semaine": 0 },   
   { "bloc_id": 5, "groupe_id": 3, "semaine": 0 },   
   { "bloc_id": 6, "groupe_id": 4, "semaine": 0 },   
-  { "bloc_id": 7, "groupe_id": 5, "semaine": 0 },   
-  { "bloc_id": 8, "groupe_id": 6, "semaine": 0 },   
-  { "bloc_id": 9, "groupe_id": 7, "semaine": 0 },   
-  { "bloc_id": 10, "groupe_id": 8, "semaine": 0 }   
+  { "bloc_id": 7, "groupe_id": 5, "semaine": 0 },
+  
+  { "bloc_id": 10, "groupe_id": 10, "semaine": 0 },
+  { "bloc_id": 11, "groupe_id": 11, "semaine": 0 },   
+  { "bloc_id": 12, "groupe_id": 12, "semaine": 0 },
+
+  { "bloc_id": 13, "groupe_id": 13, "semaine": 0 },
+  { "bloc_id": 14, "groupe_id": 14, "semaine": 0 },  
+
+  { "bloc_id": 20, "groupe_id": 6, "semaine": 0 },   
+  { "bloc_id": 21, "groupe_id": 7, "semaine": 0 },   
+  { "bloc_id": 22, "groupe_id": 8, "semaine": 0 }   
 ]

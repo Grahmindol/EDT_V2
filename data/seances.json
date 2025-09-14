@@ -315,7 +315,7 @@
     "recurrence_jours": 7,
     "heure_debut": "17:00",
     "heure_fin": "19:00",
-    "bloc_id": 8,
+    "bloc_id": 20,
     "couleur_id": 4
   },{
     "id": 25,
@@ -327,7 +327,7 @@
     "recurrence_jours": 7,
     "heure_debut": "17:00",
     "heure_fin": "19:00",
-    "bloc_id": 9,
+    "bloc_id": 21,
     "couleur_id": 4
   },{
     "id": 26,
@@ -339,7 +339,7 @@
     "recurrence_jours": 7,
     "heure_debut": "17:00",
     "heure_fin": "19:00",
-    "bloc_id": 10,
+    "bloc_id": 22,
     "couleur_id": 4
   },
 
@@ -381,6 +381,852 @@
     "heure_fin": "15:00",
     "bloc_id": 1,
     "couleur_id": 3
-  }
+  },
+
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    "id": 30,
+    "matiere": "Info",
+    "enseignant": "Vantroys",
+    "salle": "20",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "08:00",
+    "heure_fin": "10:00",
+    "bloc_id": 10,
+    "couleur_id": 3
+  },{
+    "id": 31,
+    "matiere": "TD SI",
+    "enseignant": "Cornette",
+    "salle": "36",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "10:00",
+    "heure_fin": "11:00",
+    "bloc_id": 11,
+    "couleur_id": 4
+  },{
+    "id": 32,
+    "matiere": "TD SI",
+    "enseignant": "Cornette",
+    "salle": "36",
+    "date_initiale": "2025-09-08",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "11:00",
+    "heure_fin": "12:00",
+    "bloc_id": 11,
+    "couleur_id": 4
+  },{
+    "id": 33,
+    "matiere": "TD Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "11:00",
+    "heure_fin": "12:00",
+    "bloc_id": 11,
+    "couleur_id": 2
+  },{
+    "id": 34,
+    "matiere": "TD Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-08",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "10:00",
+    "heure_fin": "11:00",
+    "bloc_id": 11,
+    "couleur_id": 2
+  },{
+    "id": 35,
+    "matiere": "Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "13:00",
+    "heure_fin": "15:00",
+    "bloc_id": 10,
+    "couleur_id": 2
+  },{
+    "id": 36,
+    "matiere": "Français",
+    "enseignant": "Capitani",
+    "salle": "20",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "08:00",
+    "heure_fin": "10:00",
+    "bloc_id": 10,
+    "couleur_id": 4
+  },{
+    "id": 37,
+    "matiere": "Anglais",
+    "enseignant": "Bocquillon",
+    "salle": "20",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "10:00",
+    "heure_fin": "11:00",
+    "bloc_id": 10,
+    "couleur_id": 4
+  },{
+    "id": 38,
+    "matiere": "Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "11:00",
+    "heure_fin": "12:00",
+    "bloc_id": 10,
+    "couleur_id": 1
+  },{
+    "id": 39,
+    "matiere": "Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "13:00",
+    "heure_fin": "15:00",
+    "bloc_id": 10,
+    "couleur_id": 1
+  },{
+    "id": 40,
+    "matiere": "Anglais",
+    "enseignant": "Bocquillon",
+    "salle": "20",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "17:00",
+    "bloc_id": 13,
+    "couleur_id": 4
+  },{
+    "id": 41,
+    "matiere": "Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-03",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "08:00",
+    "heure_fin": "10:00",
+    "bloc_id": 10,
+    "couleur_id": 2
+  },{
+    "id": 42,
+    "matiere": "Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-03",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "10:00",
+    "heure_fin": "12:00",
+    "bloc_id": 10,
+    "couleur_id": 1
+  },{
+    "id": 43,
+    "matiere": "Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-03",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "13:00",
+    "heure_fin": "15:00",
+    "bloc_id": 10,
+    "couleur_id": 1
+  },{
+    "id": 44,
+    "matiere": "Info",
+    "enseignant": "Vantroys",
+    "salle": "20",
+    "date_initiale": "2025-09-03",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "17:00",
+    "bloc_id": 10,
+    "couleur_id": 3
+  },{
+    "id": 45,
+    "matiere": "Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "08:00",
+    "heure_fin": "11:00",
+    "bloc_id": 10,
+    "couleur_id": 1
+  },{
+    "id": 46,
+    "matiere": "SI",
+    "enseignant": "Cornette",
+    "salle": "20",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "11:00",
+    "heure_fin": "12:00",
+    "bloc_id": 10,
+    "couleur_id": 4
+  },{
+    "id": 47,
+    "matiere": "Anglais",
+    "enseignant": "Capitani",
+    "salle": "20",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "16:00",
+    "bloc_id": 14,
+    "couleur_id": 4
+  },{
+    "id": 48,
+    "matiere": "Info",
+    "enseignant": "Vantroys",
+    "salle": "37",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "13:00",
+    "heure_fin": "15:00",
+    "bloc_id": 15,
+    "couleur_id": 3
+  },{
+    "id": 49,
+    "matiere": "Info",
+    "enseignant": "Vantroys",
+    "salle": "37",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "17:00",
+    "bloc_id": 16,
+    "couleur_id": 3
+  },{
+    "id": 50,
+    "matiere": "Info",
+    "enseignant": "Vantroys",
+    "salle": "37",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 7,
+    "heure_debut": "17:00",
+    "heure_fin": "19:00",
+    "bloc_id": 17,
+    "couleur_id": 3
+  },{
+    "id": 51,
+    "matiere": "TD Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "08:00",
+    "heure_fin": "10:00",
+    "bloc_id": 11,
+    "couleur_id": 1
+  },{
+    "id": 52,
+    "matiere": "TP Physique",
+    "enseignant": "Bouchet",
+    "salle": "Lab",
+    "date_initiale": "2025-09-12",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "08:00",
+    "heure_fin": "10:00",
+    "bloc_id": 11,
+    "couleur_id": 2
+  },{
+    "id": 53,
+    "matiere": "TP Physique",
+    "enseignant": "Bouchet",
+    "salle": "Lab",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "10:00",
+    "heure_fin": "12:00",
+    "bloc_id": 11,
+    "couleur_id": 2
+  },{
+    "id": 54,
+    "matiere": "TD Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-12",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "10:00",
+    "heure_fin": "12:00",
+    "bloc_id": 11,
+    "couleur_id": 1
+  },{
+    "id": 55,
+    "matiere": "TD Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "13:00",
+    "heure_fin": "14:00",
+    "bloc_id": 11,
+    "couleur_id": 2
+  },{
+    "id": 56,
+    "matiere": "TD Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-12",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "14:00",
+    "heure_fin": "15:00",
+    "bloc_id": 11,
+    "couleur_id": 2
+  },{
+    "id": 57,
+    "matiere": "TD Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-12",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "08:00",
+    "heure_fin": "10:00",
+    "bloc_id": 12,
+    "couleur_id": 1
+  },{
+    "id": 58,
+    "matiere": "TP Physique",
+    "enseignant": "Bouchet",
+    "salle": "Lab",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "08:00",
+    "heure_fin": "10:00",
+    "bloc_id": 12,
+    "couleur_id": 2
+  },{
+    "id": 59,
+    "matiere": "TP Physique",
+    "enseignant": "Bouchet",
+    "salle": "Lab",
+    "date_initiale": "2025-09-12",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "10:00",
+    "heure_fin": "12:00",
+    "bloc_id": 12,
+    "couleur_id": 2
+  },{
+    "id": 60,
+    "matiere": "TD Maths",
+    "enseignant": "Aufranc",
+    "salle": "20",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "10:00",
+    "heure_fin": "12:00",
+    "bloc_id": 12,
+    "couleur_id": 1
+  },{
+    "id": 61,
+    "matiere": "TD Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-12",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "13:00",
+    "heure_fin": "14:00",
+    "bloc_id": 12,
+    "couleur_id": 2
+  },{
+    "id": 62,
+    "matiere": "TD Physique",
+    "enseignant": "Bouchet",
+    "salle": "20",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-03",
+    "recurrence_jours": 14,
+    "heure_debut": "14:00",
+    "heure_fin": "15:00",
+    "bloc_id": 12,
+    "couleur_id": 2
+  },
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  {
+    "id": 63,
+    "matiere": "Kholle Maths",
+    "enseignant": "Aufranc",
+    "salle": "?",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "13:00",
+    "heure_fin": "13:45",
+    "bloc_id": -101,
+    "couleur_id": 1
+  },{
+    "id": 64,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Healy",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "18:00",
+    "heure_fin": "19:00",
+    "bloc_id": -101,
+    "couleur_id": 4
+  },{
+    "id": 65,
+    "matiere": "Kholle Maths",
+    "enseignant": "Broizat",
+    "salle": "?",
+    "date_initiale": "2025-09-03",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "17:15",
+    "heure_fin": "18:00",
+    "bloc_id": -102,
+    "couleur_id": 1
+  },{
+    "id": 66,
+    "matiere": "Kholle Physique",
+    "enseignant": "Kirstetter",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "17:00",
+    "bloc_id": -102,
+    "couleur_id": 2
+  },{
+    "id": 67,
+    "matiere": "Kholle Français",
+    "enseignant": "Capitani",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "16:00",
+    "bloc_id": -102,
+    "couleur_id": 4
+  },{
+    "id": 68,
+    "matiere": "Kholle Maths",
+    "enseignant": "Dubau",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "15:45",
+    "bloc_id": -103,
+    "couleur_id": 1
+  },{
+    "id": 69,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Sebah",
+    "salle": "?",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "17:00",
+    "bloc_id": -103,
+    "couleur_id": 34
+  },{
+    "id": 70,
+    "matiere": "Kholle Maths",
+    "enseignant": "Sebah",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "16:45",
+    "bloc_id": -104,
+    "couleur_id": 1
+  },{
+    "id": 71,
+    "matiere": "Kholle Physique",
+    "enseignant": "Tellier",
+    "salle": "?",
+    "date_initiale": "2025-09-03",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "18:00",
+    "heure_fin": "19:00",
+    "bloc_id": -104,
+    "couleur_id": 2
+  },{
+    "id": 72,
+    "matiere": "Kholle Maths",
+    "enseignant": "Royer",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:45",
+    "heure_fin": "16:30",
+    "bloc_id": -105,
+    "couleur_id": 1
+  },{
+    "id": 73,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Healy",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "17:00",
+    "heure_fin": "18:00",
+    "bloc_id": -105,
+    "couleur_id": 4
+  },{
+    "id": 74,
+    "matiere": "Kholle Maths",
+    "enseignant": "Charvet",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "16:45",
+    "bloc_id": -106,
+    "couleur_id": 1
+  },{
+    "id": 75,
+    "matiere": "Kholle Physique",
+    "enseignant": "Malaterre",
+    "salle": "?",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "18:00",
+    "heure_fin": "19:00",
+    "bloc_id": -106,
+    "couleur_id": 2
+  },{
+    "id": 76,
+    "matiere": "Kholle Maths",
+    "enseignant": "Ghiberti",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "17:45",
+    "heure_fin": "18:30",
+    "bloc_id": -107,
+    "couleur_id": 1
+  },{
+    "id": 77,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Dexmier",
+    "salle": "?",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "16:00",
+    "bloc_id": -107,
+    "couleur_id": 4
+  },{
+    "id": 78,
+    "matiere": "Kholle Maths",
+    "enseignant": "Dubau",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:45",
+    "heure_fin": "16:30",
+    "bloc_id": -108,
+    "couleur_id": 1
+  },{
+    "id": 79,
+    "matiere": "Kholle Physique",
+    "enseignant": "Bouchet",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "17:00",
+    "bloc_id": -108,
+    "couleur_id": 2
+  },{
+    "id": 80,
+    "matiere": "Kholle Maths",
+    "enseignant": "Aufranc",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "15:45",
+    "bloc_id": -109,
+    "couleur_id": 1
+  },{
+    "id": 81,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Bocquillon",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "18:00",
+    "heure_fin": "19:00",
+    "bloc_id": -109,
+    "couleur_id": 4
+  },{
+    "id": 82,
+    "matiere": "Kholle Maths",
+    "enseignant": "Pietri",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "16:45",
+    "bloc_id": -110,
+    "couleur_id": 1
+  },{
+    "id": 83,
+    "matiere": "Kholle Physique",
+    "enseignant": "Kirstetter",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "16:00",
+    "bloc_id": -110,
+    "couleur_id": 2
+  },{
+    "id": 84,
+    "matiere": "Kholle Maths",
+    "enseignant": "Dubau",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "17:15",
+    "heure_fin": "18:00",
+    "bloc_id": -111,
+    "couleur_id": 1
+  },{
+    "id": 85,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Sebah",
+    "salle": "?",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "16:00",
+    "bloc_id": -111,
+    "couleur_id": 4
+  },{
+    "id": 86,
+    "matiere": "Kholle Info",
+    "enseignant": "Vantroys",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "16:00",
+    "bloc_id": -111,
+    "couleur_id": 3
+  },{
+    "id": 87,
+    "matiere": "Kholle Maths",
+    "enseignant": "Ghiberti",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "17:00",
+    "heure_fin": "17:45",
+    "bloc_id": -112,
+    "couleur_id": 1
+  },{
+    "id": 88,
+    "matiere": "Kholle Physique",
+    "enseignant": "Tellier",
+    "salle": "?",
+    "date_initiale": "2025-09-03",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "17:00",
+    "heure_fin": "18:00",
+    "bloc_id": -112,
+    "couleur_id": 2
+  },{
+    "id": 89,
+    "matiere": "Kholle Maths",
+    "enseignant": "Ressigué",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "18:00",
+    "heure_fin": "178:45",
+    "bloc_id": -113,
+    "couleur_id": 1
+  },{
+    "id": 90,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Sheeley-Fuller",
+    "salle": "?",
+    "date_initiale": "2025-09-04",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "14:00",
+    "heure_fin": "15:00",
+    "bloc_id": -113,
+    "couleur_id": 4
+  },{
+    "id": 91,
+    "matiere": "Kholle Maths",
+    "enseignant": "Charvet",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:00",
+    "heure_fin": "16:45",
+    "bloc_id": -114,
+    "couleur_id": 1
+  },{
+    "id": 92,
+    "matiere": "Kholle Physique",
+    "enseignant": "Malaterre",
+    "salle": "?",
+    "date_initiale": "2025-09-05",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "17:00",
+    "heure_fin": "18:00",
+    "bloc_id": -114,
+    "couleur_id": 2
+  },{
+    "id": 93,
+    "matiere": "Kholle Français",
+    "enseignant": "Capitani",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:30",
+    "heure_fin": "17:30",
+    "bloc_id": -114,
+    "couleur_id": 4
+  },{
+    "id": 94,
+    "matiere": "Kholle Maths",
+    "enseignant": "Royer",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "15:45",
+    "bloc_id": -115,
+    "couleur_id": 1
+  },{
+    "id": 95,
+    "matiere": "Kholle Anglais",
+    "enseignant": "Ceccarelli",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "18:00",
+    "heure_fin": "19:00",
+    "bloc_id": -115,
+    "couleur_id": 4
+  },{
+    "id": 96,
+    "matiere": "Kholle Maths",
+    "enseignant": "Dubau",
+    "salle": "?",
+    "date_initiale": "2025-09-02",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "16:30",
+    "heure_fin": "17:15",
+    "bloc_id": -116,
+    "couleur_id": 1
+  },{
+    "id": 97,
+    "matiere": "Kholle Physique",
+    "enseignant": "Bouchet",
+    "salle": "?",
+    "date_initiale": "2025-09-01",
+    "date_fin": "2026-07-04",
+    "recurrence_jours": 7,
+    "heure_debut": "15:00",
+    "heure_fin": "16:00",
+    "bloc_id": -116,
+    "couleur_id": 2
+  }
 ]

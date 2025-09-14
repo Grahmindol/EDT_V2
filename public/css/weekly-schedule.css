@@ -456,6 +456,7 @@ Usage: codyhouse.co/license
 }
 
 .w-schedule__event {
+    overflow-y: auto; 
     color: inherit;
     text-decoration: none;
     display: block;
@@ -466,6 +467,25 @@ Usage: codyhouse.co/license
     border-left-style: solid;
     box-shadow: var(--shadow-sm);
     transition: 0.3s
+}
+
+/* Scrollbar styling */
+.w-schedule__event::-webkit-scrollbar {
+  width: 6px;             /* fine */
+}
+
+.w-schedule__event::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.3);  /* semi-transparent */
+  border-radius: 3px;            /* arrondi */
+}
+
+.w-schedule__event::-webkit-scrollbar-track {
+  background: transparent;       /* rien derrière */
+}
+
+.w-schedule__event > div {
+  max-height: 100%;      /* prend toute la hauteur de l’event */
+       /* scroll vertical si le texte dépasse */
 }
 
 .w-schedule__event:hover {
