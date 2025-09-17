@@ -8,6 +8,14 @@ const { parseISO, getISOWeek, addDays, isAfter } = require('date-fns');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
+const crypto = require('crypto');
+const PRENOM_SECRET = process.env.PRENOM_SECRET || 'change_this_prenom_secret';
+function prenomHash(prenom) {
+  return crypto.createHmac('sha256', PRENOM_SECRET)
+               .update(prenom.trim().toLowerCase())
+               .digest('hex');
+}
+
 const app = express();
 const port = 3000;
 const DATA_DIR = path.join(__dirname, 'data');
@@ -66,13 +74,14 @@ app.post('/auth/create', asyncHandler(async (req, res) => {
   if (!prenom || !password) return res.status(400).send('Champs manquants');
 
   const eleves = await readJson('eleves.json');
-  if (eleves.find(e => e.prenom === prenom)) {
+  const pHash = prenomHash(prenom);
+  if (eleves.find(e => e.prenom_hash === pHash)) {
     return res.status(409).send('Utilisateur existe déjà');
   }
 
   const hash = await bcrypt.hash(password, 10);
   const id = nextId(eleves);
-  eleves.push({ id, prenom, password_hash: hash });
+  eleves.push({ id, prenom_hash: pHash, password_hash: hash });
   await writeJson('eleves.json', eleves);
   res.sendStatus(201);
 }));
@@ -82,13 +91,14 @@ app.post('/auth/signin', asyncHandler(async (req, res) => {
   if (!prenom || !password) return res.status(400).send('Champs manquants');
 
   const eleves = await readJson('eleves.json');
-  const user = eleves.find(e => e.prenom === prenom);
+  const pHash = prenomHash(prenom);
+  const user = eleves.find(e => e.prenom_hash === pHash);
   if (!user) return res.status(401).send('Utilisateur introuvable');
 
   const match = await bcrypt.compare(password, user.password_hash);
   if (!match) return res.status(401).send('Mot de passe incorrect');
 
-  req.session.user = { id: user.id, prenom: user.prenom };
+  req.session.user = { id: user.id };
   res.sendStatus(200);
 }));
 

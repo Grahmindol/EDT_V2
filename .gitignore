@@ -1,2 +1,7 @@
 node_modules/
 .env
+eleve_generator.js
+prenoms.txt
+passwords.csv
+sortie.txt
+eleves.json
