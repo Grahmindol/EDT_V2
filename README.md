@@ -140,7 +140,7 @@ git push origin feature/ma-modification
 
 Pour toute question ou problème, contactez **moi**.  
 Vous pouvez aussi contribuer directement via le GitHub :  
-[https://github.com/ton-repo/edt-v2](https://github.com/ton-repo/edt-v2)
+[https://github.com/Grahmindol/EDT_V2](https://github.com/Grahmindol/EDT_V2)
 
 ---
 
