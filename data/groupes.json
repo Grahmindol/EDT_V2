@@ -2,8 +2,6 @@
   { "id": 1, "nom": "MPI" },
   { "id": 2, "nom": "MPI_INFO_1" },
   { "id": 3, "nom": "MPI_INFO_2" },
-  { "id": 4, "nom": "MPI_TP_1" },
-  { "id": 5, "nom": "MPI_TP_2" },
   { "id": 6, "nom": "ITA" },
   { "id": 7, "nom": "ESP" },
   { "id": 8, "nom": "ALMD" },

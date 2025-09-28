@@ -154,5 +154,29 @@
 {"eleve_id": 71,"groupe_id": -208},
 {"eleve_id": 72,"groupe_id": -209},
 {"eleve_id": 73,"groupe_id": -209},
-{"eleve_id": 74,"groupe_id": -209}
+{"eleve_id": 74,"groupe_id": -209},
+
+{"eleve_id": 4,"groupe_id": 6},
+{"eleve_id": 7,"groupe_id": 6},
+{"eleve_id": 12,"groupe_id": 6},
+{"eleve_id": 51,"groupe_id": 6},
+{"eleve_id": 54,"groupe_id": 6},
+{"eleve_id": 69,"groupe_id": 6},
+
+{"eleve_id": 2,"groupe_id": 7},
+{"eleve_id": 3,"groupe_id": 7},
+{"eleve_id": 6,"groupe_id": 7},
+{"eleve_id": 8,"groupe_id": 7},
+{"eleve_id": 9,"groupe_id": 7},
+{"eleve_id": 11,"groupe_id": 7},
+{"eleve_id": 13,"groupe_id": 7},
+{"eleve_id": 14,"groupe_id": 7},
+{"eleve_id": 15,"groupe_id": 7},
+{"eleve_id": 18,"groupe_id": 7},
+{"eleve_id": 70,"groupe_id": 7},
+
+{"eleve_id": 1,"groupe_id": 8},
+{"eleve_id": 62,"groupe_id": 8}
+
+
 ]

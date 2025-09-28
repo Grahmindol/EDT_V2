@@ -99,7 +99,8 @@ const colloscpe_mpi = [
   [3, 4, 5, 0, 6, 0, 7, 8, 9, 0, 0, 1, 2, 3, 4, 5, 0, 6, 7, 8, 9, 0, 0],
   [5, 6, 7, 0, 8, 0, 9, 0, 1, 2, 0, 3, 4, 5, 6, 7, 0, 8, 9, 0, 1, 2, 0],
   [7, 8, 9, 0, 0, 0, 1, 2, 3, 4, 0, 5, 6, 7, 8, 9, 0, 0, 1, 2, 3, 4, 0],
-  [9, 0, 1, 0, 2, 0, 3, 4, 5, 6, 0, 7, 8, 9, 0, 1, 0, 2, 3, 4, 5, 6, 0]
+  [9, 0, 1, 0, 2, 0, 3, 4, 5, 6, 0, 7, 8, 9, 0, 1, 0, 2, 3, 4, 5, 6, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
 // renvoie le lundi (UTC) de la semaine ISO donnée
@@ -202,6 +203,12 @@ function overrideLinks(bloc, groupe, isoWeek) {
         return colloscpe_mp2i[(semaine - 3) % 16][-101 - bloc.id] === -100 - groupe.id;
       }
     }
+
+    if (groupe.id < -100 && groupe.id > -200) {
+        if ((-100 - groupe.id)%2 == (semaine % 2)){
+
+        }
+    }
   }
 
   // --- KHOLLE MPI ---
@@ -211,6 +218,22 @@ function overrideLinks(bloc, groupe, isoWeek) {
         const col = semaine - 4; // 0-based index
         return colloscpe_mpi[-201 - bloc.id][col] === -200 - groupe.id;
       }
+    }
+  }
+
+  // TP MPI
+
+  if (groupe.id < -200 && groupe.id > -300) {
+    if (bloc.id  == 6 || bloc.id == 7){
+      const gp_kholle = -200 - groupe.id; // 0-based index
+      let partite = semaine % 2
+      if (semaine >= 4) partite++;
+      if (semaine >= 8) partite++;
+      if (semaine >= 10) partite++;
+      if (semaine >= 23) partite++;
+
+      return (bloc.id  == 6 && partite%2 == gp_kholle%2 )
+        ||   (bloc.id  == 7 && partite%2 != gp_kholle%2 )
     }
   }
 

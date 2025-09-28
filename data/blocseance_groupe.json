@@ -4,9 +4,7 @@
   { "bloc_id": 2, "groupe_id": 9, "semaine": 0 },   
   { "bloc_id": 3, "groupe_id": 1, "semaine": 0 },   
   { "bloc_id": 4, "groupe_id": 2, "semaine": 0 },   
-  { "bloc_id": 5, "groupe_id": 3, "semaine": 0 },   
-  { "bloc_id": 6, "groupe_id": 4, "semaine": 0 },   
-  { "bloc_id": 7, "groupe_id": 5, "semaine": 0 },
+  { "bloc_id": 5, "groupe_id": 3, "semaine": 0 },
   
   { "bloc_id": 10, "groupe_id": 10, "semaine": 0 },
   { "bloc_id": 11, "groupe_id": 11, "semaine": 0 },   
