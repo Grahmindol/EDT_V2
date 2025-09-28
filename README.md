@@ -1,114 +1,147 @@
-
 # 🚀 EDT V2 🌐
 
 Bienvenue dans ce magnifique projet Node.js propulsé par Express.js 🏎️💨  
-Une app complète avec API, lecteur, éditeur et cookies 🍪 !
+Une application complète basée sur JSON, avec API, lecteur, éditeur et authentification 🍪.
+
+---
+
+## 📂 Structure du projet
+
+- `app.js` : serveur principal avec API et routage  
+- `/data` : stockage des fichiers JSON (utilisateurs, groupes, séances…)  
+- `/public` : fichiers statiques (frontend, assets…)  
+- `overrideLinks.js` : logique de surcharge de l'emploi du temps  
+- `.env` : configuration des secrets
 
 ---
 
 ## 🛠️ Installation
 
-Lance ces commandes dans ton terminal :
+Clone le dépôt puis installe les dépendances :
 
-```batch
-npm init -y
+```bash
+git clone https://github.com/Grahmindol/EDT_V2.git
+cd edt-v2
 npm install
 ```
 
-# 🐬 Installation et Utilisation de MySQL
-
-## ✅ Installation de MySQL
-
-### 📦 Sous Debian/Ubuntu
-```bash
-sudo apt update
-sudo apt install mysql-server
-sudo systemctl start mysql
-sudo systemctl enable mysql
-```
-
-### 🍎 Sous macOS (avec Homebrew)
-```bash
-brew update
-brew install mysql
-brew services start mysql
-```
-
-###  🪟 Sous Windows
-
-Télécharger le MySQL Installer : https://dev.mysql.com/downloads/installer/
-   
-### 🔑 Connexion à MySQL
-```bash
-mysql -u root -p
-
-```
-> Entrer le mot de passe root défini à l’installation
-
-### 📥 Importer un fichier .sql avec source
-```SQL
-SOURCE /chemin/vers/mon_script.sql;
-```
 ---
 
 ## ▶️ Lancement
 
-Démarrer le serveur avec :
+Démarrer le serveur :
 
-```batch
+```bash
 node server.js
 ```
-💡 *Le serveur écoute par défaut sur le port 3000 (modifiable dans `server.js`).*
+
+💡 Le serveur écoute par défaut sur le port `3000`.  
+Tu peux changer ce port directement dans `server.js`.
 
 ---
 
-## ✅ Fonctionnalités
+## 🔐 Authentification
 
- 
+L’application utilise une authentification simple basée sur **sessions** et **hachage des prénoms**.  
+Endpoints principaux :
 
-
-- [x] 📖 Lecteur de contenu 
-
+| Méthode | Endpoint       | Description                      |
+|---------|----------------|-----------------------------------|
+| POST    | /auth/create   | Créer un utilisateur             |
+| POST    | /auth/signin   | Connexion                        |
+| POST    | /auth/signout  | Déconnexion                      |
+| GET     | /auth/status   | Vérifier l’état de connexion    |
 
 ---
 
-## 📡 Server
+## 📡 API
 
-- [x] 🧠 Connexion MySQL2
-- [x] 🧭 Routing Express
-- [x] 📁 Serveur de fichiers statiques
-- [ ] 🍪 Gestion des cookies (auth, préférences...)
-- [ ] 🔍 écrire les endpoints <-- en cour
-      
-### 🔌 Liste des endpoints
+### Groupes
+| Méthode | Endpoint                    | Description                       |
+|---------|-----------------------------|-----------------------------------|
+| GET     | /api/groups                 | Lister tous les groupes           |
+| GET     | /api/eleve/groups           | Lister groupes de l’élève connecté|
+| POST    | /api/eleve/groups           | Ajouter un groupe à l’élève      |
+| DELETE  | /api/eleve/groups/:groupeId | Retirer un groupe d’un élève     |
 
-| Méthode  | Endpoint             | Description                         |
-|----------|----------------------|-------------------------------------|
-| `POST`   | /auth/create         | 🔐 Créer un nouvel utilisateur      |
-| `POST`   | /auth/signin         | 🔑 Connexion                        |
-| `POST`   | /auth/signout        | 🚪 Déconnexion                      |
-| `GET`    | /api/schedule?week=n | 📅 Recupere l'EDT pour la seamine n |
-| `   `    | ...                  | ✏️ ...                              |
+### Blocs et Séances
+| Méthode | Endpoint                     | Description                      |
+|---------|--------------------------------|-----------------------------------|
+| GET     | /api/blocs                   | Lister tous les blocs            |
+| POST    | /api/blocs                   | Créer un bloc                     |
+| GET     | /api/blocseance_groupe      | Lister relations bloc/groupe     |
+| POST    | /api/blocseance_groupe      | Associer un bloc à un groupe     |
+| DELETE  | /api/blocseance_groupe      | Retirer association bloc/groupe  |
+| POST    | /api/seances                 | Créer une séance                  |
+
+### Planning
+| Méthode | Endpoint                     | Description                      |
+|---------|--------------------------------|-----------------------------------|
+| POST    | /api/planning                 | Enregistrer le planning d’un groupe |
+| GET     | /api/schedule?week=n         | Récupérer l’emploi du temps pour la semaine `n` |
 
 ---
 
 ## 📖 Lecteur
 
-### ✨ Fonctionnalités
-
-- [x] 🌙 Mode sombre (optionnel)  
-- [x] ⏩ swipe 
-- [x] 🔐 Authentification basique
-- [x] 📜 contenus  
-- [ ] 🎨 Design personnalisable  
+### Fonctionnalités
+- 🌙 Mode sombre
+- ⏩ Navigation fluide
+- 🔐 Authentification
+- 📜 Affichage des données JSON
+- 🎨 Design personnalisable (à venir)
 
 ---
 
 ## ✏️ Éditeur
 
-### 🛠️ Fonctionnalités
+### Fonctionnalités prévues
+- 🔐 Accès restreint aux éditeurs/admins
+- 📤 Création et modification d’élèves, groupes et séances
+- 📤 Gestion des “hotfix”
+- 🎨 Interface d’édition améliorée
 
-- [ ] 🔐 Accès restreint aux éditeurs/admin
-- [ ] 📤 Création d'eleve et de groupe  <-- en cour
-- [ ] 📤 Création de séance
-- [ ] 📤 Gestion des "hotfix"
+---
+
+## 🤝 Contribuer / Pull Requests
+
+Si tu souhaites contribuer au projet :  
+
+1. Fork le dépôt.  
+2. Crée une branche :  
+```bash
+git checkout -b feature/ma-modification
+```
+3. Apporte tes modifications.  
+4. Commit tes changements :  
+```bash
+git commit -m "Description des modifications"
+```
+5. Push ta branche :  
+```bash
+git push origin feature/ma-modification
+```
+6. Ouvre une Pull Request sur GitHub.  
+
+💡 Pour les pull requests, merci de préciser la nature du changement et tester localement avant de soumettre.  
+
+---
+
+## ⚠️ Notes importantes
+
+- Ce projet **n’utilise plus MySQL**, toutes les données sont stockées en JSON dans `/data`.  
+- Du fait du côté cyclique de l’EDT, si tout le monde signale les problèmes dès le début, on devrait être tranquilles ✅.  
+- Merci de vérifier les données fournies avant de signaler un bug.  
+- Je me dédouane de toute responsabilité pour les erreurs non vérifiées 🙏.  
+
+---
+
+## 📬 Contact
+
+Pour toute question ou problème, contactez **moi**.  
+Vous pouvez aussi contribuer directement via le GitHub :  
+[https://github.com/ton-repo/edt-v2](https://github.com/ton-repo/edt-v2)
+
+---
+
+**Bonne utilisation et bonne organisation 📅✨**
