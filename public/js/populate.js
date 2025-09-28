@@ -39,7 +39,7 @@ function generateScheduleDay(day) {
     } else {
         const noClassMsg = document.createElement("p");
         noClassMsg.classList.add("text-center");
-        noClassMsg.textContent = "No classes on this day 👏";
+        noClassMsg.textContent = "Pas de cours ce jour-là 😮‍💨";
         section.appendChild(noClassMsg);
     }
 
