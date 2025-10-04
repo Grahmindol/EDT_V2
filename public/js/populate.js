@@ -27,7 +27,7 @@ function generateScheduleDay(day) {
             time.setAttribute("datetime", event.datetime);
 
             const title = document.createElement("div");
-            title.classList.add("text-md", "font-medium", "text-base@md");
+            title.classList.add("text-md", "font-medium", "text-sm@md");
             title.textContent = event.name;
 
             link.append(time, title);

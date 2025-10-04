@@ -8,11 +8,6 @@
   { "id": 9, "nom": "MPI_STAR" },
 
   { "id": 10, "nom": "MP2I" },
-  { "id": 11, "nom": "MP2I_G1" },
-  { "id": 12, "nom": "MP2I_G2" },
-
-  { "id": 13, "nom": "MP2I_G1_ANG" },
-  { "id": 14, "nom": "MP2I_G2_ANG" },
 
   { "id": -101, "nom": "MP2I_G1_KHOLLE" },
   { "id": -102, "nom": "MP2I_G2_KHOLLE" },

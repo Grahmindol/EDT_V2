@@ -204,10 +204,14 @@ function overrideLinks(bloc, groupe, isoWeek) {
       }
     }
 
+    // TD/TP MP2I parité semain/groupe
     if (groupe.id < -100 && groupe.id > -200) {
-        if ((-100 - groupe.id)%2 == (semaine % 2)){
-
-        }
+      if ( bloc.id == 11 ){
+        return (-100 - groupe.id)%2 == (semaine % 2);
+      }
+      if ( bloc.id == 12 ){
+        return (-100 - groupe.id)%2 != (semaine % 2);
+      }
     }
   }
 

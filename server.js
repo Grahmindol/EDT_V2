@@ -292,8 +292,6 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
   const blocseance = await readJson('blocseance.json');
 
   const blocGroupes = [];
-
-  // Appliquer règles de base + override
   for (const bloc of blocseance) {
     for (const gId of groupes) {
       const base = blocseance_groupe.some(b =>
@@ -305,7 +303,6 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
       }
     }
   }
-
   if (!blocGroupes.length) return res.json(emptySchedule());
 
   const blocMap = blocseance.reduce((acc, b) => { acc[b.id] = b; return acc; }, {});
@@ -313,26 +310,39 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
   const seances = await readJson('seances.json');
   const selectedSeances = seances.filter(s => blocIds.includes(s.bloc_id));
 
-  const eventsByDay = Array(7).fill(null).map((_, i) => ({
+  const eventsByDay = Array.from({ length: 7 }, (_, i) => ({
     id: `${i + 1}`,
     name: DAY_NAMES[i],
     events: []
   }));
 
+  const msPerDay = 24 * 60 * 60 * 1000;
+
+  // retourne le lundi (début) de la semaine ISO `isoWeek` pour `year`
+  const startOfIsoWeekForYear = (isoWeek, year) => {
+    const jan4 = new Date(year, 0, 4);
+    const jan4IsoDay = jan4.getDay() === 0 ? 7 : jan4.getDay(); // 1..7 (Lundi=1)
+    const week1Mon = addDays(jan4, -(jan4IsoDay - 1));
+    return addDays(week1Mon, (isoWeek - 1) * 7);
+  };
+
   for (const s of selectedSeances) {
     const debut = parseISO(s.date_initiale);
     const fin = parseISO(s.date_fin);
-    const interval = s.recurrence_jours || 0;
-    let current = new Date(debut);
+    if (isNaN(debut) || isNaN(fin) || isAfter(debut, fin)) {
+      console.warn('Séance ignorée (dates invalides) id=', s.id);
+      continue;
+    }
+    const interval = Number(s.recurrence_jours) || 0;
 
-    while (!isAfter(current, fin)) {
-      const currentWeek = getISOWeek(current);
-      if (currentWeek === week) {
-        const jour = daysOfWeekIndex(current);
+    // cas occurrence unique (pas de récurrence)
+    if (interval === 0) {
+      if (getISOWeek(debut) === week) {
+        const jour = daysOfWeekIndex(debut);
         const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
         eventsByDay[jour].events.push({
           id: s.id,
-          name: `${s.matiere} (${s.salle}) ${s.enseignant != "" ? 'avec ' + s.enseignant : "" }`,
+          name: `${s.matiere} (${s.salle}) ${s.enseignant ? 'avec ' + s.enseignant : ''}`,
           enseignant: s.enseignant,
           salle: s.salle,
           datetime: `${s.heure_debut}${duration}`,
@@ -340,8 +350,43 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
           bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
         });
       }
-      if (interval === 0) break;
-      current = addDays(current, interval);
+      continue;
+    }
+
+    // Pour chaque année couverte par la plage [debut..fin], calcule la plage de la semaine ISO demandée
+    for (let year = debut.getFullYear(); year <= fin.getFullYear(); year++) {
+      const weekStart = startOfIsoWeekForYear(week, year);
+      const weekEnd = addDays(weekStart, 6);
+
+      // pas de recouvrement entre [weekStart..weekEnd] et [debut..fin]
+      if (isAfter(weekStart, fin) || isAfter(debut, weekEnd)) continue;
+
+      // on cherche n tels que : date = debut + n * interval ∈ [weekStart..weekEnd]
+      const diffStart = Math.ceil((weekStart - debut) / msPerDay); // jours entre debut et début de la semaine
+      const diffEnd = Math.floor((weekEnd - debut) / msPerDay);   // jours entre debut et fin de la semaine
+
+      const nMin = Math.ceil(Math.max(0, diffStart) / interval);
+      const nMax = Math.floor(diffEnd / interval);
+
+      if (nMin > nMax) continue; // aucune occurrence dans cette semaine
+
+      // ajoute toutes les occurrences (nMin..nMax) qui tombent bien avant `fin`
+      for (let n = nMin; n <= nMax; n++) {
+        const occ = addDays(debut, n * interval);
+        if (isAfter(occ, fin)) break;
+        const jour = daysOfWeekIndex(occ);
+        const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
+        eventsByDay[jour].events.push({
+          id: s.id,
+          name: `${s.matiere} (${s.salle}) ${s.enseignant ? 'avec ' + s.enseignant : ''}`,
+          enseignant: s.enseignant,
+          salle: s.salle,
+          datetime: `${s.heure_debut}${duration}`,
+          couleur_id: s.couleur_id,
+          bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
+        });
+      }
+      // on continue pour vérifier la même semaine dans d'autres années (comportement identique à l'original)
     }
   }
 
