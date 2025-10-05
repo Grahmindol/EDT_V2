@@ -390,7 +390,7 @@
     "salle": "36",
     "date_initiale": "2025-09-01",
     "date_fin": "2026-07-03",
-    "recurrence_jours": 17,
+    "recurrence_jours": 7,
     "heure_debut": "10:00",
     "heure_fin": "11:00",
     "bloc_id": 11,
