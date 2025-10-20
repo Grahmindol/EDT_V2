@@ -12,8 +12,8 @@ const crypto = require('crypto');
 const PRENOM_SECRET = process.env.PRENOM_SECRET || 'change_this_prenom_secret';
 function prenomHash(prenom) {
   return crypto.createHmac('sha256', PRENOM_SECRET)
-               .update(prenom.trim().toLowerCase())
-               .digest('hex');
+    .update(prenom.trim().toLowerCase())
+    .digest('hex');
 }
 
 const app = express();
@@ -353,42 +353,31 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
       continue;
     }
 
-    // Pour chaque année couverte par la plage [debut..fin], calcule la plage de la semaine ISO demandée
-    for (let year = debut.getFullYear(); year <= fin.getFullYear(); year++) {
-      const weekStart = startOfIsoWeekForYear(week, year);
-      const weekEnd = addDays(weekStart, 6);
-
-      // pas de recouvrement entre [weekStart..weekEnd] et [debut..fin]
-      if (isAfter(weekStart, fin) || isAfter(debut, weekEnd)) continue;
-
-      // on cherche n tels que : date = debut + n * interval ∈ [weekStart..weekEnd]
-      const diffStart = Math.ceil((weekStart - debut) / msPerDay); // jours entre debut et début de la semaine
-      const diffEnd = Math.floor((weekEnd - debut) / msPerDay);   // jours entre debut et fin de la semaine
-
-      const nMin = Math.ceil(Math.max(0, diffStart) / interval);
-      const nMax = Math.floor(diffEnd / interval);
-
-      if (nMin > nMax) continue; // aucune occurrence dans cette semaine
-
-      // ajoute toutes les occurrences (nMin..nMax) qui tombent bien avant `fin`
-      for (let n = nMin; n <= nMax; n++) {
-        const occ = addDays(debut, n * interval);
-        if (isAfter(occ, fin)) break;
-        const jour = daysOfWeekIndex(occ);
-        const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
-        eventsByDay[jour].events.push({
-          id: s.id,
-          name: `${s.matiere} (${s.salle}) ${s.enseignant ? 'avec ' + s.enseignant : ''}`,
-          enseignant: s.enseignant,
-          salle: s.salle,
-          datetime: `${s.heure_debut}${duration}`,
-          couleur_id: s.couleur_id,
-          bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
-        });
+    // cas récurrence
+    let n = 0;
+    while (true) {
+      const occ = addDays(debut, n * interval);
+      if (isAfter(occ, fin)) break;           // dépasse la fin
+      if (getISOWeek(occ) !== week) {         // pas dans la semaine demandée
+        n++;
+        continue;
       }
-      // on continue pour vérifier la même semaine dans d'autres années (comportement identique à l'original)
+
+      const jour = daysOfWeekIndex(occ);
+      const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
+      eventsByDay[jour].events.push({
+        id: s.id,
+        name: `${s.matiere} (${s.salle}) ${s.enseignant ? 'avec ' + s.enseignant : ''}`,
+        enseignant: s.enseignant,
+        salle: s.salle,
+        datetime: `${s.heure_debut}${duration}`,
+        couleur_id: s.couleur_id,
+        bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
+      });
+      n++;
     }
   }
+
 
   for (const day of eventsByDay) {
     day.events.sort((a, b) => a.datetime.localeCompare(b.datetime));

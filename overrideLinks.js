@@ -1,4 +1,5 @@
 // overrideLinks.js
+const { getISOWeek } = require('date-fns');
 // Fonction pour ajouter ou retirer dynamiquement des liens bloc<->groupe selon la semaine
 
 // colloscpe_mp2i[semaine][colleur] = goupe
@@ -119,75 +120,32 @@ function isoWeekStartDateUTC(year, week) {
  * - isoWeek  : numéro ISO de la semaine (1..53)
  * - isoYear  : année ISO de la semaine (ex: 2025 pour nov 2025)
  * Retour :
- *  - -1 si la semaine est une semaine de vacances (zone B, 2025-2026)
+ *  - 0 si la semaine est une semaine de vacances (zone B, 2025-2026)
  *  - sinon : nombre de semaines de cours écoulées depuis la semaine contenant 01/09/2025 (inclusive)
  */
-function weeksCoursElapsed(isoWeek, isoYear) {
-  // --- lundi UTC de la semaine demandée
-  const weekMon = isoWeekStartDateUTC(isoYear, isoWeek);
+function getWeekNumberFromDate(isoWeek) {
 
-  // --- lundi de la semaine contenant 01/09/2025 (UTC)
-  const sep1 = new Date(Date.UTC(2025, 8, 1)); // 2025-09-01
-  const sep1Dow = (sep1.getUTCDay() + 6) % 7; // 0=Mon
-  const sepWeekMon = new Date(Date.UTC(2025, 8, 1 - sep1Dow));
-  sepWeekMon.setUTCHours(0, 0, 0, 0);
+  // Liste des lundis de la rentrée 2025–2026
+  const weekStartDates = [
+    "2025-09-01", "2025-09-08", "2025-09-15", "2025-09-22", "2025-09-29",
+    "2025-10-06", "2025-10-13", "2025-11-03", "2025-11-10", "2025-11-17",
+    "2025-11-24", "2025-12-01", "2025-12-08", "2025-12-15", "2026-01-05",
+    "2026-01-12", "2026-01-19", "2026-01-26", "2026-02-02", "2026-02-23",
+    "2026-03-02", "2026-03-09", "2026-03-16", "2026-03-23", "2026-03-30",
+    "2026-04-20", "2026-04-27", "2026-05-04", "2026-05-11", "2026-05-18",
+    "2026-05-25", "2026-06-01", "2026-06-08", "2026-06-15", "2026-06-22",
+    "2026-06-29"
+  ].map(dateStr => getISOWeek(new Date(dateStr)));
 
-  // --- périodes de vacances (on utilise end = jour APRÈS le dernier jour de vacances)
-  // format : { start: Date(00:00) inclusive, end: Date(00:00) exclusive }
-  const vacations = [
-    // Toussaint : 18/10/2025 -> dernier jour de vacances = 02/11/2025 => end = 03/11/2025 (exclu)
-    { start: new Date(Date.UTC(2025, 9, 18)), end: new Date(Date.UTC(2025, 10, 3)) },
-
-    // Noël : 20/12/2025 -> dernier jour = 05/01/2026 => end = 05/01/2026 (exclu)
-    { start: new Date(Date.UTC(2025, 11, 20)), end: new Date(Date.UTC(2026, 0, 5)) },
-
-    // Hiver (Zone B) : 14/02/2026 -> dernier jour = 02/03/2026 => end = 02/03/2026 (exclu)
-    { start: new Date(Date.UTC(2026, 1, 14)), end: new Date(Date.UTC(2026, 2, 2)) },
-
-    // Printemps (Zone B) : 11/04/2026 -> dernier jour = 27/04/2026 => end = 26/04/2026 (exclu)
-    { start: new Date(Date.UTC(2026, 3, 11)), end: new Date(Date.UTC(2026, 3, 26)) },
-
-    // Grandes vacances à partir du 04/07/2026 (on peut garder un end lointain)
-    { start: new Date(Date.UTC(2026, 6, 4)), end: new Date(Date.UTC(9999, 0, 1)) }
-  ];
-
-  // normaliser à 00:00 pour start/end (par sécurité)
-  vacations.forEach(v => { v.start.setUTCHours(0,0,0,0); v.end.setUTCHours(0,0,0,0); });
-
-  function isInRange(date, start, end) {
-    const t = date.getTime();
-    return t >= start.getTime() && t < end.getTime(); // end exclusive
-  }
-
-  // avant la rentrée -> 0
-  if (weekMon < sepWeekMon) return 0;
-
-  // si semaine demandée est une semaine de vacances -> -1
-  for (const v of vacations) if (isInRange(weekMon, v.start, v.end)) return -1;
-
-  // compter semaines de cours depuis sepWeekMon à weekMon (inclus), en sautant les semaines de vacances
-  let count = 0;
-  for (let cur = new Date(sepWeekMon); cur <= weekMon; cur.setUTCDate(cur.getUTCDate() + 7)) {
-    let inVac = false;
-    for (const v of vacations) {
-      if (isInRange(cur, v.start, v.end)) { inVac = true; break; }
-    }
-    if (!inVac) count++;
-  }
-
-  return count;
+  // Cherche le numéro de semaine correspondant
+  return weekStartDates.findIndex(week => week === isoWeek) + 1;
 }
 
 
-
-function overrideLinks(bloc, groupe, isoWeek) {
+function overrideLinks(bloc, groupe, week) {
   // année ISO en fonction du numéro de semaine
-  // (rentrée = semaine 36, donc avant → 2026, sinon 2025)
-  const isoYear = (isoWeek < 36) ? 2026 : 2025;
-
-  // convertir en semaine de cours écoulée
-  let semaine = weeksCoursElapsed(isoWeek, isoYear);
-  if (semaine < 0) return false;
+  let semaine = getWeekNumberFromDate(week)
+  if (semaine <= 0) return false;
 
   // --- INFO MP2I ---
   if (semaine >= 3) {
@@ -206,11 +164,11 @@ function overrideLinks(bloc, groupe, isoWeek) {
 
     // TD/TP MP2I parité semain/groupe
     if (groupe.id < -100 && groupe.id > -200) {
-      if ( bloc.id == 11 ){
-        return (-100 - groupe.id)%2 == (semaine % 2);
+      if (bloc.id == 11) {
+        return (-100 - groupe.id) % 2 == (semaine % 2);
       }
-      if ( bloc.id == 12 ){
-        return (-100 - groupe.id)%2 != (semaine % 2);
+      if (bloc.id == 12) {
+        return (-100 - groupe.id) % 2 != (semaine % 2);
       }
     }
   }
@@ -228,7 +186,7 @@ function overrideLinks(bloc, groupe, isoWeek) {
   // TP MPI
 
   if (groupe.id < -200 && groupe.id > -300) {
-    if (bloc.id  == 6 || bloc.id == 7){
+    if (bloc.id == 6 || bloc.id == 7) {
       const gp_kholle = -200 - groupe.id; // 0-based index
       let partite = semaine % 2
       if (semaine >= 4) partite++;
@@ -236,8 +194,8 @@ function overrideLinks(bloc, groupe, isoWeek) {
       if (semaine >= 10) partite++;
       if (semaine >= 23) partite++;
 
-      return (bloc.id  == 6 && partite%2 == gp_kholle%2 )
-        ||   (bloc.id  == 7 && partite%2 != gp_kholle%2 )
+      return (bloc.id == 6 && partite % 2 == gp_kholle % 2)
+        || (bloc.id == 7 && partite % 2 != gp_kholle % 2)
     }
   }
 
