@@ -310,21 +310,27 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
   const seances = await readJson('seances.json');
   const selectedSeances = seances.filter(s => blocIds.includes(s.bloc_id));
 
-  const eventsByDay = Array.from({ length: 7 }, (_, i) => ({
-    id: `${i + 1}`,
-    name: DAY_NAMES[i],
-    events: []
-  }));
+  const eventsByDay = Array.from({ length: 7 }, (_, i) => {
+    return {
+      id: `${i + 1}`,
+      name: DAY_NAMES[i],
+      events: []
+    };
+  });
 
-  const msPerDay = 24 * 60 * 60 * 1000;
-
-  // retourne le lundi (début) de la semaine ISO `isoWeek` pour `year`
-  const startOfIsoWeekForYear = (isoWeek, year) => {
-    const jan4 = new Date(year, 0, 4);
-    const jan4IsoDay = jan4.getDay() === 0 ? 7 : jan4.getDay(); // 1..7 (Lundi=1)
-    const week1Mon = addDays(jan4, -(jan4IsoDay - 1));
-    return addDays(week1Mon, (isoWeek - 1) * 7);
-  };
+  function push_event(date, s) {
+    const jour = daysOfWeekIndex(date);
+    const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
+    eventsByDay[jour].events.push({
+      id: s.id,
+      name: `${s.matiere} (${s.salle}) ${s.enseignant ? 'avec ' + s.enseignant : ''}`,
+      enseignant: s.enseignant,
+      salle: s.salle,
+      datetime: `${s.heure_debut}${duration}`,
+      couleur_id: s.couleur_id,
+      bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
+    });
+  }
 
   for (const s of selectedSeances) {
     const debut = parseISO(s.date_initiale);
@@ -338,17 +344,7 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
     // cas occurrence unique (pas de récurrence)
     if (interval === 0) {
       if (getISOWeek(debut) === week) {
-        const jour = daysOfWeekIndex(debut);
-        const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
-        eventsByDay[jour].events.push({
-          id: s.id,
-          name: `${s.matiere} (${s.salle}) ${s.enseignant ? 'avec ' + s.enseignant : ''}`,
-          enseignant: s.enseignant,
-          salle: s.salle,
-          datetime: `${s.heure_debut}${duration}`,
-          couleur_id: s.couleur_id,
-          bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
-        });
+        push_event(debut, s);
       }
       continue;
     }
@@ -363,17 +359,7 @@ app.get('/api/schedule', asyncHandler(async (req, res) => {
         continue;
       }
 
-      const jour = daysOfWeekIndex(occ);
-      const duration = `PT${computeDuration(s.heure_debut, s.heure_fin)}`;
-      eventsByDay[jour].events.push({
-        id: s.id,
-        name: `${s.matiere} (${s.salle}) ${s.enseignant ? 'avec ' + s.enseignant : ''}`,
-        enseignant: s.enseignant,
-        salle: s.salle,
-        datetime: `${s.heure_debut}${duration}`,
-        couleur_id: s.couleur_id,
-        bloc_prio: (blocMap[s.bloc_id]?.prio) || 0
-      });
+      push_event(occ, s);
       n++;
     }
   }

@@ -68,8 +68,8 @@
         </a>
       </div>
 
-      <div class="date-input js-date-input"><label for="date-input-1" class="form-label margin-bottom-4xs">Sélectionner une date <i
-            class="sr-only">, au format jj/mm/aaaa</i>:</label>
+      <div class="date-input js-date-input"><label for="date-input-1" class="form-label margin-bottom-4xs">Sélectionner
+          une date <i class="sr-only">, au format jj/mm/aaaa</i>:</label>
         <div class="date-input__wrapper"><input type="text"
             class="form-control width-100% date-input__text js-date-input__text" placeholder="jj/mm/aaaa"
             autocomplete="off" id="date-input-1"> <button class="date-input__trigger js-date-input__trigger"
@@ -138,8 +138,7 @@
       </div>
 
       <button class="btn btn--subtle header__trigger js-header__trigger" aria-label="Toggle menu" aria-expanded="false"
-        aria-controls="header-nav"
-        style="box-shadow: none; background-color: transparent !important;outline: none;">
+        aria-controls="header-nav" style="box-shadow: none; background-color: transparent !important;outline: none;">
         <i class="header__trigger-icon" aria-hidden="true"></i>
       </button>
 
@@ -229,6 +228,24 @@
       return 1 + Math.round(((tmp - week1) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
     }
 
+    const HOLIDAYS = {
+      "2025-11-01": "🕯️ Toussaint 💐",
+      "2025-11-11": "🕊️ 11 novembre 🇫🇷",
+      "2025-12-25": "🎄 Jour de Noël 🎁",
+      "2026-01-01": "🎆 1er janvier 🍾",
+      "2026-04-06": "🐣 Lundi de Pâques 🐰",
+      "2026-05-01": "🌹 1er mai 🔧",
+      "2026-05-08": "🕊️ 8 mai 🇫🇷",
+      "2026-05-14": "⛅ Ascension 🙏",
+      "2026-05-25": "🔥 Lundi de Pentecôte 🕊️",
+      "2026-07-14": "🇫🇷 14 juillet 🎆",
+      "2026-08-15": "🌸 Assomption 🙏"
+    };
+
+    function isHoliday(date) {
+      return HOLIDAYS[date.toLocaleDateString("fr-CA")] || null;
+    }
+
     async function getDaySchedule(date) {
       const week = getWeekNumber(date);
       if (!weekCache.has(week)) {
@@ -242,12 +259,13 @@
       const dayNum = date.getDate();
       const days = weekCache.get(week);
       const found = days.find(d => d.name.toLowerCase() === dayName.toLowerCase());
+      const holiday = isHoliday(date);
 
       if (found) {
         // 🔹 on modifie directement la propriété name
         return {
           ...found,
-          name: `${found.name} ${dayNum}`
+          name: holiday != null ? holiday : `${found.name} ${dayNum}`
         };
       }
 
@@ -269,7 +287,7 @@
       { id: 2, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./img/weekly-schedule-img-maths.png" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Titre ...</h1><p class="color-contrast-medium">Ici on pourrai retrouver le devoir par exemple.... mais franchement j\'ai pas le temp de finir donc pour le mmoment je laisse ca :) Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">il est vraiment stylé se btn</button></p></div></div>' },
       { id: 3, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./img/weekly-schedule-img-maths.png" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Titre ...</h1><p class="color-contrast-medium">Ici on pourrai retrouver le devoir par exemple.... mais franchement j\'ai pas le temp de finir donc pour le mmoment je laisse ca :) Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">hummm un boutton</button></p></div></div>' },
       { id: 4, content: '<a class="w-schedule-modal__figure height-25% width-30%@md height-100%@md" href="#0"><img src="./img/weekly-schedule-img-maths.png" alt="Image description"></a><div class="w-schedule-modal__body padding-md width-70%@md height-100%@md"><div class="text-component"><h1 class="text-xl">Titre ...</h1><p class="color-contrast-medium">Ici on pourrai retrouver le devoir par exemple.... mais franchement j\'ai pas le temp de finir donc pour le mmoment je laisse ca :) Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur et labore esse mollitia. Pariatur error nesciunt ab illum.</p><p class="color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta placeat ex sunt?</p><p><button class="btn btn--primary">HA HA je sers a rien !</button></p></div></div>' },
-      ];
+    ];
     let my_schedule = new WSchedule({
       element: wSchedule,
       searchData: function (trigger, cb) {
