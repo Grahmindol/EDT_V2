@@ -176,7 +176,11 @@
 {"eleve_id": 70,"groupe_id": 7},
 
 {"eleve_id": 1,"groupe_id": 8},
-{"eleve_id": 62,"groupe_id": 8}
+{"eleve_id": 62,"groupe_id": 8},
 
+{"eleve_id": 75,"groupe_id": 10},
+
+{"eleve_id": 76,"groupe_id": 9},
+{"eleve_id": 76,"groupe_id": 1}
 
 ]
