@@ -368,5 +368,15 @@
     "id": 74,
     "prenom_hash": "3688d04a52470554af524a117c9152c26c5e339ca6b27cb001c4d109b5c6efce",
     "password_hash": "$2b$10$6tnXnuY9qlswyoMc/SB/hOfwlpRZSq2fi/1w8ZQeJGmxIPGJPPbYC"
+  },
+  {
+    "id": 75,
+    "prenom_hash": "c6ca1a789a0374a27bd77a5c5d535fea407da4ff764974a6692c8513ba82d4da",
+    "password_hash": "$2b$10$wuAmu6LW3GNPBxBeGIs/s.QjeLErcC8R5yweg.mKZhZEiXUSCXOg6"
+  },
+  {
+    "id": 76,
+    "prenom_hash": "706d6edc012d9a4b8bd79ac59a645b8d7b78cee9c766d4b71004d67c081c2350",
+    "password_hash": "$2b$10$XjaR0HjItB9bwEwS1E4hH.BdTYe2lDEqqHwWSKsVbPrV8sJgi6tQG"
   }
 ]

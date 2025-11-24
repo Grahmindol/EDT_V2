@@ -1,826 +1,186 @@
 [
-  {
-    "eleve_id": 1,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 2,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 4,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 5,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 6,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 7,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 8,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 9,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 10,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 11,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 12,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 13,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 14,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 15,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 16,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 17,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 18,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 19,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 20,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 21,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 22,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 23,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 24,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 25,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 26,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 27,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 28,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 29,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 30,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 31,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 34,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 35,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 36,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 37,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 38,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 39,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 40,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 41,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 42,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 43,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 44,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 45,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 46,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 47,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 48,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 49,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 50,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 51,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 52,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 53,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 55,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 56,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 57,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 58,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 59,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 60,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 61,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 62,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 63,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 64,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 65,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 66,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 67,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 68,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 69,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 70,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 71,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 72,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 73,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 74,
-    "groupe_id": 1
-  },
-  {
-    "eleve_id": 1,
-    "groupe_id": -101
-  },
-  {
-    "eleve_id": 2,
-    "groupe_id": -101
-  },
-  {
-    "eleve_id": 3,
-    "groupe_id": -101
-  },
-  {
-    "eleve_id": 4,
-    "groupe_id": -102
-  },
-  {
-    "eleve_id": 5,
-    "groupe_id": -102
-  },
-  {
-    "eleve_id": 6,
-    "groupe_id": -102
-  },
-  {
-    "eleve_id": 7,
-    "groupe_id": -103
-  },
-  {
-    "eleve_id": 8,
-    "groupe_id": -103
-  },
-  {
-    "eleve_id": 9,
-    "groupe_id": -103
-  },
-  {
-    "eleve_id": 10,
-    "groupe_id": -104
-  },
-  {
-    "eleve_id": 11,
-    "groupe_id": -104
-  },
-  {
-    "eleve_id": 12,
-    "groupe_id": -104
-  },
-  {
-    "eleve_id": 13,
-    "groupe_id": -105
-  },
-  {
-    "eleve_id": 14,
-    "groupe_id": -105
-  },
-  {
-    "eleve_id": 15,
-    "groupe_id": -105
-  },
-  {
-    "eleve_id": 16,
-    "groupe_id": -106
-  },
-  {
-    "eleve_id": 17,
-    "groupe_id": -106
-  },
-  {
-    "eleve_id": 18,
-    "groupe_id": -106
-  },
-  {
-    "eleve_id": 19,
-    "groupe_id": -107
-  },
-  {
-    "eleve_id": 20,
-    "groupe_id": -107
-  },
-  {
-    "eleve_id": 21,
-    "groupe_id": -107
-  },
-  {
-    "eleve_id": 22,
-    "groupe_id": -108
-  },
-  {
-    "eleve_id": 23,
-    "groupe_id": -108
-  },
-  {
-    "eleve_id": 24,
-    "groupe_id": -108
-  },
-  {
-    "eleve_id": 26,
-    "groupe_id": -109
-  },
-  {
-    "eleve_id": 27,
-    "groupe_id": -109
-  },
-  {
-    "eleve_id": 28,
-    "groupe_id": -110
-  },
-  {
-    "eleve_id": 29,
-    "groupe_id": -110
-  },
-  {
-    "eleve_id": 30,
-    "groupe_id": -110
-  },
-  {
-    "eleve_id": 31,
-    "groupe_id": -111
-  },
-  {
-    "eleve_id": 33,
-    "groupe_id": -111
-  },
-  {
-    "eleve_id": 34,
-    "groupe_id": -112
-  },
-  {
-    "eleve_id": 35,
-    "groupe_id": -112
-  },
-  {
-    "eleve_id": 36,
-    "groupe_id": -112
-  },
-  {
-    "eleve_id": 37,
-    "groupe_id": -113
-  },
-  {
-    "eleve_id": 38,
-    "groupe_id": -113
-  },
-  {
-    "eleve_id": 39,
-    "groupe_id": -113
-  },
-  {
-    "eleve_id": 40,
-    "groupe_id": -114
-  },
-  {
-    "eleve_id": 41,
-    "groupe_id": -114
-  },
-  {
-    "eleve_id": 42,
-    "groupe_id": -114
-  },
-  {
-    "eleve_id": 43,
-    "groupe_id": -115
-  },
-  {
-    "eleve_id": 44,
-    "groupe_id": -115
-  },
-  {
-    "eleve_id": 45,
-    "groupe_id": -115
-  },
-  {
-    "eleve_id": 46,
-    "groupe_id": -116
-  },
-  {
-    "eleve_id": 47,
-    "groupe_id": -116
-  },
-  {
-    "eleve_id": 48,
-    "groupe_id": -116
-  },
-  {
-    "eleve_id": 49,
-    "groupe_id": -201
-  },
-  {
-    "eleve_id": 50,
-    "groupe_id": -201
-  },
-  {
-    "eleve_id": 51,
-    "groupe_id": -202
-  },
-  {
-    "eleve_id": 52,
-    "groupe_id": -202
-  },
-  {
-    "eleve_id": 53,
-    "groupe_id": -202
-  },
-  {
-    "eleve_id": 55,
-    "groupe_id": -203
-  },
-  {
-    "eleve_id": 56,
-    "groupe_id": -203
-  },
-  {
-    "eleve_id": 57,
-    "groupe_id": -204
-  },
-  {
-    "eleve_id": 58,
-    "groupe_id": -204
-  },
-  {
-    "eleve_id": 59,
-    "groupe_id": -204
-  },
-  {
-    "eleve_id": 60,
-    "groupe_id": -205
-  },
-  {
-    "eleve_id": 61,
-    "groupe_id": -205
-  },
-  {
-    "eleve_id": 62,
-    "groupe_id": -205
-  },
-  {
-    "eleve_id": 63,
-    "groupe_id": -206
-  },
-  {
-    "eleve_id": 64,
-    "groupe_id": -206
-  },
-  {
-    "eleve_id": 65,
-    "groupe_id": -206
-  },
-  {
-    "eleve_id": 66,
-    "groupe_id": -207
-  },
-  {
-    "eleve_id": 67,
-    "groupe_id": -207
-  },
-  {
-    "eleve_id": 68,
-    "groupe_id": -207
-  },
-  {
-    "eleve_id": 69,
-    "groupe_id": -208
-  },
-  {
-    "eleve_id": 70,
-    "groupe_id": -208
-  },
-  {
-    "eleve_id": 71,
-    "groupe_id": -208
-  },
-  {
-    "eleve_id": 72,
-    "groupe_id": -209
-  },
-  {
-    "eleve_id": 73,
-    "groupe_id": -209
-  },
-  {
-    "eleve_id": 74,
-    "groupe_id": -209
-  },
-  {
-    "eleve_id": 4,
-    "groupe_id": 6
-  },
-  {
-    "eleve_id": 7,
-    "groupe_id": 6
-  },
-  {
-    "eleve_id": 12,
-    "groupe_id": 6
-  },
-  {
-    "eleve_id": 51,
-    "groupe_id": 6
-  },
-  {
-    "eleve_id": 69,
-    "groupe_id": 6
-  },
-  {
-    "eleve_id": 2,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 6,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 8,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 9,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 11,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 13,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 14,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 15,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 18,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 70,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 1,
-    "groupe_id": 8
-  },
-  {
-    "eleve_id": 62,
-    "groupe_id": 8
-  },
-  {
-    "eleve_id": 74,
-    "groupe_id": 2
-  },
-  {
-    "eleve_id": 17,
-    "groupe_id": 14
-  },
-  {
-    "eleve_id": 20,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 20,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 24,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 24,
-    "groupe_id": 14
-  },
-  {
-    "eleve_id": 3,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 3,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 33,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 33,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 14,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 18,
-    "groupe_id": 14
-  },
-  {
-    "eleve_id": 14,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 15,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 15,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 18,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 48,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 30,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 30,
-    "groupe_id": 14
-  },
-  {
-    "eleve_id": 46,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 28,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 28,
-    "groupe_id": 14
-  },
-  {
-    "eleve_id": 19,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 19,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 2,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 22,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 33,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 10,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 47,
-    "groupe_id": 14
-  },
-  {
-    "eleve_id": 5,
-    "groupe_id": 14
-  },
-  {
-    "eleve_id": 37,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 37,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 5,
-    "groupe_id": 12
-  },
-  {
-    "eleve_id": 32,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 25,
-    "groupe_id": -109
-  },
-  {
-    "eleve_id": 32,
-    "groupe_id": 11
-  },
-  {
-    "eleve_id": 32,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 2,
-    "groupe_id": 13
-  },
-  {
-    "eleve_id": 72,
-    "groupe_id": 7
-  },
-  {
-    "eleve_id": 72,
-    "groupe_id": 2
-  },
-  {
-    "eleve_id": 54,
-    "groupe_id": 9
-  },
-  {
-    "eleve_id": 54,
-    "groupe_id": 6
-  },
-  {
-    "eleve_id": 54,
-    "groupe_id": -203
-  },
-  {
-    "eleve_id": 60,
-    "groupe_id": 2
-  },
-  {
-    "eleve_id": 73,
-    "groupe_id": 2
-  },
-  {
-    "eleve_id": 32,
-    "groupe_id": -111
-  },
-  {
-    "eleve_id": 3,
-    "groupe_id": 10
-  },
-  {
-    "eleve_id": 3,
-    "groupe_id": 7
-  }
+  {"eleve_id": 1,"groupe_id": 10},
+{"eleve_id": 2,"groupe_id": 10},
+{"eleve_id": 3,"groupe_id": 10},
+{"eleve_id": 4,"groupe_id": 10},
+{"eleve_id": 5,"groupe_id": 10},
+{"eleve_id": 6,"groupe_id": 10},
+{"eleve_id": 7,"groupe_id": 10},
+{"eleve_id": 8,"groupe_id": 10},
+{"eleve_id": 9,"groupe_id": 10},
+{"eleve_id": 10,"groupe_id": 10},
+{"eleve_id": 11,"groupe_id": 10},
+{"eleve_id": 12,"groupe_id": 10},
+{"eleve_id": 13,"groupe_id": 10},
+{"eleve_id": 14,"groupe_id": 10},
+{"eleve_id": 15,"groupe_id": 10},
+{"eleve_id": 16,"groupe_id": 10},
+{"eleve_id": 17,"groupe_id": 10},
+{"eleve_id": 18,"groupe_id": 10},
+{"eleve_id": 19,"groupe_id": 10},
+{"eleve_id": 20,"groupe_id": 10},
+{"eleve_id": 21,"groupe_id": 10},
+{"eleve_id": 22,"groupe_id": 10},
+{"eleve_id": 23,"groupe_id": 10},
+{"eleve_id": 24,"groupe_id": 10},
+{"eleve_id": 25,"groupe_id": 10},
+{"eleve_id": 26,"groupe_id": 10},
+{"eleve_id": 27,"groupe_id": 10},
+{"eleve_id": 28,"groupe_id": 10},
+{"eleve_id": 29,"groupe_id": 10},
+{"eleve_id": 30,"groupe_id": 10},
+{"eleve_id": 31,"groupe_id": 10},
+{"eleve_id": 32,"groupe_id": 10},
+{"eleve_id": 33,"groupe_id": 10},
+{"eleve_id": 34,"groupe_id": 10},
+{"eleve_id": 35,"groupe_id": 10},
+{"eleve_id": 36,"groupe_id": 10},
+{"eleve_id": 37,"groupe_id": 10},
+{"eleve_id": 38,"groupe_id": 10},
+{"eleve_id": 39,"groupe_id": 10},
+{"eleve_id": 40,"groupe_id": 10},
+{"eleve_id": 41,"groupe_id": 10},
+{"eleve_id": 42,"groupe_id": 10},
+{"eleve_id": 43,"groupe_id": 10},
+{"eleve_id": 44,"groupe_id": 10},
+{"eleve_id": 45,"groupe_id": 10},
+{"eleve_id": 46,"groupe_id": 10},
+{"eleve_id": 47,"groupe_id": 10},
+{"eleve_id": 48,"groupe_id": 10},
+
+{"eleve_id": 49,"groupe_id": 9},
+{"eleve_id": 50,"groupe_id": 9},
+{"eleve_id": 51,"groupe_id": 9},
+{"eleve_id": 52,"groupe_id": 9},
+{"eleve_id": 53,"groupe_id": 9},
+{"eleve_id": 54,"groupe_id": 9},
+{"eleve_id": 55,"groupe_id": 9},
+{"eleve_id": 56,"groupe_id": 9},
+
+{"eleve_id": 57,"groupe_id": 1},
+{"eleve_id": 58,"groupe_id": 1},
+{"eleve_id": 59,"groupe_id": 1},
+{"eleve_id": 60,"groupe_id": 1},
+{"eleve_id": 61,"groupe_id": 1},
+{"eleve_id": 62,"groupe_id": 1},
+{"eleve_id": 63,"groupe_id": 1},
+{"eleve_id": 64,"groupe_id": 1},
+{"eleve_id": 65,"groupe_id": 1},
+{"eleve_id": 66,"groupe_id": 1},
+{"eleve_id": 67,"groupe_id": 1},
+{"eleve_id": 68,"groupe_id": 1},
+{"eleve_id": 69,"groupe_id": 1},
+{"eleve_id": 70,"groupe_id": 1},
+{"eleve_id": 71,"groupe_id": 1},
+{"eleve_id": 72,"groupe_id": 1},
+{"eleve_id": 73,"groupe_id": 1},
+{"eleve_id": 74,"groupe_id": 1},
+
+
+
+
+{"eleve_id": 1,"groupe_id": -101},
+{"eleve_id": 2,"groupe_id": -101},
+{"eleve_id": 3,"groupe_id": -101},
+{"eleve_id": 4,"groupe_id": -102},
+{"eleve_id": 5,"groupe_id": -102},
+{"eleve_id": 6,"groupe_id": -102},
+{"eleve_id": 7,"groupe_id": -103},
+{"eleve_id": 8,"groupe_id": -103},
+{"eleve_id": 9,"groupe_id": -103},
+{"eleve_id": 10,"groupe_id": -104},
+{"eleve_id": 11,"groupe_id": -104},
+{"eleve_id": 12,"groupe_id": -104},
+{"eleve_id": 13,"groupe_id": -105},
+{"eleve_id": 14,"groupe_id": -105},
+{"eleve_id": 15,"groupe_id": -105},
+{"eleve_id": 16,"groupe_id": -106},
+{"eleve_id": 17,"groupe_id": -106},
+{"eleve_id": 18,"groupe_id": -106},
+{"eleve_id": 19,"groupe_id": -107},
+{"eleve_id": 20,"groupe_id": -107},
+{"eleve_id": 21,"groupe_id": -107},
+{"eleve_id": 22,"groupe_id": -108},
+{"eleve_id": 23,"groupe_id": -108},
+{"eleve_id": 24,"groupe_id": -108},
+{"eleve_id": 25,"groupe_id": -109},
+{"eleve_id": 26,"groupe_id": -109},
+{"eleve_id": 27,"groupe_id": -109},
+{"eleve_id": 28,"groupe_id": -110},
+{"eleve_id": 29,"groupe_id": -110},
+{"eleve_id": 30,"groupe_id": -110},
+{"eleve_id": 31,"groupe_id": -111},
+{"eleve_id": 32,"groupe_id": -111},
+{"eleve_id": 33,"groupe_id": -111},
+{"eleve_id": 34,"groupe_id": -112},
+{"eleve_id": 35,"groupe_id": -112},
+{"eleve_id": 36,"groupe_id": -112},
+{"eleve_id": 37,"groupe_id": -113},
+{"eleve_id": 38,"groupe_id": -113},
+{"eleve_id": 39,"groupe_id": -113},
+{"eleve_id": 40,"groupe_id": -114},
+{"eleve_id": 41,"groupe_id": -114},
+{"eleve_id": 42,"groupe_id": -114},
+{"eleve_id": 43,"groupe_id": -115},
+{"eleve_id": 44,"groupe_id": -115},
+{"eleve_id": 45,"groupe_id": -115},
+{"eleve_id": 46,"groupe_id": -116},
+{"eleve_id": 47,"groupe_id": -116},
+{"eleve_id": 48,"groupe_id": -116},
+
+{"eleve_id": 49,"groupe_id": -201},
+{"eleve_id": 50,"groupe_id": -201},
+{"eleve_id": 51,"groupe_id": -202},
+{"eleve_id": 52,"groupe_id": -202},
+{"eleve_id": 53,"groupe_id": -202},
+{"eleve_id": 54,"groupe_id": -203},
+{"eleve_id": 55,"groupe_id": -203},
+{"eleve_id": 56,"groupe_id": -203},
+
+{"eleve_id": 57,"groupe_id": -204},
+{"eleve_id": 58,"groupe_id": -204},
+{"eleve_id": 59,"groupe_id": -204},
+{"eleve_id": 60,"groupe_id": -205},
+{"eleve_id": 61,"groupe_id": -205},
+{"eleve_id": 62,"groupe_id": -205},
+{"eleve_id": 63,"groupe_id": -206},
+{"eleve_id": 64,"groupe_id": -206},
+{"eleve_id": 65,"groupe_id": -206},
+{"eleve_id": 66,"groupe_id": -207},
+{"eleve_id": 67,"groupe_id": -207},
+{"eleve_id": 68,"groupe_id": -207},
+{"eleve_id": 69,"groupe_id": -208},
+{"eleve_id": 70,"groupe_id": -208},
+{"eleve_id": 71,"groupe_id": -208},
+{"eleve_id": 72,"groupe_id": -209},
+{"eleve_id": 73,"groupe_id": -209},
+{"eleve_id": 74,"groupe_id": -209},
+
+{"eleve_id": 4,"groupe_id": 6},
+{"eleve_id": 7,"groupe_id": 6},
+{"eleve_id": 12,"groupe_id": 6},
+{"eleve_id": 51,"groupe_id": 6},
+{"eleve_id": 54,"groupe_id": 6},
+{"eleve_id": 69,"groupe_id": 6},
+
+{"eleve_id": 2,"groupe_id": 7},
+{"eleve_id": 3,"groupe_id": 7},
+{"eleve_id": 6,"groupe_id": 7},
+{"eleve_id": 8,"groupe_id": 7},
+{"eleve_id": 9,"groupe_id": 7},
+{"eleve_id": 11,"groupe_id": 7},
+{"eleve_id": 13,"groupe_id": 7},
+{"eleve_id": 14,"groupe_id": 7},
+{"eleve_id": 15,"groupe_id": 7},
+{"eleve_id": 18,"groupe_id": 7},
+{"eleve_id": 70,"groupe_id": 7},
+
+{"eleve_id": 1,"groupe_id": 8},
+{"eleve_id": 62,"groupe_id": 8},
+
+{"eleve_id": 75,"groupe_id": 10},
+
+{"eleve_id": 76,"groupe_id": 9},
+{"eleve_id": 76,"groupe_id": 1}
+
 ]
